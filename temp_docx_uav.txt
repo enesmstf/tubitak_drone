@@ -1,0 +1,317 @@
+4-UAV RF LOCALIZATION & MULTI-TELEMETRY SYSTEM
+Windows Ground Station — Setup, Operation & Troubleshooting Guide
+SAFETY
+Remove all propellers before any desk/bench test that involves the flight controller. Do not power LoRa/HC-12/E22 or SiK radios without an antenna attached.
+Field
+Value
+Document
+4-UAV RF Localization — Windows Operation Guide
+Scope
+Deploying Check1.py to Drone 1–4, running the Windows ground station, expected screen output, health checks, and troubleshooting
+Companion files
+Check1.py, ground_station_core.py, ground_station_windows.py, ground_station_linux.py
+Audience
+Field operators running the Windows ground station computer
+Contents
+1. System Overview
+2. Identification Plan (NODE_ID, COM Ports, SYSID)
+3. Step 1 — Deploying Check1.py to the Drones
+4. Step 2 — Preparing the Windows Ground Station Computer
+5. Step 3 — Configuring COM Ports
+6. Step 4 — Running the Ground Station
+7. What You Should See on Screen (Healthy Startup Sequence)
+8. The RSSI Dashboard — Reading the Synchronized Signal Table
+9. Verifying Signals Are Actually Reaching the Drones
+10. Pre-Flight Health Checklist
+11. Troubleshooting & Connection Problem Map
+12. Configuration Reference
+13. Safety Reminders
+1. System Overview
+This system uses 4 UAVs ('drones'), each carrying a Raspberry Pi node running Check1.py, an RTL-SDR receiver, and an HC-12/E22 LoRa transmitter. Each drone continuously measures the signal strength (RSSI) of a central RF transmitter and broadcasts that value to the ground over LoRa, in strict turn order (TDMA).
+A single ground station computer (this guide focuses on Windows) listens to all 4 LoRa broadcasts, validates each packet, and calculates how far the swarm's virtual center should shift toward the strongest combined signal. It then sends MAVLink position commands directly to each drone's Pixhawk flight controller over a separate SiK telemetry radio.
+THREE INDEPENDENT RADIO LINKS
+LoRa (RSSI data), SiK/MAVLink (flight commands), and Wi-Fi/Cockpit (drone maintenance) are three separate channels. A problem on one link is never fixed by touching another link's settings.
+1.1 Two ground station variants — pick the one that is stable
+Both variants share the exact same logic (ground_station_core.py) and only differ in how serial ports are named:
+ground_station_windows.py — uses COM5, COM6, COM7… (Windows port names)
+ground_station_linux.py — uses /dev/ttyUSB0, /dev/ttyUSB1… (Linux port names)
+Run whichever one is stable on your available hardware. This guide focuses on the Windows path.
+2. Identification Plan (NODE_ID, COM Ports, SYSID)
+Fill in this table with your real values before starting. Confusing these IDs across layers is the single most common source of field errors.
+Drone
+Check1.py NODE_ID
+Pixhawk SYSID_THISMAV
+Ground COM port (telemetry)
+Role in formation
+Drone 1
+1
+1
+COM___
+North sentinel — origin reference
+Drone 2
+2
+2
+COM___
+South sentinel
+Drone 3
+3
+3
+COM___
+East sentinel
+Drone 4
+4
+4
+COM___
+West sentinel
+LoRa ground module COM port (single shared link for all 4 drones): COM___
+WHY THIS MATTERS
+NODE_ID controls the LoRa TDMA time slot and packet header. SYSID_THISMAV lets the ground station's MAVLink connection identify each aircraft. COM port assignment tells Windows which physical radio is which. These are three independent identifiers — changing one does not change the others.
+3. Step 1 — Deploying Check1.py to the Drones
+Check1.py runs on the Raspberry Pi node carried by each drone. It reads RTL-SDR power samples, computes a filtered RSSI value, and transmits it over LoRa in a fixed time slot every 4-second cycle (Absolute-Time TDMA).
+3.1 Deployment order
+Because Check1.py uses absolute system time (not a 'first one to boot' scheme) to compute its transmit slot, the drones do NOT need to be powered on in any particular numerical order. However, follow this sequence for a clean, verifiable rollout:
+Copy the exact same Check1.py file to all 4 Raspberry Pi nodes (identical content).
+On each Pi, open Check1.py and change ONLY the NODE_ID value to match that physical drone (1, 2, 3, or 4).
+Confirm the Pi's system clock is synchronized (NTP) on all 4 nodes BEFORE flight — TDMA timing depends on this.
+Power on Drone 1 first, wait for a healthy TX log line, then repeat for Drone 2, 3, 4.
+Only start the ground station after at least Drone 1 (origin reference) is transmitting.
+DO NOT SKIP
+If the 4 Pi clocks are not synchronized, each drone's 4-second time slot calculation will drift, and the ground station may see packets arrive out of the expected order or miss them due to the freshness window (see Section 12).
+3.2 Editing NODE_ID
+# Near the top of Check1.py:
+NODE_ID = 1        # <-- change to 2, 3, or 4 on the other three Pis
+TOTAL_NODES = 4     # leave this the same on all 4 drones
+3.3 Starting Check1.py on each drone
+Manual run (for testing):
+python3 Check1.py
+Expected healthy log on each drone (values will vary):
+LoRa connected on /dev/ttyUSB0
+RTL-SDR connected and configured.
+SDR gain fixed: 40.0 dB (target: 40.0 dB)
+Localization Node 1 armed.
+ABSOLUTE-TIME TDMA Started. Cycle: 4.0s
+TX -> N1,-74,67
+If your deployment uses a systemd service (locnode.service) instead of manual execution, start/restart it and follow the live log:
+sudo systemctl restart locnode.service
+sudo journalctl -u locnode.service -f -o cat
+Repeat this verification for all 4 drones before moving to Step 2. Do not proceed until you see a TX line from every drone.
+4. Step 2 — Preparing the Windows Ground Station Computer
+4.1 Install Python
+Install Python 3.10+ from python.org. During installation, check "Add Python to PATH".
+4.2 Install required packages
+Open Command Prompt (cmd.exe) or PowerShell and run:
+pip install pyserial pymavlink
+4.3 Place the files together
+Copy these three files into the SAME folder on the Windows computer:
+ground_station_core.py
+ground_station_windows.py
+(ground_station_linux.py is not needed on Windows — it can stay out of this folder.)
+WHY ALL FILES MUST BE TOGETHER
+ground_station_windows.py imports ground_station_core.py from its own folder. If the core file is missing or in a different directory, Python will raise a ModuleNotFoundError.
+5. Step 3 — Configuring COM Ports
+5.1 Find the real COM numbers
+Open Windows Device Manager → Ports (COM & LPT). With everything plugged in and powered, note:
+Which COM number is the LoRa ground module (USB-serial adapter, e.g. CH340/CP210x/FTDI)
+Which COM number is each of the 4 SiK telemetry radios connected to this ground computer
+Tip: unplug one device at a time and watch which COM entry disappears from the list — this is the most reliable way to map physical cables to COM numbers.
+5.2 Edit ground_station_windows.py
+Open the file in a text editor and update these lines with the values from Section 2:
+SIMULATION_MODE = False
+ 
+LORA_PORT = "COM5"        # <-- your LoRa ground module port
+ 
+PIXHAWK_PORTS = {
+    1: "COM6",   # Drone 1 (ORIGIN reference)
+    2: "COM7",   # Drone 2
+    3: "COM8",   # Drone 3
+    4: "COM9",   # Drone 4
+}
+TEST FIRST WITHOUT HARDWARE
+To dry-run the software logic before connecting any radios, temporarily set SIMULATION_MODE = True. The script will generate fake RSSI/GPS data and print the exact same log format you will see in real flight. Set it back to False before the real test.
+6. Step 4 — Running the Ground Station
+Open Command Prompt in the folder containing the files and run:
+python ground_station_windows.py
+This program will now hold the LoRa COM port and all 4 telemetry COM ports open for as long as it runs. RealTerm and Mission Planner CANNOT open the same COM ports at the same time (Windows allows only one owner per COM port).
+REALTERM IS NO LONGER NEEDED
+ground_station_windows.py prints every raw LoRa line it receives directly to its own console window, labeled [RADIO-MONITOR]. This replaces RealTerm's monitoring role — you do not need to (and cannot) run RealTerm on the same COM port at the same time as this script.
+Similarly, Mission Planner cannot CONNECT to the same telemetry COM ports while this script is running. Use Mission Planner only when the ground station script is stopped, or connect Mission Planner through a separate, additional SiK radio set if you need live map monitoring during the same flight (see Section 11).
+To stop the script safely at any time, press Ctrl+C in the console window.
+7. What You Should See on Screen (Healthy Startup Sequence)
+A fully healthy startup looks like this, in this order:
+7.1 Banner and mode
+========================================
+  AUTONOMOUS SWARM GROUND STATION
+  Platform: Windows
+========================================
+Mode: REAL HARDWARE FLIGHT
+RSSI_MAX_AGE_S=8.0s | ADJUST_ORIGIN_FOR_DRONE1_POSITION=True | Geofence=+/-20.0m
+7.2 LoRa connection
+[SYSTEM] Connecting to real LoRa port: COM5
+[SUCCESS] LoRa connected: COM5
+7.3 Telemetry heartbeats (repeats for Drone 1–4)
+[CONNECTION] Drone 1 port opened: COM6. Waiting for heartbeat...
+[SUCCESS] Drone 1 heartbeat received (sysid=1, compid=1)
+... (same for Drone 2, 3, 4) ...
+If any drone's Pixhawk is not powered, not connected, or the wrong COM port was entered, this stage will repeat its warning and retry every few seconds instead of proceeding — this is expected retry behavior, not a crash.
+7.4 Origin capture
+[SYSTEM] Passive LoRa listener started (waiting for TDMA broadcast).
+[SYSTEM] Waiting for Drone 1 GPS position for Origin...
+[SUCCESS] Drone 1 raw GPS: LAT 41.000100, LON 34.000100
+[SUCCESS] Origin (shifted 5.0m south of Drone1) -> LAT: 41.000055, LON: 34.000100
+Origin capture requires Drone 1 to already have a GPS fix (this is a normal pre-arm requirement, independent of this software). If this step does not complete within 30 seconds, it will print a warning and no MAVLink commands will be sent until Drone 1's GPS is available.
+7.5 Main loop — repeats once per second
+=======================================================
+[RSSI DASHBOARD] (HC-12/E22 center transmitter signal - per drone)
+    N1:  -74 dBm  | last update: 0.3s ago  [OK]
+    N2:  -60 dBm  | last update: 0.5s ago  [OK]
+    N3:  -78 dBm  | last update: 0.9s ago  [OK]
+    N4:  -86 dBm  | last update: 0.2s ago  [OK]
+[DECISION ENGINE] Signal deltas -> N/S: -14dB, E/W: 8dB
+[DECISION ENGINE] Step shift -> NORTH: -5.0m, EAST: 4.0m
+[DECISION ENGINE] Virtual center (relative to Origin) -> NORTH: 6.5m, EAST: 11.0m (Geofence: +/-20.0m)
+[MAVLINK] Drone 1 -> LAT: 41.000158, LON: 34.000231, ALT: 15.0m
+[MAVLINK] Drone 2 -> LAT: 41.000068, LON: 34.000231, ALT: 15.0m
+[MAVLINK] Drone 3 -> LAT: 41.000113, LON: 34.000290, ALT: 15.0m
+[MAVLINK] Drone 4 -> LAT: 41.000113, LON: 34.000171, ALT: 15.0m
+=======================================================
+Below the dashboard block you will also see raw [RADIO-MONITOR] lines scrolling as packets arrive — this is the direct replacement for RealTerm's view.
+8. The RSSI Dashboard — Reading the Synchronized Signal Table
+Every second, the ground station prints a synchronized snapshot showing the most recent known RSSI value FROM ALL 4 DRONES TOGETHER, regardless of which drone's packet happened to arrive most recently. This gives you a single, comparable view of the HC-12/E22 center transmitter's signal strength as measured independently by each of the 4 drones.
+Column
+Meaning
+N1 / N2 / N3 / N4
+Drone identifier (matches NODE_ID / formation role)
+dBm value
+Filtered RSSI measured by that drone's RTL-SDR of the center transmitter's signal
+last update
+How many seconds ago this value was received over LoRa
+[OK] / [STALE (eski)]
+OK = within the freshness window (8s); STALE = older data, being held, not used for new steering decisions
+---- dBm
+No packet has ever been received yet from this drone
+Healthy operation looks like all 4 rows showing [OK] and updating within roughly 4 seconds of each other, matching the TDMA cycle time in Check1.py.
+IF FEWER THAN 4 ARE [OK]
+The Decision Engine will print 'Not all drones have fresh data (X/4)' and hold the virtual center at its last known position rather than steering on incomplete data. This is a safety behavior, not an error — but it should not persist for more than a few cycles in a healthy link. See Section 11.
+9. Verifying Signals Are Actually Reaching the Drones
+Seeing '[MAVLINK] Drone N -> LAT ... LON ... ALT ...' printed on the ground station console only confirms the command was SENT over the serial link. Confirm it was actually RECEIVED and ACTED ON using these independent checks:
+Bench test (props off): with the drone armed in GUIDED mode, confirm the console does NOT print '[SAFETY] Drone N not ready for commands' — if it does, the drone is being deliberately skipped (see Section 11.3).
+If you have a spare SiK radio pair, connect Mission Planner to ONE drone at a time (while the ground station script is stopped) and watch the Guided target marker move on the map when you manually re-run the script briefly.
+Watch each Pixhawk's own GPS/position telemetry (via Cockpit + MAVLink logs, or a secondary GCS session) for small, smooth position changes that track the ground station's printed LAT/LON — not large jumps, which would indicate a frame/origin mismatch.
+During an actual bench/tethered hover test, physically confirm the drone drifts in the expected compass direction when you intentionally weaken one drone's signal reception (e.g. temporarily detune its antenna) — the swarm center should shift away from that drone.
+10. Pre-Flight Health Checklist
+10.1 RF / LoRa layer
+LoRa ground module COM port opens without retrying (Section 7.2 log appears once, cleanly)
+All 4 drones show in the RSSI Dashboard as [OK] within ~4-8 seconds of starting Check1.py on all of them
+No repeated '[SECURITY WARNING] Checksum mismatch' lines during a quiet RF environment
+No repeated '[RADIO WARNING] Malformed packet' lines
+10.2 MAVLink / Pixhawk layer
+All 4 drones show a heartbeat SUCCESS line at startup
+With props off, arm each drone in GUIDED mode and confirm the console stops printing '[SAFETY] Drone N not ready for commands' for that drone
+Confirm GCS Failsafe is configured in Mission Planner for all 4 vehicles (FS_GCS_ENABLE / FS_GCS_TIMEOUT / RTL or LAND action) — this script cannot set this for you
+10.3 Origin & geometry
+Origin capture succeeds within 30 seconds of Drone 1 having GPS lock
+Confirm ADJUST_ORIGIN_FOR_DRONE1_POSITION matches your actual ground layout (Section 12)
+Confirm the printed Origin LAT/LON is inside your intended flight area, not somewhere unexpected
+10.4 Full loop
+Let the ground station run for at least 2-3 full minutes on the bench (props off, armed) and confirm the Decision Engine values stay within the ±20m geofence and do not oscillate wildly
+Confirm the loop timing stays close to 1 second per cycle (no long pauses in the console output)
+11. Troubleshooting & Connection Problem Map
+11.1 LoRa / COM port issues
+Symptom
+Likely cause
+Fix
+"could not open port COM5" repeating
+Wrong COM number, or RealTerm/another program already has it open
+Check Device Manager; close RealTerm/any terminal program using that port; correct LORA_PORT
+Script connects, but [RADIO-MONITOR] never prints anything
+LoRa ground module wiring, M0/M1 not both GND, wrong baud, or drones not transmitting yet
+Verify Check1.py is running and printing TX lines on all drones; check M0/M1 = GND; check 9600 8N1 wiring
+[RADIO-MONITOR] lines appear but [SECURITY WARNING] Checksum mismatch every time
+Check1.py version on the drone does NOT include the checksum field (older/unpatched version)
+Redeploy the checksum-enabled Check1.py to every drone (Section 3)
+[RADIO WARNING] Malformed packet frequently
+RF noise/interference, or a foreign transmitter sharing the band
+Check antenna separation between LoRa/E22 modules and other 900MHz gear; verify RF channel settings match on both ends
+One drone's dBm never updates (stuck STALE)
+That drone's Check1.py crashed, NODE_ID conflict, or its LoRa TX hardware failed
+Check that drone's own Check1.py console/log; confirm NODE_ID is unique; check drone-side LoRa wiring
+11.2 MAVLink / telemetry issues
+Symptom
+Likely cause
+Fix
+"[WARNING] Drone N telemetry could not be opened" repeating
+Wrong COM number, Pixhawk unpowered, or Mission Planner already connected to that COM port
+Verify Device Manager COM number; ensure Mission Planner is disconnected from that port; power-cycle the SiK pair
+Heartbeat never arrives
+SERIAL1_PROTOCOL/SERIAL1_BAUD misconfigured on Pixhawk, or wrong SiK Net ID pairing
+Verify SERIAL1_BAUD=57 (57600) and SERIAL1_PROTOCOL=1/2 on Pixhawk; re-check SiK Local/Remote Net ID match
+'[SAFETY] Drone N not ready for commands (armed=False)'
+Vehicle not armed
+Arm the vehicle (props off for bench test) — this is a deliberate safety skip, not a bug
+'... (mode not GUIDED)'
+Vehicle is in a different flight mode
+Switch to GUIDED via Mission Planner or RC mode switch
+'... (not airborne / below altitude threshold)'
+relative_alt below 2m — vehicle has not yet climbed above the airborne heuristic
+Expected on the ground; will clear once climbing. If it never clears after takeoff, verify GPS altitude source
+11.3 Origin / geometry issues
+Symptom
+Likely cause
+Fix
+"[WARNING] Could not get GPS position from Drone 1 within 30 seconds"
+Drone 1 has no GPS fix, or its telemetry link is unstable
+Wait for GPS 3D fix on Drone 1 before starting the ground station; verify GPS module wiring/antenna
+Whole swarm shifts unexpectedly on takeoff
+ADJUST_ORIGIN_FOR_DRONE1_POSITION does not match your physical ground layout
+If drones were laid out on the ground in a cross shape and lifted together, keep this True. If each drone is already individually positioned at its formation slot, set it to False (Section 12)
+Virtual center pinned at exactly the geofence edge
+Sustained one-directional RSSI imbalance (e.g. one antenna disconnected/misdirected) is pushing past the ±20m limit repeatedly
+Check antennas and RF orientation on the sentinel drone showing consistently weak or strong readings
+11.4 Windows-specific port conflicts
+Symptom
+Likely cause
+Fix
+"PermissionError" / "Access is denied" opening a COM port
+Another program (RealTerm, Mission Planner, Arduino IDE, a second Python instance) already has that COM port open
+Close all other terminal/GCS software using that port; this script cannot share a COM port with another process
+Need live map + this script running at the same time
+Only one program can own each SiK COM port
+Use mavlink-router or MAVProxy to fan out a single SiK link to both this script and Mission Planner, OR dedicate a second SiK radio pair purely for Mission Planner monitoring
+COM number changes after unplugging/replugging a USB radio
+Windows may reassign COM numbers on reconnection
+Re-check Device Manager and update ground_station_windows.py before the next run
+12. Configuration Reference
+All of the following live at the top of ground_station_core.py and apply identically on Windows and Linux:
+Setting
+Default
+Meaning
+RSSI_MAX_AGE_S
+8.0 s
+How old a drone's last RSSI reading may be and still count as 'fresh' (2 full TDMA cycles of tolerance for packet loss)
+ADJUST_ORIGIN_FOR_DRONE1_POSITION
+True
+True: origin = Drone 1's GPS shifted 5m south (drones laid out on ground in a cross, lifted together). False: origin = Drone 1's raw GPS directly (drones already positioned individually)
+FORMATION_DISTANCE_M
+5.0 m
+Distance from virtual center to each sentinel drone
+FORMATION_ALT_M
+15.0 m
+Target relative altitude sent to all drones
+MAX_CENTER_DRIFT_M
+20.0 m
+Geofence — maximum distance the virtual center may drift from Origin, in either axis
+COMMAND_LOOP_HZ
+1.0 Hz
+How often MAVLink position targets are re-sent, even with no new RSSI data (prevents GUIDED timeout/Loiter)
+AIRBORNE_RELATIVE_ALT_THRESHOLD_M
+2.0 m
+Heuristic altitude above which a drone is treated as airborne for command-readiness checks
+HEURISTIC NOTICE
+AIRBORNE_RELATIVE_ALT_THRESHOLD_M is a simple approximation based on relative altitude, not ArduPilot's own landed-state detection. For production hardening, replace it with ArduPilot's EXTENDED_SYS_STATE / LANDED_STATE message.
+13. Safety Reminders
+Propellers stay off until all bench testing of arming, GUIDED mode, and command flow is complete.
+Configure GCS Failsafe (FS_GCS_ENABLE / FS_GCS_TIMEOUT, action = RTL or LAND) on all 4 vehicles in Mission Planner. If the ground station computer or its telemetry link fails, this is what brings the drones down safely — this script cannot do it for you.
+Do not disable ARMING_CHECK parameters to work around a PreArm message — fix the underlying cause instead.
+Keep the ±20m geofence (MAX_CENTER_DRIFT_M) enabled at all times during autonomous centering flights.
+Verify LiPo battery levels and antenna attachment on all radios (LoRa/E22 and SiK) before every flight.
+This checksum (sum-mod-256) only rejects accidental corruption/noise, not a deliberate spoofing attempt. Treat the RF link as untrusted for anything beyond this demonstrator's safety margins.
