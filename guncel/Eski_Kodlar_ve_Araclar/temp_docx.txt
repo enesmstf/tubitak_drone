@@ -1,0 +1,1184 @@
+4 İHA RF KONUMLANDIRMA VE ÇOKLU TELEMETRİ SİSTEMİ
+Raspberry Pi Zero + RTL-SDR + E22 LoRa + Pixhawk/ArduPilot + Mission Planner + SiK + Cockpit + RealTerm
+Şekil 1. Sistemin üç bağımsız haberleşme yolu: bakım Wi‑Fi’si, LoRa veri hattı ve SiK MAVLink telemetrisi.
+Sürüm 1.0  |  29 Temmuz 2026
+Proje: TÜBİTAK 3501 Çoklu İHA RF Konumlandırma ve Sürü Haberleşmesi
+Hazırlayan: Sadık Can Güler
+GÜVENLİK  Bu doküman laboratuvar kurulumu, uçuş öncesi hazırlık, işletim, bakım ve arıza ayırma için tek başvuru kaynağı olarak tasarlanmıştır. Uçuş kontrolüyle ilgili tüm masa başı testlerde pervaneler çıkarılmalıdır.
+Doküman Kontrolü
+Alan
+Değer
+Doküman adı
+4 İHA RF Konumlandırma ve Çoklu Telemetri Sistemi
+Kapsam
+Drone1–Drone4 Raspberry Pi düğümleri, RF veri hattı, Pixhawk ve yer istasyonu
+Temel iç kaynak
+Drone2 Raspberry Pi Zero Sıfırdan Kurulum Rehberi - Final
+Geçerli kod
+Bu dokümanın Ek A bölümünde verilen absolute-time TDMA Check1.py
+Güncelleme ilkesi
+Donanım, port, kullanıcı adı, NODE_ID, SYSID ve Net ID değişikliklerinde revizyon kaydı oluşturulur
+Gizlilik
+Proje içi kullanım
+Revizyon Geçmişi
+Sürüm
+Tarih
+Değişiklik
+1.0
+29.07.2026
+Raspberry Pi, Cockpit, systemd, SDR, LoRa, RealTerm, Pixhawk, Mission Planner, RC ve çoklu SiK telemetri tek dokümanda birleştirildi.
+İçindekiler
+1. Amaç, kapsam ve sistem sınırları
+2. Sistem mimarisi ve haberleşme yolları
+3. Kimliklendirme ve konfigürasyon kayıt planı
+4. Donanım, bağlantı ve güç mimarisi
+5. Raspberry Pi Zero sıfırdan kurulum
+6. USB host, RTL-SDR ve seri port altyapısı
+7. Check1.py algoritması ve TDMA zamanlama
+8. systemd otomatik başlatma ve USB rescan
+9. Cockpit ile uzaktan yönetim
+10. LoRa/RealTerm yer istasyonu kullanımı
+11. Pixhawk, ArduPilot ve Mission Planner kurulumu
+12. FlySky RC alıcısı, PPM ve radyo kalibrasyonu
+13. SiK telemetri çiftleri ve çoklu araç bağlantısı
+14. Normal işletim ve saha açılış sırası
+15. Sorun giderme karar tabloları
+16. Uçuş öncesi ve uçuş sonrası kontrol listeleri
+Ek A. Tam Check1.py kodu
+Ek B. Servis ve yardımcı scriptler
+Ek C. Komut hızlı referansı
+Kaynaklar
+1. Amaç, Kapsam ve Sistem Sınırları
+Bu doküman dört ayrı İHA üzerinde çalışan RF konumlandırma düğümlerinin, uçuş kontrol sistemlerinin ve yer istasyonunun kurulmasını; normal işletimini; çoklu araç bağlantısını; servis yönetimini ve arıza ayırmayı uçtan uca tarif eder. Drone2 için hazırlanmış temiz kurulum rehberindeki Cockpit, USB host, RTL-SDR sürücü çakışması, hub rescan ve systemd yapısı temel alınmıştır [1].
+Bakım ve yönetim: Raspberry Pi Zero’ya Wi‑Fi üzerinden Cockpit web terminaliyle erişilir.
+RF ölçüm: RTL-SDR, 446.450 MHz merkez frekansında IQ örnekleri toplar.
+Özel veri hattı: Raspberry Pi, RSSI değerini CH340 üzerinden E22 LoRa modülüne 9600 baud ile gönderir.
+Uçuş telemetrisi: Pixhawk, MAVLink verisini TELEM1 üzerindeki SiK radyo çiftinden Mission Planner’a 57600 baud ile taşır.
+Çoklu araç: Her Pixhawk benzersiz SYSID_THISMAV, her SiK çifti de diğerlerinden farklı Net ID kullanır.
+KRİTİK AYRIM  Bu sistemde üç ayrı haberleşme kanalı vardır. Cockpit Wi‑Fi bağlantısı, E22 LoRa RSSI hattı ve SiK MAVLink telemetrisi birbirinden bağımsızdır. Birinin baud değeri veya bağlantı problemi diğerinin ayarıyla çözülmez.
+1.1 Güvenlik sınırları
+Pervaneler; frame, RC, ESC ve motor testi tamamlanana kadar sökülü tutulur.
+LoRa ve SiK modüllerine anten takılmadan enerji verilmez.
+Raspberry Pi aynı anda hem bilgisayar USB’sinden hem harici 5 V regülatörden beslenmez.
+LiPo batarya şarjı uçuş sisteminden ayrı ve gözetim altında yapılır.
+BRD_SAFETYENABLE=0 fiziksel switch gereksinimini kaldırabilir; aracı otomatik arm etmez. ARMING_CHECK kontrolleri uçuş için kapatılmaz.
+ArduCopter 3.6.7 eski bir sürümdür. Parametre yedeği ve kontrollü bench doğrulaması olmadan saha öncesi firmware yükseltmesi yapılmaz; orta vadede desteklenen sürüme geçiş planlanır.
+2. Sistem Mimarisi ve Haberleşme Yolları
+Şekil 2. Drone düğümü ve yer istasyonu arasındaki bağımsız yollar.
+2.1 Wi‑Fi/Cockpit bakım yolu
+Cockpit, Linux yönetimini web tarayıcısına taşır ve varsayılan olarak 9090 numaralı TCP portunda çalışır [2][3]. Bu yol uçuş verisi taşımak için değil; servis başlatma, log okuma, lsusb kontrolü, yazılım güncelleme ve hata ayırma için kullanılır.
+2.2 E22 LoRa RSSI veri yolu
+Check1.py tarafından üretilen metin paketleri CH340 USB-UART adaptörüne 9600 baud, 8 veri biti, parity yok, 1 stop biti (8N1) formatında yazılır. E22 modülleri normal/şeffaf iletim modunda kullanılır; bu modda M0 ve M1 düşük seviyede tutulur. E22 UART hızı, RF hava veri hızı ve RF kanalı birbirinden farklı kavramlardır [14][15].
+2.3 SiK/MAVLink uçuş telemetrisi
+SiK radyo çifti Pixhawk’ın TELEM1 seri portu ile bilgisayarın USB COM portu arasında MAVLink taşır. Mission Planner bağlantısında tipik seri baud 57600’dür. Aynı bilgisayarda birden fazla araç eklemek için ilk bağlantı normal CONNECT, sonraki bağlantılar CONNECT düğmesine sağ tıklanarak Connection Options üzerinden açılır [6][7].
+RF BİRLİKTE ÇALIŞABİLİRLİK  Net ID, SiK çiftlerini mantıksal ağlara ayırır; ayrı ve garantili bir RF frekans kanalı tahsis etmez. Aynı 915 MHz bandındaki dört SiK ağı ve E22-900T22D modülleri ortak spektrumu paylaşabilir. Kanal planı, anten ayrımı ve saha testi gereklidir.
+3. Kimliklendirme ve Konfigürasyon Kayıt Planı
+Birden fazla aracın güvenilir işletilmesi için Linux, Python düğümü, MAVLink ve SiK katmanlarında kimliklerin birbiriyle karıştırılmaması gerekir.
+Araç
+Linux hostname / kullanıcı
+Check1.py NODE_ID
+Pixhawk SYSID_THISMAV
+SiK Net ID
+Drone 1
+drone1 / drone1
+1
+1
+Mevcut çiftten Load Settings ile okunacak
+Drone 2
+drone2 / drone2
+2
+2
+40 (doğrulandı)
+Drone 3
+drone3 / drone3
+3
+3
+Mevcut çiftten Load Settings ile okunacak
+Drone 4
+drone4 / drone4
+4
+4
+Mevcut çiftten Load Settings ile okunacak
+KAYIT KURALI  Diğer üç SiK çiftinin Net ID’leri hatırlanmıyorsa rastgele değiştirilmez. Her çift tek başına açılır, SiK Radio → Load Settings ile Local ve Remote değerleri okunur ve etiketlenir. Drone2’nin Local/Remote Net ID değeri 40’tır.
+3.1 Kimliklerin görevleri
+Kimlik
+Katman
+Görev
+hostname
+Ağ/mDNS
+Tarayıcıdan drone1.local, drone2.local gibi erişim
+NODE_ID
+Python/TDMA
+LoRa paket başlığı ve 4 saniyelik çevrimde gönderim slotu
+SYSID_THISMAV
+MAVLink
+Mission Planner’ın araçları ayırması
+Net ID
+SiK radyo
+Yer ve hava SiK modülünün aynı mantıksal ağa katılması
+COM port
+Windows
+Mission Planner veya RealTerm’in doğru USB cihazını açması
+Şekil 3. Kimliklerin farklı katmanlarda kullanımı ve Mission Planner çoklu COM bağlantısı.
+4. Donanım, Bağlantı ve Güç Mimarisi
+Şekil 4. Raspberry Pi RF düğümü için önerilen güç ve veri bağlantısı.
+4.1 Drone RF düğümü bağlantı tablosu
+Kaynak
+Hedef
+Açıklama
+Pi Zero USB/DATA
+Harici beslemeli USB hub veri girişi
+OTG/data adaptörü üzerinden
+USB hub portu 1
+RTL-SDR
+Yüksek hızlı USB örnekleme cihazı
+USB hub portu 2
+CH340 USB-UART
+E22 LoRa seri arayüzü
+CH340 TXD
+E22 RXD
+Çapraz seri bağlantı
+CH340 RXD
+E22 TXD
+Çapraz seri bağlantı
+CH340 GND
+E22 GND
+Ortak referans
+5 V regülatör/BEC
+Pi PWR IN
+Kararlı 5 V besleme
+5 V regülatör/BEC
+USB hub harici power girişi
+SDR ve CH340 yükünü Pi portundan ayırır
+5 V regülatör/BEC
+E22 VCC
+CH340 5 V pininden besleme yapılmaz
+E22 M0 ve M1
+GND
+Normal şeffaf iletim modu
+4.2 Pixhawk ve uçuş telemetrisi
+Bağlantı
+Hedef
+SiK hava modülü
+Pixhawk TELEM1
+FlySky alıcı PPM/CH1 çıkışı
+Pixhawk RCIN Signal
+FlySky alıcı +5 V / GND
+Pixhawk RCIN +5 V / GND
+GPS/Compass modülü
+GPS ve I2C/uygun compass portu
+ESC sinyal kabloları
+Pixhawk MAIN OUT 1–4, Quad X motor eşlemesine göre
+4.3 Güç kararlılığı ve USB çökmesini önleme
+Pi, hub, SDR ve E22 toplam akımının tepe yükünü karşılayacak regülatör seçilir; uçuşta kablo düşümü dahil 5 V hattı ölçülür.
+Pasif hub yalnızca kısa masa testi için kabul edilir. Uçuş konfigürasyonunda harici beslemeli hub tercih edilir.
+USB hub, OTG adaptörü ve ağır RTL-SDR gövdesi mekanik olarak sabitlenir; titreşim altında konektör yük taşımamalıdır.
+Pi’nin PWR IN portu ve USB/DATA portu karıştırılmaz.
+Her RF modülünün anteni gövdeden ve diğer 900 MHz antenlerden mümkün olduğunca ayrılır.
+FİZİKSEL KATMAN  “lsusb” içinde hub, CH340 veya RTL-SDR görünmüyorsa Python kodu cihazı geri getiremez. Önce güç, OTG/data kablosu, hub ve fiziksel bağlantı düzeltilir.
+5. Raspberry Pi Zero Sıfırdan Kurulum
+Bu bölüm Raspberry Pi OS’un temiz kurulduğu bir DroneN düğümünü uçuş sistemine hazırlar. Drone2 iç rehberindeki paket, Cockpit, izin, host mode ve servis yaklaşımı temel alınmıştır [1]. Komutlarda N yerine 1–4 yazılır.
+5.1 İmaj, kullanıcı ve hostname
+1. Raspberry Pi Imager ile güncel Raspberry Pi OS Lite 64-bit imajını karta yazın.
+2. Kullanıcı adını drone1, drone2, drone3 veya drone4 olarak belirleyin.
+3. Hostname’i aynı biçimde ayarlayın; Wi‑Fi SSID ve parolasını imaj aşamasında ekleyin.
+4. İlk açılıştan sonra tarih/saat ve ülke ayarını doğrulayın.
+sudo hostnamectl set-hostname droneN
+sudo timedatectl set-timezone Europe/Istanbul
+sudo timedatectl set-ntp true
+timedatectl status
+5.2 Temel paketler
+sudo apt update
+sudo apt upgrade -y
+sudo apt install -y git python3 python3-pip python3-dev build-essential \
+  rtl-sdr librtlsdr-dev libusb-1.0-0-dev cockpit nano wget usbutils \
+  avahi-daemon
+SÜRÜM YÖNETİMİ  Çalışan uçuş imajında büyük sistem güncellemesini saha gününden hemen önce yapmayın. Önce SD kart imaj yedeği alın, güncellemeyi bir düğümde doğrulayın, sonra diğerlerine yayın.
+5.3 Kullanıcı izinleri
+sudo usermod -aG dialout,plugdev droneN
+sudo reboot
+dialout grubu /dev/ttyUSB* seri portları için, plugdev ise takılabilir cihaz erişimleri için kullanılır. Grup değişikliği yeni oturum veya reboot sonrasında etkili olur.
+5.4 Cockpit kurulumu ve erişim
+sudo systemctl enable --now cockpit.socket
+sudo systemctl status cockpit.socket --no-pager
+hostname -I
+Cockpit resmi olarak systemd socket activation ile çalışır ve web arayüzü varsayılan olarak 9090 portundan açılır [2][3]. Tarayıcı adresleri:
+https://droneN.local:9090
+# veya
+https://<Raspberry_IP>:9090
+Tarayıcı sertifika uyarısında Gelişmiş → Devam et seçilir; yerel self-signed sertifika nedeniyle bu beklenebilir.
+Kullanıcı adı ve Raspberry Pi parolasıyla giriş yapılır.
+Her drone için ayrı tarayıcı sekmesi açılabilir.
+.local adı çözülmüyorsa hostname -I ile IP alınır ve IP:9090 kullanılır.
+# Windows PowerShell
+Test-NetConnection droneN.local -Port 9090
+# veya
+Test-NetConnection <Raspberry_IP> -Port 9090
+6. USB Host, RTL-SDR ve Seri Port Altyapısı
+6.1 Pi Zero USB host modu
+Pi Zero’nun OTG denetleyicisi host olarak zorlanır. Raspberry Pi dokümantasyonu OTG/host işlevinin config.txt üzerinden overlay parametreleriyle yapılandırıldığını açıklar [4].
+ls /boot/firmware/config.txt /boot/config.txt 2>/dev/null
+sudo nano /boot/firmware/config.txt
+# dosyanın sonuna ekle:
+dtoverlay=dwc2,dr_mode=host
+sudo reboot
+grep -n "dwc2" /boot/firmware/config.txt 2>/dev/null || \
+  grep -n "dwc2" /boot/config.txt
+6.2 RTL-SDR kernel sürücü çakışmasını engelleme
+sudo tee /etc/modprobe.d/blacklist-rtl-sdr.conf > /dev/null <<'EOF'
+blacklist dvb_usb_rtl28xxu
+blacklist rtl2832
+blacklist rtl2830
+EOF
+sudo modprobe -r dvb_usb_rtl28xxu rtl2832 rtl2830 2>/dev/null || true
+sudo reboot
+6.3 Donanım doğrulama
+lsusb
+python3 -m serial.tools.list_ports -v
+ls -l /dev/ttyUSB* /dev/ttyACM* 2>/dev/null || true
+Beklenen cihaz
+USB kimliği / çıktı
+USB hub
+USB2.0 HUB; sahada görülen örnekler 214b:7260 ve 2148:7022
+CH340
+1a86:7523 QinHeng Electronics CH340 serial converter
+RTL-SDR
+0bda:2838 Realtek RTL2838 DVB-T
+Seri port
+/dev/ttyUSB0; USB resetinden sonra /dev/ttyUSB1 olabilir
+6.4 RTL-SDR bağımsız testi
+sudo systemctl stop locnode.service
+sudo pkill -f Check1.py
+timeout 300 rtl_test -s 2048000
+Sağlıklı testte R820T/Rafael Micro tuner bulunur, 2.048 MS/s örnekleme başlar ve “Samples per million lost (minimum): 0” benzeri sonuç alınabilir. `timeout` nedeniyle Exit 124 oluşması test süresinin dolduğunu gösterir; tek başına arıza değildir.
+TEST YORUMU  R820T tuner üzerinde `rtl_test -t` komutunun “No E4000 tuner found” demesi doğru test seçilmediği için görülebilir. Sürekli okuma testi için `rtl_test -s 2048000` kullanın.
+6.5 Saat senkronizasyonu
+Absolute-time TDMA, her Pi’nin `time.time()` değerini ortak referans kabul eder. Bu nedenle uçuş öncesi saatler senkron olmalıdır.
+timedatectl status
+timedatectl timesync-status 2>/dev/null || true
+date '+%s.%N'
+Her dört Pi’de NTP aktif ve “System clock synchronized: yes” görülmelidir.
+Ağsız uçuş öncesinde sistemler aynı ağda açılıp senkron olduktan sonra sahaya alınmalıdır.
+Uzun süreli ve hassas saha kullanımı için yerel NTP sunucusu veya GPS/PPS zaman kaynağı planlanmalıdır.
+7. Check1.py Algoritması ve TDMA Zamanlama
+7.1 Konfigürasyon özeti
+Parametre
+Mevcut değer
+Görev
+NODE_ID
+Drone’a göre 1–4
+Paket kimliği ve TDMA slotu
+TOTAL_NODES
+4
+Toplam slot sayısı
+SLOT_DURATION
+1.0 s
+Her aracın nominal zaman alanı
+CYCLE_DURATION
+4.0 s
+Tam TDMA çevrimi
+LORA_BAUD
+9600
+CH340/E22 UART hızı
+SDR_FREQ
+446.450e6 Hz
+RTL-SDR merkez frekansı
+SDR_SAMPLE_RATE
+2.048e6 S/s
+IQ örnekleme hızı
+SDR gain
+auto
+Son stabil testte kullanılan AGC davranışı
+Şekil 5. NODE_ID’ye göre hedef TX zamanları.
+7.2 Paket formatı
+N<NODE_ID>,<RSSI>\n
+Örnek: N1,-22\n
+`TX -> N1,-22` logu yalnızca Python’ın seri porta yazma işlemini tamamladığını gösterir. E22’nin RF üzerinden yayın yaptığını ve yer tarafının paketi aldığını tek başına kanıtlamaz.
+7.3 RSSI değerinin mühendislik anlamı
+ÖLÇÜM SINIRI  Kodun `10*log10(mean(|samples|²))` hesabı kalibrasyon katsayısı, empedans ve alıcı kazancı düzeltmesi içermediğinden mutlak dBm ölçümü değildir. Çıktı göreli RSSI/dBFS-benzeri bir indeks olarak kullanılmalıdır. Mutlak güç veya mesafe modelinde her SDR için laboratuvar kalibrasyonu gerekir.
+Auto gain sabit sahnede bile değerin değişmesine yol açabilir; karşılaştırmalı lokalizasyonda tüm düğümlerin aynı davranışta olması önemlidir.
+Multipath, anten yönü, insan hareketi, gövde gölgelemesi ve yakın alan RF vericileri RSSI’yi değiştirir.
+Aynı konumda iki farklı seviye görülürse TDMA çift gönderim, AGC ve çevresel RF birlikte incelenir.
+7.4 Absolute-time TDMA işleyişi
+1. Unix sistem saati 4 saniyelik çevrimlere bölünür.
+2. NODE_ID=1 için hedef çevrim+0.20 s, NODE_ID=2 için +1.20 s, NODE_ID=3 için +2.20 s, NODE_ID=4 için +3.20 s hesaplanır.
+3. Hedef zaman geçmişse sonraki çevrime geçilir.
+4. Uzun bekleme `sleep` ile yapılır; son 20 ms daha küçük aralıklarla beklenir.
+5. `last_tx_cycle` aynı çevrimde ikinci TX’i engeller.
+7.5 Bilinen yazılım davranışları ve geliştirme notları
+Konu
+Mevcut davranış
+Etki / öneri
+SDR açılış hatası
+connect_sdr sonsuz retry döngüsüne girer
+SDR yoksa LoRa/TDMA başlangıcı da bekler. Üretim sertleştirmesinde non-blocking retry değerlendirilmeli.
+SDR çalışma hatası
+reconnect_sdr çağrısı bloklayabilir
+USB bus çöktüğünde servis “Starting/Retrying” durumunda kalabilir. Önce fiziksel USB hattı düzeltilir.
+Seri port seçimi
+İlk uygun USB serial port açılır
+Tek CH340 varsa uygundur. Ek USB serial cihazında VID/PID filtreleme veya udev symlink önerilir.
+Saat değişimi
+time.time NTP düzeltmesinden etkilenir
+Uçuş öncesi senkron tamamlanmalı; uçuş sırasında büyük saat adımı olmamalı.
+RSSI adı
+Değişken `dbm` olarak adlandırılmış
+Kalibrasyonsuz değer mutlak dBm değildir.
+8. systemd Otomatik Başlatma ve USB Rescan
+systemd servis birimleri süreçleri başlatır, izler ve hata sonrası yeniden başlatabilir [5]. Bu projede locnode.service, USB cihazlarının boot sırasında geç gelmesini bekler ve Check1.py’yi otomatik çalıştırır.
+8.1 Dosya yolları
+Öğe
+Yol
+Python uygulaması
+/home/droneN/Desktop/tubitak35012026/Check1.py
+Servis birimi
+/etc/systemd/system/locnode.service
+USB rescan scripti
+/usr/local/bin/usb_hub_rescan.sh
+Canlı log
+journalctl -u locnode.service -f -o cat
+8.2 Servis yönetimi
+sudo systemctl daemon-reload
+sudo systemctl enable locnode.service
+sudo systemctl reset-failed locnode.service
+sudo systemctl restart locnode.service
+sudo systemctl status locnode.service --no-pager
+# canlı log
+sudo journalctl -u locnode.service -f -o cat
+ 
+# son boot
+sudo journalctl -u locnode.service -b -n 200 -l --no-pager
+8.3 Manuel test ile servis çakışmasını önleme
+sudo systemctl stop locnode.service
+sudo pkill -f Check1.py
+sudo pkill -f rtl_test
+pgrep -af "Check1|rtl_test"
+Aynı RTL-SDR veya CH340 aynı anda hem manuel Python süreci hem systemd servisi tarafından açılamaz. Test bitiminde manuel süreç kapatılmadan servis başlatılmaz.
+9. Cockpit ile Uzaktan Yönetim
+9.1 Tarayıcıdan erişim
+Drone
+Adres
+Drone 1
+https://drone1.local:9090
+Drone 2
+https://drone2.local:9090
+Drone 3
+https://drone3.local:9090
+Drone 4
+https://drone4.local:9090
+Her adresi ayrı sekmede açın; Cockpit terminali bir sekmede journal, diğerinde dmesg için kullanılabilir.
+İkinci terminal gerekirse aynı Cockpit URL’sini yeni tarayıcı sekmesinde açın.
+Wi‑Fi ağı SSH’yi engellese bile 9090 açık ise Cockpit kullanılabilir.
+Cockpit terminalinde görülen `cockpit-bridge` Python süreçleri normaldir ve kapatılmaz.
+9.2 Günlük operasyon komutları
+hostname
+hostname -I
+lsusb
+python3 -m serial.tools.list_ports -v
+sudo systemctl status locnode.service --no-pager
+sudo journalctl -u locnode.service -f -o cat
+9.3 Kaynak kullanımı
+top
+free -h
+vcgencmd get_throttled 2>/dev/null || true
+df -h
+KAYNAK VE GÜÇ  Cockpit erişimi servis başladığında kopuyorsa önce `dmesg` içindeki USB disconnect/under-voltage kayıtlarını ve güç hattını kontrol edin. Python döngüsü USB bus’ı fiziksel olarak yeniden enumerate edemez.
+10. LoRa ve RealTerm Yer İstasyonu Kullanımı
+10.1 RealTerm ayarları
+Ayar
+Değer
+Port
+Windows Aygıt Yöneticisi’nde yer CH340’a karşılık gelen COM numarası
+Baud
+9600
+Data bits
+8
+Parity
+None
+Stop bits
+1
+Flow control
+None
+Display
+ASCII
+RealTerm USB serial portları COM numarasıyla açar; baud ve port ayarları Port sekmesinden seçilir [14]. Port seçildikten sonra Change/Open uygulanır. “Char Count: 0” ve CPS:0 devam ediyorsa doğru COM’un açık olduğu doğrulanır.
+BAUD KARIŞIKLIĞI  Mission Planner 57600 ve RealTerm 9600 aynı bağlantının iki farklı ayarı değildir. Mission Planner SiK/MAVLink hattını, RealTerm ise E22/CH340 RSSI hattını kullanır.
+10.2 Drone tarafında manuel LoRa testi
+sudo systemctl stop locnode.service
+sudo pkill -f Check1.py
+python3 - <<'PY'
+import time
+import serial
+import serial.tools.list_ports
+port = None
+for item in serial.tools.list_ports.comports():
+    if 'VID:PID=1A86:7523' in (item.hwid or '').upper():
+        port = item.device
+        break
+if port is None:
+    raise SystemExit('ERROR: CH340 not found.')
+print('CH340 port:', port)
+with serial.Serial(port, 9600, timeout=1) as ser:
+    for i in range(30):
+        payload = f'N1,MANUAL,{i}\r\n'
+        ser.write(payload.encode('ascii'))
+        ser.flush()
+        print('SENT:', payload.strip())
+        time.sleep(1)
+PY
+10.3 Sonuçların yorumlanması
+Durum
+Yorum / sonraki adım
+Python “SENT” yazıyor, RealTerm boş
+Seri yazma tamam; E22 bağlantısı, M0/M1, RF kanal/air rate, yer modülü, COM ve RealTerm Open durumu kontrol edilir.
+/dev/ttyUSB0 yok, /dev/ttyUSB1 var
+USB resetinden sonra isim değişmiştir. Kod otomatik tarar; manuel test gerçek portu kullanmalıdır.
+CH340 lsusb içinde yok
+Hub/güç/data fiziksel sorunu; Python testi yapılmaz.
+Tek drone çalışıyor, dört drone’da kayıp var
+E22 RF çakışması, kanal planı, TDMA saat senkronu ve SiK/E22 spektrum birlikte çalışması incelenir.
+10.4 E22 normal mod bağlantı kontrolü
+M0=GND ve M1=GND; pinler boşta bırakılmaz.
+CH340 TXD → E22 RXD, CH340 RXD ← E22 TXD ve ortak GND.
+Drone ve yer E22 modüllerinde UART baud, RF kanal, air data rate ve transmission mode aynı olmalıdır.
+Her iki modülde uygun anten takılı olmalıdır.
+E22 VCC kararlı regülatörden beslenir; CH340 5 V pini kullanılmaz.
+11. Pixhawk, ArduPilot ve Mission Planner Kurulumu
+Mission Planner, ArduPilot araçlarını yapılandırmak ve telemetriyle izlemek için kullanılan Windows yer kontrol yazılımıdır [6]. Kullanılan araçta ArduCopter 3.6.7/fmuv3 görülmüştür; menü ve parametre isimleri yeni sürümlerden farklı olabilir.
+11.1 USB ve telemetri bağlantısı
+Bağlantı
+Mission Planner ayarı
+Pixhawk doğrudan USB
+Pixhawk’ın COM portu; baud çoğunlukla otomatik/115200
+SiK yer modülü
+SiK USB COM portu; 57600
+11.2 Frame ayarı - Quad X
+SETUP → Mandatory Hardware → Frame Type
+Frame Class: Quad
+Frame Type: X
+Parametre
+Değer
+FRAME_CLASS
+1 (Quad)
+FRAME_TYPE
+1 (X)
+Doğru seçimden sonra açılış mesajı “Frame: QUAD”, Motor Test ekranı “Class: Quad / Type: X” göstermeli ve yalnızca A–D motorları listelenmelidir [12].
+11.3 Safety switch davranışı
+Parametre
+Mevcut eski sürüm anlamı
+BRD_SAFETYENABLE
+0: başlangıçta fiziksel safety switch basışı beklenmez; 1: safety aktif başlar
+Write Params sonrası kartın USB ve batarya gücü tamamen kesilip yeniden açılır.
+Bu parametre aracı otomatik arm etmez.
+PreArm mesajları RC, compass, frame veya failsafe sorunlarını ayrıca gösterebilir.
+BRD_SAFETYOPTION ve BRD_SAFETY_MASK, yalnızca bu problemi çözmek için değiştirilmez.
+11.4 Zorunlu kalibrasyon sırası
+1. Frame Class=Quad ve Frame Type=X doğrulanır.
+2. Accelerometer calibration düz ve titreşimsiz yüzeyde tamamlanır.
+3. Compass calibration metal masa, güç kaynağı ve güçlü mıknatıslardan uzakta yapılır.
+4. Radio Calibration ile CH1–CH4 minimum, maksimum ve merkez değerleri kaydedilir.
+5. ESC calibration yalnızca kullanılan ESC tipinin prosedürü doğrulandıktan ve pervaneler söküldükten sonra yapılır.
+6. Motor Test ile A–D motor konumu ve dönüş yönü kontrol edilir.
+11.5 PreArm mesajlarının okunması
+Mesaj
+Anlam / düzeltme
+RC Roll/Pitch/Throttle/Yaw not configured
+RC sinyali görünmüyor veya radio calibration yapılmamış
+Throttle below Failsafe
+Throttle PWM, FS_THR_VALUE altında; önce RC bağlantısı ve kalibrasyon
+Compass not calibrated
+Etkin pusula(lar) kalibre edilmemiş
+check firmware or FRAME_CLASS
+Frame sınıfı tanımsız/uyumsuz
+Motor Test: RC not calibrated
+Eski firmware motor testinden önce RC calibration istiyor
+Pre-arm kontrolleri arming başarısızlığının gerçek nedenini GCS mesajlarıyla bildirir [13]. Kontrolleri kapatmak yerine mesajın kaynağı düzeltilir.
+12. FlySky RC Alıcısı, PPM ve Radio Calibration
+12.1 Bind ile RCIN aynı şey değildir
+Kumanda ekranında RX sinyalinin %100 görünmesi yalnızca transmitter ile receiver’ın bind olduğunu gösterir. Mission Planner’ın kanalları görmesi için alıcının birleşik RC çıkışının Pixhawk RCIN portuna ulaşması gerekir.
+12.2 FlySky output mode
+FlySky System Setup / RX Setup
+Output mode: PPM
+Serial: i-BUS (PPM kullanılıyorsa ayrı seri seçiminin RCIN’e etkisi yoktur)
+PPM seçimi kaydedilir ve kumanda/alıcı yeniden başlatılır.
+Alıcının PPM/CH1 portu üç telli kabloyla Pixhawk RCIN’e bağlanır.
+Signal, +5 V ve GND yönü alıcı ve Pixhawk üzerindeki işaretlerden doğrulanır.
+Normal tek kanal PWM çıkışı, RCIN’e tek kabloyla dört kanalı taşımaz. PPM/SBus/i-BUS gibi birleşik protokol gerekir [11].
+12.3 Mission Planner sinyal doğrulama
+DATA → Status
+ch1in, ch2in, ch3in, ch4in değerlerini izle
+Stick durumu
+Beklenen PWM
+Minimum
+Yaklaşık 1000 µs
+Merkez
+Yaklaşık 1500 µs
+Maksimum
+Yaklaşık 2000 µs
+Gözlem
+Teşhis
+ch1in–ch4in hiç değişmiyor
+PPM kapalı, yanlış receiver portu, ters kablo veya RCIN sinyal yok
+Yalnızca ch1in değişiyor
+Alıcı normal PWM CH1 veriyor; PPM etkin değil
+Dört kanal değişiyor
+Fiziksel bağlantı doğru; Radio Calibration yapılabilir
+12.4 Radio Calibration
+1. Pervaneleri sökün ve kumandayı açın.
+2. SETUP → Mandatory Hardware → Radio Calibration ekranına girin.
+3. Calibrate Radio düğmesine basın.
+4. İki sticki tüm uçlara götürün; tüm switch ve knobları bütün konumlara alın.
+5. Kalibrasyonu bitirin ve kartı yeniden başlatın.
+6. CH1=Roll, CH2=Pitch, CH3=Throttle, CH4=Yaw eşlemesini doğrulayın [10].
+13. SiK Telemetri Çiftleri ve Çoklu Araç Bağlantısı
+13.1 Tek çiftin yapılandırılması
+1. Sadece ayarlanacak yer ve hava SiK modülünü açın; diğer çiftleri kapatın.
+2. Hava modülünü Pixhawk TELEM1’e, yer modülünü bilgisayar USB’sine bağlayın; antenleri takın.
+3. Mission Planner’da doğru COM ve 57600 baud seçin; CONNECT’e basmayın.
+4. SETUP → Optional Hardware → SiK Radio → Load Settings.
+5. Local ve Remote alanlarının dolduğunu doğrulayın.
+6. Çift için benzersiz Net ID girin; Drone2 için Local=40 ve Remote=40 doğrulanmıştır.
+7. Copy Required to Remote ve Save Settings uygulayın.
+8. Gücü tamamen kesip yeniden açın; tekrar Load Settings ile kalıcılığı doğrulayın [8].
+Ayar
+Kural
+Net ID
+Aynı çiftin Local/Remote uçlarında aynı; diğer çiftlerden farklı
+Baud
+57600
+Air Speed
+Çalışan çiftlerle aynı; ekranda 64 kullanıldı
+ECC
+İki uçta aynı
+MAVLink
+İki uçta aynı
+Min/Max Frequency ve # Channels
+İki uçta aynı; ülke mevzuatı ve RF planına uygun
+DOĞRULAMA  Net ID değiştirirken yalnızca Local kutusunu düzenleyip Save Settings demek yerine Remote değerini de doğrulayın. Güç çevriminden sonra Load Settings ile Local/Remote aynı değerde kalmalıdır.
+13.2 Pixhawk MAVLink kimliği
+CONFIG → Full Parameter List
+SYSID_THISMAV = 1 / 2 / 3 / 4
+Write Params → güç döngüsü → Refresh Params
+KİMLİKLER  SYSID_THISMAV ile SiK Net ID farklı katmanlardır. Drone2 için SYSID_THISMAV=2 ve SiK Net ID=40 birlikte kullanılabilir.
+13.3 TELEM1 seri parametreleri
+Parametre
+Değer
+SERIAL1_PROTOCOL
+1 (MAVLink1, eski sürüm)
+SERIAL1_BAUD
+57 (57600)
+TELEM2 kullanılıyorsa aynı mantık SERIAL2_* parametrelerine uygulanır. Hava radyo LED’i karanlıksa seri parametreden önce TELEM portu güç/kablo bağlantısı kontrol edilir.
+13.4 Dört aracı Mission Planner’a ekleme
+1. Dört yer SiK modülünü kaliteli ve tercihen harici beslemeli USB hub’a bağlayın.
+2. Windows Aygıt Yöneticisi’nde her COM portunu fiziksel çift etiketiyle eşleyin.
+3. İlk araç için COM + 57600 seçip normal CONNECT yapın.
+4. CONNECT düğmesine sağ tıklayın, Connection Options ile ikinci COM’u ekleyin.
+5. Aynı işlemi üçüncü ve dördüncü araç için tekrarlayın [6].
+6. Her yeni bağlantının parametre yüklemesi için bekleyin; hızlı art arda Connect basmayın.
+7. Haritada ve araç listesinde SYSID 1–4 araçlarını doğrulayın.
+Şekil 6. Dört ayrı seri bağlantının tek Mission Planner oturumuna eklenmesi.
+14. Normal İşletim ve Saha Açılış Sırası
+14.1 Laboratuvar açılış sırası
+1. Pervaneleri sökün; tüm antenleri takın.
+2. Harici 5 V güç mimarisini ve ortak GND’yi kontrol edin.
+3. Yer istasyonu bilgisayarını açın; RealTerm ve Mission Planner’ı hazırlayın.
+4. Pi düğümlerini Wi‑Fi ağına bağlayıp saat senkronunu doğrulayın.
+5. Her drone’a güç verin; locnode.service için 60–120 saniye bekleyin.
+6. Cockpit üzerinden lsusb ve journalctl ile CH340, RTL-SDR ve TX logunu doğrulayın.
+7. RealTerm’de dört NODE_ID paket sırasını gözleyin.
+8. SiK çiftlerinin yeşil link LED’lerini ve Mission Planner araç listesini kontrol edin.
+9. RC kalibrasyonu, flight mode ve PreArm mesajlarını doğrulayın.
+14.2 Uçuş sahası açılış sırası
+1. Drone bataryaları, pervaneler, RF antenleri, kablo sabitlemeleri ve mekanik bütünlüğü kontrol edin.
+2. Yer istasyonu USB hub’ını ve dört SiK yer modülünü açın.
+3. Drone’ları belirlenmiş sırayla açın; ancak TDMA başlangıç sırasına bağlı değildir.
+4. Pi saatlerinin daha önce senkron olduğunu ve RTC/NTP driftinin kabul edilebilir olduğunu doğrulayın.
+5. Mission Planner’da araç kimliklerini ve GPS/compass/RC değerlerini kontrol edin.
+6. RSSI paketlerinin N1→N2→N3→N4 düzeninde ve yaklaşık dört saniyede bir geldiğini kontrol edin.
+7. Pervaneler takıldıktan sonra yalnızca güvenli uçuş alanında arm işlemi yapılır.
+14.3 Beklenen sağlıklı log
+LoRa connected on /dev/ttyUSB0
+Found Rafael Micro R820T tuner
+RTL-SDR connected and configured.
+Localization Node 1 armed.
+ABSOLUTE-TIME TDMA Started. Cycle: 4.0s
+TX -> N1,-22
+# yaklaşık 4 saniye sonra
+TX -> N1,-21
+15. Sorun Giderme Karar Tabloları
+15.1 Cockpit erişilemiyor
+Kontrol
+Komut / çözüm
+Pi IP almış mı?
+hostname -I
+Cockpit socket aktif mi?
+sudo systemctl status cockpit.socket
+Port açık mı?
+Windows: Test-NetConnection <IP> -Port 9090
+.local çözülmüyor
+IP:9090 kullan; avahi-daemon ve hostname kontrol et
+Servis çalışınca ağ kopuyor
+Güç düşümü, USB reset, CPU/sıcaklık ve dmesg kontrolü
+15.2 USB/hub/CH340/RTL-SDR
+Belirti
+Teşhis
+İşlem
+lsusb yalnızca Linux root hub
+Pi harici hub’ı görmüyor
+OTG data portu, host mode, hub, kablo ve güç
+Hub var, CH340 yok
+Seri adaptör düşmüş
+Başka port, güç, ch341 sürücüsü, dmesg
+CH340 var, ttyUSB0 yok ama ttyUSB1 var
+USB resetinden sonra port numarası değişmiş
+Otomatik port taraması veya gerçek tty adı
+RTL-SDR var, LIBUSB_ERROR_IO
+Cihaz enumerate olmuş ama veri/control transferi bozuk
+Servisi durdur, çıkar-tak, rtl_test, güç/hub
+USB disconnect / error -71 / -19
+Fiziksel bus reset veya bağlantı kaybı
+Harici beslemeli hub, OTG/data kablosu, mekanik sabitleme
+urb stopped: -32
+Seri URB durdu; kapanma/reset sırasında görülebilir
+Eşlik eden disconnect ve cihaz kaybına göre yorumla
+sudo dmesg -wH | egrep -i "usb|rtl|dvb|disconnect|reset|error|ch34|ttyUSB|under-voltage|voltage"
+15.3 Servis “Starting” durumunda kalıyor
+ExecStartPre sleep/rescan sürüyor olabilir; 60–120 saniye bekleyin.
+Check1.py `connect_sdr()` içinde cihazı açana kadar tekrar deneyebilir.
+`journalctl -u locnode.service -f -o cat` ile hangi aşamada olduğunu görün.
+SDR fiziksel olarak yoksa mevcut kod LoRa gönderimine geçmez; bu bilinen davranıştır.
+15.4 Journal’da TX var, RealTerm boş
+1. RealTerm’in doğru COM portunda gerçekten Open olduğunu doğrulayın.
+2. 9600, 8N1 ve flow control None ayarını doğrulayın.
+3. Yer E22 TXD → USB-TTL RXD bağlantısını kontrol edin.
+4. Drone CH340 TXD → E22 RXD bağlantısını kontrol edin.
+5. M0/M1’in GND olduğunu ve iki E22’nin RF ayarlarının aynı olduğunu doğrulayın.
+6. Manuel 30 paket testini çalıştırın.
+7. Diğer drone vericilerini kapatıp tek çift test edin.
+15.5 Mission Planner telemetri bağlanmıyor
+Belirti
+Kontrol
+Yer SiK yeşil yanıp sönüyor
+Hava modülü güç alıyor mu, anten, Local/Remote Net ID ve frekans ayarları
+Yeşil sabit, MP bağlanmıyor
+Doğru COM, 57600, SERIAL1_PROTOCOL/BAUD
+Load Settings Local dolu, Remote boş
+RF link yok; hava modülü güç/anten/ayar
+Bir araç geliyor, diğerleri gelmiyor
+Her COM ayrı bağlantı; benzersiz SYSID; Net ID ve USB hub
+15.6 RC görünmüyor ve motor test reddediliyor
+FlySky Output Mode=PPM kaydedilmiş mi?
+Alıcı PPM/CH1 üç telli kabloyla RCIN’e doğru yönde bağlı mı?
+DATA→Status ch1in–ch4in değişiyor mu?
+Radio Calibration tamamlandı mı?
+Frame: QUAD / Type: X doğru mu?
+Motor testi pervaneler sökülü ve kart disarmed iken mi yapılıyor?
+16. Uçuş Öncesi ve Uçuş Sonrası Kontrol Listeleri
+16.1 Uçuş öncesi - RF düğümü
+Kontrol
+Tamam
+Pi, hub, SDR, CH340 ve E22 mekanik olarak sabit
+☐
+Antenler takılı ve fiziksel olarak ayrılmış
+☐
+5 V hat yük altında ölçüldü
+☐
+lsusb: hub + CH340 + RTL-SDR
+☐
+locnode.service active/running
+☐
+Her drone yaklaşık 4 saniyede bir tek TX
+☐
+N1/N2/N3/N4 NODE_ID benzersiz
+☐
+Pi saatleri senkron
+☐
+RealTerm doğru COM/9600/8N1/Open
+☐
+16.2 Uçuş öncesi - Pixhawk/RC/telemetri
+Kontrol
+Tamam
+Frame Class=Quad, Type=X
+☐
+SYSID_THISMAV benzersiz
+☐
+SiK çift Local/Remote Net ID eşleşiyor
+☐
+Mission Planner dört aracı görüyor
+☐
+RC ch1in–ch4in hareket ediyor
+☐
+Radio calibration ve flight mode switchleri doğrulandı
+☐
+Compass/accelerometer kalibre
+☐
+PreArm kritik hata yok
+☐
+Motor yönü ve numarası pervanesiz test edildi
+☐
+LiPo hücreleri dengeli ve konektörler sağlam
+☐
+16.3 Uçuş sonrası
+Önce araçları disarm edin, ardından bataryaları ayırın.
+LiPo hücre voltajlarını ölçün; depolanacak bataryaları storage seviyesine alın.
+Mission Planner loglarını ve gerekirse Pi journal kayıtlarını yedekleyin.
+USB/hub konektörlerinde gevşeme, RF antenlerinde hasar ve kablolarda ısınma kontrolü yapın.
+Konfigürasyon değiştiyse kimlik tablosunu ve revizyon kaydını güncelleyin.
+Ek A. Drone İçinde Çalışan Tam Check1.py
+Aşağıdaki kod kullanıcının verdiği mevcut sürümdür. Her drone’da yalnızca NODE_ID değeri 1, 2, 3 veya 4 olarak değiştirilir. Dosya yolu: /home/droneN/Desktop/tubitak35012026/Check1.py
+import numpy as np
+import serial
+import serial.tools.list_ports
+import time
+import sys
+import signal
+import logging
+from rtlsdr import RtlSdr
+ 
+# --- SWARM CONFIGURATION ---
+NODE_ID = 1
+TOTAL_NODES = 4
+SLOT_DURATION = 1.0
+CYCLE_DURATION = TOTAL_NODES * SLOT_DURATION
+ 
+LORA_BAUD = 9600
+SDR_FREQ = 446.450e6
+SDR_SAMPLE_RATE = 2.048e6
+ 
+# --- RETRY SETTINGS ---
+LORA_RETRY_DELAY = 2
+SDR_RETRY_DELAY = 3
+ 
+# --- LOGGING SETUP ---
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s"
+)
+ 
+ 
+class LocalizationNode:
+    def __init__(self):
+        self.node_id = NODE_ID
+        self.running = True
+        self.sdr = None
+        self.lora = None
+ 
+        signal.signal(signal.SIGINT, self.shutdown)
+        signal.signal(signal.SIGTERM, self.shutdown)
+ 
+        self.connect_hardware()
+ 
+    # -------------------------------------------------
+    # PORT SEARCH
+    # -------------------------------------------------
+    def list_serial_candidates(self):
+        """
+        Finds all possible serial ports.
+        This includes ttyUSB, ttyACM and USB-Serial adapters.
+        """
+        candidates = []
+        ports = list(serial.tools.list_ports.comports())
+ 
+        for port in ports:
+            device = port.device
+            desc = (port.description or "").upper()
+            hwid = (port.hwid or "").upper()
+ 
+            logging.info(f"Detected port: {device} | {desc} | {hwid}")
+ 
+            if (
+                "TTYUSB" in device.upper()
+                or "TTYACM" in device.upper()
+                or "USB" in desc
+                or "SERIAL" in desc
+                or "CH340" in desc
+                or "CP210" in desc
+                or "FTDI" in desc
+                or "UART" in desc
+            ):
+                candidates.append(device)
+ 
+        candidates = list(dict.fromkeys(candidates))
+        return candidates
+ 
+    def find_working_lora_port(self):
+        """
+        Tries every candidate port until one opens successfully.
+        """
+        candidates = self.list_serial_candidates()
+ 
+        if not candidates:
+            logging.warning("No serial port candidate found.")
+            return None
+ 
+        for device in candidates:
+            try:
+                logging.info(f"Trying LoRa port: {device}")
+                test = serial.Serial(device, LORA_BAUD, timeout=0.2)
+                test.close()
+                logging.info(f"Working LoRa port found: {device}")
+                return device
+            except Exception as e:
+                logging.warning(f"Port failed: {device} | {e}")
+ 
+        return None
+ 
+    # -------------------------------------------------
+    # HARDWARE CONNECT / RECONNECT
+    # -------------------------------------------------
+    def connect_lora(self):
+        """
+        Keeps trying until LoRa serial port is connected.
+        """
+        while self.running:
+            port = self.find_working_lora_port()
+ 
+            if not port:
+                logging.warning(f"No LoRa port available. Retrying in {LORA_RETRY_DELAY}s...")
+                time.sleep(LORA_RETRY_DELAY)
+                continue
+ 
+            try:
+                self.lora = serial.Serial(port, LORA_BAUD, timeout=0.1)
+                logging.info(f"LoRa connected on {port}")
+                return True
+            except Exception as e:
+                logging.warning(f"Could not open LoRa on {port}: {e}")
+                self.safe_close_lora()
+                time.sleep(LORA_RETRY_DELAY)
+ 
+        return False
+ 
+    def connect_sdr(self):
+        """
+        Keeps trying until RTL-SDR is connected.
+        """
+        while self.running:
+            try:
+                self.sdr = RtlSdr()
+                self.configure_sdr()
+                logging.info("RTL-SDR connected and configured.")
+                return True
+            except Exception as e:
+                logging.warning(f"SDR connection failed: {e}. Retrying in {SDR_RETRY_DELAY}s...")
+                self.safe_close_sdr()
+                time.sleep(SDR_RETRY_DELAY)
+ 
+        return False
+ 
+    def connect_hardware(self):
+        """
+        Connects both LoRa and SDR.
+        If one is missing at boot, it waits instead of crashing.
+        """
+        logging.info("Waiting for hardware...")
+ 
+        self.connect_lora()
+        self.connect_sdr()
+ 
+        logging.info(f"Localization Node {self.node_id} armed.")
+ 
+    def reconnect_lora(self):
+        """
+        Reconnects LoRa after write failure or USB reset.
+        """
+        logging.warning("Reconnecting LoRa...")
+        self.safe_close_lora()
+        return self.connect_lora()
+ 
+    def reconnect_sdr(self):
+        """
+        Reconnects SDR after read failure if needed.
+        """
+        logging.warning("Reconnecting SDR...")
+        self.safe_close_sdr()
+        return self.connect_sdr()
+ 
+    # -------------------------------------------------
+    # SDR
+    # -------------------------------------------------
+    def configure_sdr(self):
+        self.sdr.sample_rate = SDR_SAMPLE_RATE
+        self.sdr.center_freq = SDR_FREQ
+ 
+        # Şimdilik eski stabil davranışa döndürüldü.
+        # Fixed gain Pi/SDR tarafını zorlamış olabilir.
+        self.sdr.gain = "auto"
+ 
+    def get_filtered_rssi(self):
+        readings = []
+ 
+        try:
+            for _ in range(3):
+                _ = self.sdr.read_samples(256)
+                samples = self.sdr.read_samples(16384)
+ 
+                power = np.mean(np.abs(samples) ** 2)
+                dbm = 10 * np.log10(power + 1e-12)
+                readings.append(dbm)
+ 
+            return int(np.median(readings))
+ 
+        except Exception as e:
+            logging.error(f"SDR Read Error: {e}")
+            self.reconnect_sdr()
+            return -120
+ 
+    # -------------------------------------------------
+    # LORA TX
+    # -------------------------------------------------
+    def transmit(self, rssi):
+        payload = f"N{self.node_id},{rssi}\n"
+ 
+        for attempt in range(2):
+            try:
+                if self.lora is None or not self.lora.is_open:
+                    self.reconnect_lora()
+ 
+                self.lora.write(payload.encode("ascii"))
+                self.lora.flush()
+                logging.info(f"TX -> {payload.strip()}")
+                return True
+ 
+            except Exception as e:
+                logging.error(f"LoRa TX Failure: {e}")
+                self.reconnect_lora()
+ 
+        logging.error("LoRa TX failed after reconnect attempt.")
+        return False
+ 
+    # -------------------------------------------------
+    # SAFE CLOSE
+    # -------------------------------------------------
+    def safe_close_lora(self):
+        try:
+            if self.lora:
+                self.lora.close()
+        except Exception:
+            pass
+ 
+        self.lora = None
+ 
+    def safe_close_sdr(self):
+        try:
+            if self.sdr:
+                self.sdr.close()
+        except Exception:
+            pass
+ 
+        self.sdr = None
+ 
+    # -------------------------------------------------
+    # SHUTDOWN
+    # -------------------------------------------------
+    def shutdown(self, signum, frame):
+        logging.info("Initiating graceful teardown...")
+        self.running = False
+        self.safe_close_sdr()
+        self.safe_close_lora()
+        logging.info("Hardware released. Node disarmed.")
+        sys.exit(0)
+ 
+    # -------------------------------------------------
+    # MAIN LOOP
+    # -------------------------------------------------
+    def run(self):
+        """
+        Absolute-time TDMA.
+ 
+        Amaç:
+        - Drone'lar farklı zamanda açılsa bile sistem saatine göre slot bulsun.
+        - Her 4 saniyelik cycle içinde sadece 1 kez TX atsın.
+        - Pi Zero'yu yormamak için sürekli 0.02 sn loop dönmesin.
+        """
+ 
+        logging.info(f"ABSOLUTE-TIME TDMA Started. Cycle: {CYCLE_DURATION}s")
+ 
+        last_tx_cycle = -1
+ 
+        while self.running:
+            now = time.time()
+ 
+            slot_start = (self.node_id - 1) * SLOT_DURATION
+ 
+            # Slotun tam başında değil, biraz içinde gönderiyoruz.
+            # Örnek:
+            # N1 -> cycle + 0.20
+            # N2 -> cycle + 1.20
+            # N3 -> cycle + 2.20
+            # N4 -> cycle + 3.20
+            slot_tx_offset = slot_start + 0.20
+ 
+            current_cycle = int(now // CYCLE_DURATION)
+            target_time = (current_cycle * CYCLE_DURATION) + slot_tx_offset
+ 
+            # Eğer bu cycle'daki kendi zamanını kaçırdıysa bir sonraki cycle'a geç.
+            if now >= target_time:
+                current_cycle += 1
+                target_time = (current_cycle * CYCLE_DURATION) + slot_tx_offset
+ 
+            # Hedef zamana kadar büyük kısmı uyuyarak bekle.
+            sleep_time = target_time - time.time()
+ 
+            if sleep_time > 0.05:
+                time.sleep(sleep_time - 0.02)
+ 
+            # Son küçük kısmı hassas bekle.
+            while time.time() < target_time:
+                time.sleep(0.002)
+ 
+            cycle_index = int(time.time() // CYCLE_DURATION)
+ 
+            # Aynı cycle içinde ikinci kez TX atmayı engelle.
+            if cycle_index != last_tx_cycle:
+                rssi = self.get_filtered_rssi()
+                self.transmit(rssi)
+                last_tx_cycle = cycle_index
+ 
+            # CPU'yu rahatlat.
+            time.sleep(0.10)
+ 
+ 
+if __name__ == "__main__":
+    node = LocalizationNode()
+    node.run()
+Ek B. Servis ve Yardımcı Scriptler
+B.1 Python paket kurulumu
+python3 -m pip install --break-system-packages --ignore-installed --no-cache-dir \
+  numpy==2.4.4 packaging==26.2 pyserial==3.5 setuptools==69.5.1 \
+  wheel==0.47.0 pyrtlsdr==0.2.93
+python3 - <<'PY'
+import numpy
+import serial
+import serial.tools.list_ports
+from rtlsdr import RtlSdr
+print('Python libraries OK')
+PY
+B.2 USB hub rescan scripti
+Aşağıdaki sürüm projede görülmüş iki hub USB kimliğini destekler. Her iki cihaz zaten görünüyorsa reset yapmadan çıkar. Başarısız olsa bile exit 0 ile servisin kendi retry mantığına geçmesine izin verir.
+sudo nano /usr/local/bin/usb_hub_rescan.sh
+#!/bin/bash
+set +e
+ 
+echo "[USB-HUB-RESCAN] Starting robust USB hub rescan..."
+modprobe usbserial || true
+modprobe ch341 || true
+modprobe cp210x || true
+modprobe ftdi_sio || true
+ 
+LORA_VIDPID="1a86:7523"
+SDR_VIDPID="0bda:2838"
+KNOWN_HUBS=("214b:7260" "2148:7022")
+ 
+sleep 10
+ 
+for attempt in 1 2 3 4 5 6 7 8 9 10; do
+    echo "[USB-HUB-RESCAN] Attempt $attempt"
+    lsusb || true
+    ls -l /dev/ttyUSB* /dev/ttyACM* 2>/dev/null || true
+ 
+    if lsusb | grep -qi "$LORA_VIDPID" && lsusb | grep -qi "$SDR_VIDPID"; then
+        echo "[USB-HUB-RESCAN] SUCCESS: CH340 and RTL-SDR detected."
+        exit 0
+    fi
+ 
+    HUB_PATH=""
+    for dev in /sys/bus/usb/devices/*; do
+        [ -f "$dev/idVendor" ] || continue
+        [ -f "$dev/idProduct" ] || continue
+        VID=$(cat "$dev/idVendor")
+        PID=$(cat "$dev/idProduct")
+        for id in "${KNOWN_HUBS[@]}"; do
+            if [ "$VID:$PID" = "$id" ]; then
+                HUB_PATH="$dev"
+                break 2
+            fi
+        done
+    done
+ 
+    if [ -n "$HUB_PATH" ] && [ -f "$HUB_PATH/authorized" ]; then
+        echo "[USB-HUB-RESCAN] Resetting known hub at $HUB_PATH"
+        echo 0 > "$HUB_PATH/authorized"
+        sleep 3
+        echo 1 > "$HUB_PATH/authorized"
+        sleep 8
+    else
+        echo "[USB-HUB-RESCAN] Known hub not found; waiting."
+        sleep 8
+    fi
+done
+ 
+echo "[USB-HUB-RESCAN] WARNING: devices not detected after retries."
+exit 0
+sudo chmod +x /usr/local/bin/usb_hub_rescan.sh
+sudo /usr/local/bin/usb_hub_rescan.sh
+B.3 locnode.service
+sudo nano /etc/systemd/system/locnode.service
+[Unit]
+Description=UAV Localization Telemetry Node
+After=multi-user.target
+StartLimitIntervalSec=0
+ 
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/droneN/Desktop/tubitak35012026
+TimeoutStartSec=0
+ExecStartPre=/bin/sleep 60
+ExecStartPre=/usr/bin/udevadm settle --timeout=30
+ExecStartPre=/usr/local/bin/usb_hub_rescan.sh
+ExecStart=/usr/bin/python3 /home/droneN/Desktop/tubitak35012026/Check1.py
+Restart=always
+RestartSec=10
+Environment=PYTHONUNBUFFERED=1
+StandardOutput=journal
+StandardError=journal
+ 
+[Install]
+WantedBy=multi-user.target
+sudo systemctl daemon-reload
+sudo systemctl enable locnode.service
+sudo systemctl reset-failed locnode.service
+sudo systemctl restart locnode.service
+Ek C. Komut Hızlı Referansı
+Amaç
+Komut
+Cockpit durumu
+sudo systemctl status cockpit.socket --no-pager
+Servis canlı log
+sudo journalctl -u locnode.service -f -o cat
+Servisi durdur
+sudo systemctl stop locnode.service
+Servisi başlat
+sudo systemctl restart locnode.service
+USB liste
+lsusb
+Seri portlar
+python3 -m serial.tools.list_ports -v
+SDR test
+timeout 300 rtl_test -s 2048000
+USB canlı hata
+sudo dmesg -wH | egrep -i "usb|rtl|disconnect|reset|error|ch34|ttyUSB|voltage"
+Saat durumu
+timedatectl status
+NODE_ID kontrol
+grep -n "NODE_ID" /home/droneN/Desktop/tubitak35012026/Check1.py
+Syntax kontrol
+python3 -m py_compile /home/droneN/Desktop/tubitak35012026/Check1.py
+Kaynaklar
+[1] Proje içi kaynak: Drone2 Raspberry Pi Zero Sıfırdan Kurulum Rehberi - Final (yüklenen 7 sayfalık PDF).
+[2] Cockpit Project - Running Cockpit - https://cockpit-project.org/running
+[3] Cockpit Project - TCP Port and Address - https://cockpit-project.org/guide/latest/listen
+[4] Raspberry Pi Documentation - config.txt / USB OTG - https://www.raspberrypi.com/documentation/computers/config_txt.html
+[5] freedesktop.org - systemd.service - https://www.freedesktop.org/software/systemd/man/systemd.service.html
+[6] ArduPilot - Connect Mission Planner to AutoPilot / Multiple Vehicles - https://ardupilot.org/planner/docs/common-connect-mission-planner-autopilot.html
+[7] ArduPilot - Mission Planner Swarming - https://ardupilot.org/planner/docs/swarming.html
+[8] ArduPilot - Configuring a Telemetry Radio using Mission Planner - https://ardupilot.org/copter/docs/common-configuring-a-telemetry-radio-using-mission-planner.html
+[9] ArduPilot - Multi-Vehicle Flying - https://ardupilot.org/copter/docs/common-multi-vehicle-flying.html
+[10] ArduPilot - Radio Control Calibration - https://ardupilot.org/copter/docs/common-radio-control-calibration.html
+[11] ArduPilot - Radio Control Systems - https://ardupilot.org/copter/docs/common-rc-systems.html
+[12] ArduPilot - Frame Type Configuration - https://ardupilot.org/copter/docs/frame-type-configuration.html
+[13] ArduPilot - Pre-Arm Safety Checks - https://ardupilot.org/copter/docs/common-prearm-safety-checks.html
+[14] RealTerm - Official Serial Terminal Documentation - https://realterm.sourceforge.io/
+[15] Chengdu Ebyte - E22-900T22D Product/Manual Page - https://www.cdebyte.com/products/E22-900T22D
+DOKÜMAN SONU  Bu doküman sahada kullanılan gerçek yapı ve gözlenen arıza örüntülerine göre hazırlanmıştır. Donanım revizyonu, firmware güncellemesi, yeni hub/LoRa/SiK modeli veya kod değişikliği sonrasında revizyon numarası artırılmalıdır.

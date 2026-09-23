@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<style>
+    body { font-family: 'Times New Roman', Times, serif; line-height: 1.6; color: #000; margin: 40px auto; max-width: 850px; padding: 20px; font-size: 12pt; text-align: justify; }
+    h3 { font-family: Arial, Helvetica, sans-serif; color: #000; margin-top: 30px; font-size: 14pt; font-weight: bold; }
+    h4 { font-family: Arial, Helvetica, sans-serif; color: #000; margin-top: 20px; font-size: 12pt; font-weight: bold; }
+    pre { background: #f4f4f4; padding: 10px; border: 1px solid #ddd; overflow-x: auto; font-family: 'Courier New', Courier, monospace; font-size: 10pt; }
+    code { font-family: 'Courier New', Courier, monospace; background: #f4f4f4; padding: 2px 4px; border: 1px solid #ddd; }
+    ul, ol { margin-bottom: 20px; }
+    li { margin-bottom: 8px; }
+    @media print {
+        body { margin: 0; padding: 0; max-width: none; }
+        pre { white-space: pre-wrap; word-break: break-word; }
+    }
+</style>
+</head>
+<body>
+
+<h3>7. Yazılım Geliştirme Süreçleri, Karşılaşılan Problemler ve Uygulanan Çözümler</h3>
+<p>Projenin teorik altyapısının tamamlanmasının ardından, saha testleri ve laboratuvar donanım entegrasyonu aşamalarına geçilmiştir. Bu süreçte karşılaşılan algoritmik darboğazlar ve donanımsal (RF) kısıtlamalar kronolojik olarak aşağıdaki adımlarla çözülmüş ve koda dökülmüştür.</p>
+
+<h4>7.1. "5 Metre Sınırı" (Convex Hull) Probleminin Tespiti ve İntegratör Algoritmasına Geçiş</h4>
+<p>Laboratuvar ortamında yapılan ilk yer istasyonu testlerinde, hedef (PMR telsiz) dronların 20-30 metre uzağına götürülmesine rağmen, karar motoru arayüzünde hedefin formasyon merkezinden en fazla 5 metre uzağa gidebildiği tespit edilmiştir. Kaynak kodlar incelendiğinde, hedefin tahmini konumunun, 4 İHA'nın mevcut koordinatlarının RSSI (Alınan Sinyal Gücü) değerlerine göre "Ağırlıklı Ortalaması (Exponential Moving Average)" alınarak hesaplandığı görülmüştür. Bu matematiksel yaklaşım, doğası gereği sonucu her zaman dronların oluşturduğu poligonun (Convex Hull) içinde tutmaktadır.</p>
+<p>Bu problemi aşmak için ağırlıklı ortalama yöntemi terk edilerek <strong>İntegratör (Birikimli) Yönelim Algoritması</strong> geliştirilmiştir. Yeni kodlama mantığında; dronlar arası güç farkları (örn. Kuzey ve Güney dronu arasındaki fark) doğrudan konuma değil, sanal merkezin <em>hareket vektörüne (hızına)</em> dönüştürülmüştür.</p>
+
+<pre>
+# ground_station_core_kalman.py - İntegratör Bloğu
+delta_ns = P1_cal - P2_cal  # Kuzey-Güney güç farkı
+delta_ew = P3_cal - P4_cal  # Doğu-Batı güç farkı
+
+# Farkların hıza dönüştürülmesi
+shift_y = delta_ns * K_GAIN
+shift_x = delta_ew * K_GAIN
+
+# Konumun birikimli olarak güncellenmesi
+self.virtual_center_x += shift_x
+self.virtual_center_y += shift_y
+</pre>
+<p>Bu sayede güç farkı var olduğu sürece sistem hedefi teorik olarak sınırsız bir menzilde takip edebilir duruma gelmiştir.</p>
+
+<h4>7.2. RF Gürültülerinin Skaler Kalman Filtresi ile İzolasyonu</h4>
+<p>İntegratör algoritmasına geçildikten sonra, sistemin RF gürültülerine karşı fazla hassaslaştığı görülmüştür. Hedef sabit durmasına rağmen arayüzdeki sanal hedefin sürekli titreşim yaptığı gözlemlenmiştir. Bu sorunu çözmek için ham RSSI verilerinin karar motoruna girmeden önce temizlenmesi gerektiğine karar verilmiş ve <code>ground_station_core_kalman.py</code> içerisine 1-Boyutlu Skaler Kalman Filtresi yazılmıştır. Filtrenin İşlem Gürültüsü (Q) ve Ölçüm Gürültüsü (R) matrisleri optimize edilerek anlık sıçramalar izole edilmiştir.</p>
+
+<h4>7.3. Küre (Sphere) Formasyonu Matematiğinin Koda Aktarılması</h4>
+<p>Artı formasyonunun stabil hale getirilmesinin ardından, 3 boyutlu lokalizasyon sağlayan Küre formasyonu için <code>ground_station_core_sphere.py</code> modülü oluşturulmuştur. Raporlarda teorik olarak kurulan yörünge denklemleri yazılıma entegre edilmiştir.</p>
+<ul>
+    <li>Yatay düzlem (XY) ve dikey düzlem (XZ) etrafındaki rotasyon açıları (&alpha; ve &beta;) için ayrı ayrı PID kontrolcüler yazılmıştır.</li>
+    <li>İrtifa değişimine giren dronların (D2 ve D4) Z ekseni hareketleri 3D rotasyon matrisleriyle hesaplanmış ve MAVLink otopilot komutlarına dönüştürülmüştür.</li>
+    <li>Hedefin nihai 3B vektörünü bulmak için <em>Artırılmış Nokta (Augmented Point)</em> matematiği koda dahil edilmiştir.</li>
+</ul>
+
+<h4>7.4. Donanımsal Kararsızlıkların Giderilmesi ve Anten Optimizasyonu</h4>
+<p>Kapalı alan (masaüstü) testlerinde, 446 MHz bandının dalga boyu (~67 cm) nedeniyle çok şiddetli Çok Yollu Sönümleme (Multipath Fading) yaşandığı tespit edilmiştir. Ayrıca dronlardaki SDR alıcılarının birbirlerine göre farklı desibel ofsetlerine sahip olduğu görülmüştür.</p>
+<p>Bunu çözmek için öncelikle donanımsal bir karara varılarak <strong>SDR alıcılarının antenleri sökülmüştür.</strong> Bu sayede sistemin sadece çok yakın alandaki (near-field) güç farklarına odaklanması sağlanmış, dış ortam yansımalarının etkisi donanımsal olarak zayıflatılmıştır.</p>
+
+<h4>7.5. Radar Arayüzünde "Masaüstü Testi" Yanılgısının Çözülmesi</h4>
+<p>Anten optimizasyonundan sonra Radar GUI üzerinde yapılan testlerde, hedefin ekranda 70 metre gibi absürt mesafelere sürüklenmesi (runaway) problemiyle karşılaşılmıştır. Yapılan sistem analizinde bunun yazılımsal bir hata olmadığı, <em>Açık Döngü (Open-Loop)</em> paradoksu olduğu tespit edilmiştir. Gerçek uçuşta sistem hedef yönüne giderek sinyal farkını kapatırken, masaüstü testinde dronlar fiziksel olarak hareket edemediği için yazılım sinyalin kapanmadığını görmekte ve hedefi sürekli daha uzağa itmektedir.</p>
+<p>Bunu çözmek için <code>Radar_Kalibrasyon_GUI.py</code> arayüzü yeniden yazılmıştır. Arayüze "Masaüstü (Anlık Trilaterasyon)" ve "Uçuş (İntegratör)" olmak üzere iki ayrı işletim modu eklenmiştir. Ayrıca &plusmn;2 dBm altındaki güç farklarını termal gürültü kabul edip yok sayan bir <em>Ölü Bölge (Dead Zone)</em> filtresi entegre edilmiştir.</p>
+<pre>
+# Masaüstü testlerinde hedefin sonsuza sürüklenmesini engelleyen Ölü Bölge Filtresi
+DEAD_ZONE_DB = 2.0
+if abs(delta_ew) < DEAD_ZONE_DB:
+    delta_ew = 0.0
+if abs(delta_ns) < DEAD_ZONE_DB:
+    delta_ns = 0.0
+</pre>
+
+<h4>7.6. 13-Noktalı Log-Normal Shadowing Regresyonu ve Uzamsal Ortalama</h4>
+<p>Mesafe kestirim doğruluğunu artırmak amacıyla sistemin basit kalibrasyondan çıkarılıp, ortama özel Path-Loss (Yol Kaybı) modelini öğrenmesi sağlanmıştır. Geliştirilen <code>kalibrasyon_oturumu.py</code> yazılımı ile 13 farklı referans noktasından toplanan 52 adet veri, <em>En Küçük Kareler (Least Squares)</em> matrisine sokularak analiz edilmiştir.</p>
+<p>Bu regresyon sonucunda:</p>
+<ol>
+    <li>Dronların donanımsal ofsetleri,</li>
+    <li>Testin yapıldığı ortama (arazi/laboratuvar) özgü yayılım katsayısı ($n$),</li>
+    <li>1 Metre referans sinyal gücü ($RSSI_0$)</li>
+</ol>
+<p>eşzamanlı olarak hesaplanmıştır. Son olarak, kalibrasyon veri toplama fazında sönümleme çukurlarından (multipath nulls) kaçınmak için <strong>Uzamsal Ortalama (Spatial Averaging)</strong> prosedürü getirilmiştir. Vericinin sabit tutulması yerine 15-20 cm'lik küçük bir çemberde hafifçe hareket ettirilerek 5-15 saniyelik ortalamasının alınması, kalibrasyon modelinin doğruluğunu maksimuma çıkarmıştır.</p>
+<p>Gerçekleştirilen bu iyileştirmeler zinciri ile sistem saha uçuşlarına (closed-loop) eksiksiz olarak hazır hale getirilmiştir.</p>
+
+</body>
+</html>

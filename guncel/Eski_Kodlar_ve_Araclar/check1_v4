@@ -1,0 +1,229 @@
+import numpy as np
+import serial
+import serial.tools.list_ports
+import time
+import sys
+import signal
+import logging
+
+try:
+    from rtlsdr import RtlSdr
+except ImportError:
+    print("pyrtlsdr kütüphanesi eksik. Lütfen 'pip install pyrtlsdr' komutunu çalıştırın.")
+    sys.exit(1)
+
+
+# ==========================================
+# SÜRÜ AYARLARI (SWARM CONFIGURATION)
+# ==========================================
+NODE_ID = 1               # LÜTFEN HER DRONE İÇİN 1, 2, 3, 4 OLARAK DEĞİŞTİRİN!
+TOTAL_NODES = 4
+SLOT_DURATION = 1.0
+CYCLE_DURATION = TOTAL_NODES * SLOT_DURATION
+
+LORA_BAUD = 9600
+
+# RTL-SDR FREKANS AYARLARI
+SDR_FREQ = 433.0e6
+SDR_SAMPLE_RATE = 2.048e6
+
+# AGC (OTOMATİK KAZANÇ) KESİNLİKLE KAPALI OLMALI
+# Aksi takdirde sinyal güçlense de zayıflasa da SDR kendi sesini kısar/açar ve değer sabit kalır!
+SDR_TARGET_GAIN_DB = 40.0
+
+# --- RETRY SETTINGS ---
+LORA_RETRY_DELAY = 2
+SDR_RETRY_DELAY = 3
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s"
+)
+
+def compute_checksum(payload: str) -> int:
+    return sum(ord(c) for c in payload) % 256
+
+class LocalizationNode:
+
+    def __init__(self):
+        self.node_id = NODE_ID
+        self.lora = None
+        self.sdr = None
+        self.running = True
+
+        signal.signal(signal.SIGINT, self.shutdown)
+        signal.signal(signal.SIGTERM, self.shutdown)
+
+    def find_working_lora_port(self):
+        ports = list(serial.tools.list_ports.comports())
+        for p in ports:
+            if "ttyS" in p.device:
+                continue
+            
+            try:
+                test_ser = serial.Serial(p.device, LORA_BAUD, timeout=0.5)
+                test_ser.close()
+                return p.device
+            except Exception:
+                pass
+        return None
+
+    def connect_lora(self):
+        while self.running:
+            port = self.find_working_lora_port()
+            if not port:
+                time.sleep(LORA_RETRY_DELAY)
+                continue
+            try:
+                self.lora = serial.Serial(port, LORA_BAUD, timeout=0.1)
+                logging.info(f"LoRa connected on {port}")
+                return True
+            except Exception as e:
+                self.safe_close_lora()
+                time.sleep(LORA_RETRY_DELAY)
+        return False
+
+    def connect_sdr(self):
+        while self.running:
+            try:
+                self.sdr = RtlSdr()
+                self.configure_sdr()
+                logging.info("RTL-SDR connected and configured.")
+                return True
+            except Exception as e:
+                logging.warning(f"SDR connection failed: {e}. Retrying...")
+                self.safe_close_sdr()
+                time.sleep(SDR_RETRY_DELAY)
+        return False
+
+    def connect_hardware(self):
+        logging.info("Waiting for hardware...")
+        self.connect_lora()
+        self.connect_sdr()
+        logging.info(f"Localization Node {self.node_id} armed.")
+
+    def reconnect_lora(self):
+        self.safe_close_lora()
+        return self.connect_lora()
+
+    def reconnect_sdr(self):
+        self.safe_close_sdr()
+        return self.connect_sdr()
+
+    def configure_sdr(self):
+        self.sdr.sample_rate = SDR_SAMPLE_RATE
+        self.sdr.center_freq = SDR_FREQ
+        
+        # 1. KRİTİK DÜZELTME: AGC'yi zorla kapatıyoruz!
+        self.sdr.set_manual_gain_enabled(True)
+
+        try:
+            valid_gains = self.sdr.valid_gains_db
+            closest_gain = min(valid_gains, key=lambda g: abs(g - SDR_TARGET_GAIN_DB))
+            self.sdr.gain = closest_gain
+            logging.info(f"SDR gain sabitlendi: {closest_gain} dB")
+        except Exception:
+            self.sdr.gain = SDR_TARGET_GAIN_DB
+
+    def get_filtered_rssi(self):
+        readings = []
+        try:
+            for _ in range(3):
+                _ = self.sdr.read_samples(256)
+                samples = self.sdr.read_samples(16384)
+
+                # 2. KRİTİK DÜZELTME: FFT (Frekans Analizi) ile nokta atışı sinyal gücü bulma.
+                # Eski kod tüm 2 MHz'lik banttaki gürültüyü topluyordu (Samanlık). 
+                # Şimdi FFT ile sadece HC-12'nin sivri sinyalini (İğneyi) çekip alacağız.
+                fft_data = np.abs(np.fft.fft(samples))
+                
+                # Tam merkezdeki cihaz kaynaklı paraziti (DC Spike) sil
+                fft_data[0:5] = 0 
+                
+                # Havada yakalanan en yüksek radyo frekans sinyalinin gücü (Peak)
+                peak_power = np.max(fft_data)
+                
+                dbm = 10 * np.log10(peak_power + 1e-12)
+                readings.append(dbm)
+
+            return int(np.median(readings))
+
+        except Exception as e:
+            logging.error(f"SDR Read Error: {e}")
+            self.reconnect_sdr()
+            return -120
+
+    def transmit(self, rssi):
+        body = f"N{self.node_id},{rssi}"
+        checksum = compute_checksum(body)
+        payload = f"{body},{checksum}\n"
+
+        for attempt in range(2):
+            try:
+                if self.lora is None or not self.lora.is_open:
+                    self.reconnect_lora()
+
+                self.lora.write(payload.encode("ascii"))
+                self.lora.flush()
+                logging.info(f"TX -> {payload.strip()}")
+                return True
+
+            except Exception:
+                self.reconnect_lora()
+                time.sleep(0.1)
+
+        return False
+
+    def safe_close_lora(self):
+        try:
+            if self.lora: self.lora.close()
+        except Exception: pass
+        self.lora = None
+
+    def safe_close_sdr(self):
+        try:
+            if self.sdr: self.sdr.close()
+        except Exception: pass
+        self.sdr = None
+
+    def shutdown(self, signum, frame):
+        self.running = False
+        self.safe_close_sdr()
+        self.safe_close_lora()
+        sys.exit(0)
+
+    def run(self):
+        logging.info(f"ABSOLUTE-TIME TDMA Started. Cycle: {CYCLE_DURATION}s")
+        last_tx_cycle = -1
+
+        while self.running:
+            now = time.time()
+            slot_start = (self.node_id - 1) * SLOT_DURATION
+            slot_tx_offset = slot_start + 0.20
+
+            current_cycle = int(now // CYCLE_DURATION)
+            target_time = (current_cycle * CYCLE_DURATION) + slot_tx_offset
+
+            if now >= target_time:
+                current_cycle += 1
+                target_time = (current_cycle * CYCLE_DURATION) + slot_tx_offset
+
+            sleep_time = target_time - time.time()
+            if sleep_time > 0.05:
+                time.sleep(sleep_time - 0.02)
+
+            while time.time() < target_time:
+                time.sleep(0.002)
+
+            cycle_index = int(time.time() // CYCLE_DURATION)
+            if cycle_index != last_tx_cycle:
+                rssi = self.get_filtered_rssi()
+                self.transmit(rssi)
+                last_tx_cycle = cycle_index
+
+            time.sleep(0.10)
+
+if __name__ == "__main__":
+    node = LocalizationNode()
+    node.connect_hardware()
+    node.run()

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; margin: 40px auto; max-width: 900px; padding: 20px; }
+    h1 { text-align: center; color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+    h2 { color: #2980b9; margin-top: 30px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+    h3 { color: #16a085; }
+    pre { background: #f8f9fa; padding: 15px; border-radius: 5px; border-left: 4px solid #34495e; overflow-x: auto; font-family: Consolas, monospace; font-size: 14px;}
+    code { color: #c0392b; font-weight: bold; background: #f1f2f6; padding: 2px 4px; border-radius: 3px; }
+    .cover { text-align: center; margin-bottom: 50px; }
+    .cover p { font-size: 18px; margin: 5px; }
+    @media print {
+        body { margin: 0; padding: 20mm; max-width: none; }
+        pre { white-space: pre-wrap; word-break: break-word; }
+        .page-break { page-break-before: always; }
+    }
+</style>
+</head>
+<body>
+
+<div class="cover">
+    <h1>TÜBİTAK 123E294 PROJESİ: KAPSAMLI YAZILIM, ALGORİTMA VE SİSTEM GELİŞTİRME RAPORU</h1>
+    <br>
+    <p><strong>Proje Adı:</strong> Yeni Bir Geometrik RSSI Yaklaşımıyla Çoklu İHA Kullanarak RF Kaynak Lokalizasyonu</p>
+    <p><strong>Proje No:</strong> 123E294</p>
+    <p><strong>Yürütücü:</strong> Dr. Öğr. Üyesi Nurbanu GÜZEY</p>
+    <p><strong>Tarih:</strong> Eylül 2026</p>
+</div>
+
+<h2>ÖZET</h2>
+<p>Bu doküman, proje kapsamında geliştirilen Yer İstasyonu (Ground Station) yazılımları, Karar Motoru (Decision Engine) algoritmaları, İHA formasyon uçuşu denklemleri, Radyo Frekansı (RF) filtreleme ve kalibrasyon çalışmalarının tüm detaylarını, kaynak kodlarını ve operasyonel süreçlerini kronolojik olarak belgelemektedir.</p>
+<p>Çalışmalar, İP-1 ve İP-2 gelişme raporlarında teorik altyapısı kurulan matematiksel denklemlerin gerçek zamanlı Python uygulamalarına dönüştürülmesi ve donanımsal (RF) kısıtlamaların yazılımsal filtrelerle aşılması üzerine yoğunlaşmıştır.</p>
+
+<h2>1. BAŞLANGIÇ DURUMU VE TESPİT EDİLEN TEMEL PROBLEMLER</h2>
+<p>Projenin başlangıç yazılımlarında (eski yer istasyonu kodları), tahmini hedef konumunun bulunması için İHA'ların mevcut konumlarının Alınan Sinyal Gücü (RSSI) değerleriyle <strong>Ağırlıklı Ortalaması (Exponential Moving Average - EMA)</strong> alınıyordu.</p>
+<p>Bu durum, RF kaynağının (hedefin) ekrandaki sanal konumunun, İHA'ların oluşturduğu formasyon poligonunun (Convex Hull) dışına çıkamamasına neden oluyordu. Formasyon yarıçapı 5 metre olduğu için, hedef gerçekte 100 metre uzakta olsa bile arayüzde (Radar GUI) en fazla 5 metre uzakta gösteriliyor ve sürü hedefe doğru ilerleyemiyordu.</p>
+<p>Bunun yanı sıra SDR (Yazılım Tabanlı Radyo) alıcılarının antenlerinin çıkarılmış olması ve 446 MHz bandının doğası gereği (Çok yollu sönümleme - Multipath Fading), ham RSSI verileri anlık olarak &plusmn;10 dBm sapmalar gösteriyordu.</p>
+
+<div class="page-break"></div>
+
+<h2>2. ARTI (+) FORMASYONU VE KESİNTİSİZ HEDEF TAKİBİ (AŞAMA 1)</h2>
+<h3>2.1. İntegratör (Birikimli) Yönelim Algoritması</h3>
+<p>Ağırlıklı ortalama yönteminden vazgeçilerek, "Virtual Center (Sanal Merkez)" kavramı üzerine kurulu İntegratör (PID) yaklaşımına geçilmiştir. Bu yaklaşımda güç farkları konumu değil, <strong>hareket vektörünü (hızı)</strong> belirler.</p>
+<ul>
+    <li>P<sub>Kuzey</sub> (D1) ve P<sub>Güney</sub> (D2) arasındaki fark Y-eksenindeki hızı belirler.</li>
+    <li>P<sub>Doğu</sub> (D3) ve P<sub>Batı</sub> (D4) arasındaki fark X-eksenindeki hızı belirler.</li>
+</ul>
+
+<pre>
+# ground_station_core_kalman.py içerisindeki İntegratör bloğu
+def _integrator_step(self):
+    # Kalibre edilmiş RSSI değerlerinin farkı (Hata Sinyali)
+    delta_ns = P1_cal - P2_cal  # Kuzey-Güney ekseni
+    delta_ew = P3_cal - P4_cal  # Doğu-Batı ekseni
+    
+    # K_gain ile farkların hız vektörüne çevrilmesi
+    shift_y = delta_ns * K_GAIN
+    shift_x = delta_ew * K_GAIN
+    
+    # Sanal merkezin birikimli olarak güncellenmesi (İntegral)
+    self.virtual_center_x += shift_x
+    self.virtual_center_y += shift_y
+</pre>
+<p><em>Bu algoritma sayesinde hedef 5 metre poligonundan kurtarılmış ve sistem teorik olarak sınırsız menzilde hedef takibi yapabilir hale gelmiştir.</em></p>
+
+<h3>2.2. Ham Sinyallerin 1-Boyutlu Skaler Kalman Filtresi ile Temizlenmesi</h3>
+<p>RF sönümlemelerini (Multipath fading) filtrelemek için her bir drone'un RSSI veri akışına bağımsız Skaler Kalman Filtresi uygulanmıştır.</p>
+<pre>
+class ScalarKalmanFilter:
+    def __init__(self, process_noise=1.0, measurement_noise=20.0):
+        self.Q = process_noise      # Sistemin gerçekte ne kadar hızlı değişebileceği
+        self.R = measurement_noise  # Ölçüm cihazının (SDR) gürültüsü
+        self.P = 1.0                # Tahmin hatası varyansı
+        self.x = -90.0              # Başlangıç RSSI tahmini
+
+    def update(self, measurement):
+        # 1. TAHMİN (Prediction)
+        P_pred = self.P + self.Q
+
+        # 2. GÜNCELLEME (Update)
+        K = P_pred / (P_pred + self.R) # Kalman Kazancı
+        self.x = self.x + K * (measurement - self.x)
+        self.P = (1 - K) * P_pred
+        return self.x
+</pre>
+<p><em>Gözlem:</em> Kalman filtresi uygulandıktan sonra, telsizin (vericinin) küçük hareketlerinden kaynaklanan 4-5 dBm'lik anlık sıçramalar izole edilmiş ve karar motoruna pürüzsüz (smooth) bir sinyal beslenmiştir.</p>
+
+<div class="page-break"></div>
+
+<h2>3. KÜRE (SPHERE) FORMASYONUNUN GELİŞTİRİLMESİ (AŞAMA 2)</h2>
+<p>Projenin en zorlu kısımlarından biri olan Küre formasyonu, 4 İHA'nın iki dikey düzlemde (XY ve XZ) rotasyon yaparak hedefi 3 boyutlu uzayda aramasını gerektiriyordu. Raporlarda yer alan ağır matematiksel denklemler (Eq. 29, 34, 36, 37) koda aktarıldı.</p>
+
+<h3>3.1. Formasyon Denklemleri ve İHA Konumlandırma</h3>
+<pre>
+# ground_station_core_sphere.py içerisindeki konum hesaplama fonksiyonu
+def compute_drone_positions(self):
+    # R: Çember yarıçapı, alpha: Yatay (XY) dönme açısı, beta: Dikey (XZ) dönme açısı
+    # Merkez koordinatları (xc, yc, zc)
+    
+    # D1 ve D3 (XY Düzlemi - İrtifa Sabit)
+    d1_x = xc + R * math.cos(alpha)
+    d1_y = yc + R * math.sin(alpha)
+    d1_z = zc
+    
+    d3_x = xc - R * math.cos(alpha)
+    d3_y = yc - R * math.sin(alpha)
+    d3_z = zc
+    
+    # D2 ve D4 (XZ Düzlemi - İrtifa Değişken)
+    # 3D rotasyon matrisleri (Pitch & Yaw) uygulanarak elde edilen sonuçlar:
+    d2_x = xc - R * math.sin(alpha) * math.sin(beta)
+    d2_y = yc + R * math.cos(alpha) * math.sin(beta)
+    d2_z = zc + R * math.cos(beta)
+    
+    d4_x = xc + R * math.sin(alpha) * math.sin(beta)
+    d4_y = yc - R * math.cos(alpha) * math.sin(beta)
+    d4_z = zc - R * math.cos(beta)
+</pre>
+
+<h3>3.2. Yörünge Açıları (α ve β) için PID Kontrolü</h3>
+<p>Hedefin yönünü tayin edebilmek için İHA'ların kendi çemberleri etrafında dönmesi (Orbit) gerekmektedir. Güç farkı sıfır olana kadar (hedef İHA'ların tam ortasına/karşısına gelene kadar) yörünge açısı değiştirilir.</p>
+<pre>
+# PID Kontrolcü ile Açısal Hız (Omega) Hesabı
+omega_alpha = self.pid_alpha.update(error_alpha, dt)
+self.alpha += omega_alpha * dt
+
+omega_beta = self.pid_beta.update(error_beta, dt)
+self.beta += omega_beta * dt
+</pre>
+
+<h3>3.3. Augmented Point (Artırılmış Nokta) Hesabı (Eq. 36 & 37)</h3>
+<p>Tüm rotasyon tamamlandıktan sonra sürünün ilerleyeceği "hedef doğrultusu" sanal bir Artırılmış Nokta (P<sub>aug</sub>) yaratılarak bulunur.</p>
+<pre>
+def compute_augmented_point(self):
+    ra = abs(R * math.cos(self.beta))
+    x_aug = self.center_x - ra * math.sin(self.alpha)
+    y_aug = self.center_y - ra * math.cos(self.alpha)
+    z_aug = self.center_z + R * math.sin(self.alpha) * math.sin(self.beta)
+    return (x_aug, y_aug, z_aug)
+</pre>
+
+<div class="page-break"></div>
+
+<h2>4. RF KALİBRASYON MODELİ VE UZAMSAL ORTALAMA (SPATIAL AVERAGING)</h2>
+<p>SDR cihazlarındaki donanım toleranslarını eşitlemek ve arazinin sinyal emici özelliklerini (Path Loss) sisteme tanıtmak için kademeli bir kalibrasyon sistemi tasarlanmıştır.</p>
+
+<h3>4.1. Çok Noktalı Ortak Regresyon (Least Squares)</h3>
+<p>Geliştirilen <code>kalibrasyon_oturumu.py</code> aracı ile 13 farklı lokasyonda x 4 drone = 52 veri noktası toplanmaktadır. 
+Kullanılan matematiksel model: <strong>Log-Normal Shadowing Modeli</strong></p>
+<pre>RSSI(d) = RSSI_ref - 10 * n * log10(d) + Offset_drone</pre>
+<p>Python Numpy kütüphanesi ile yazılan bu denklem sistemi, bir <strong>En Küçük Kareler Matrisi (Least Squares Matrix)</strong> içine yerleştirilerek aynı anda 3 bilinmeyeni çözer:</p>
+<ol>
+    <li>Donanım sapmaları (Offset)</li>
+    <li>Ortam Sönümleme Katsayısı (n)</li>
+    <li>1 Metre Referans Gücü (RSSI_ref)</li>
+</ol>
+<pre>
+# kalibrasyon_oturumu.py Regresyon Algoritması Özeti
+# A_mat = [[1, -10*log(d), Offset2_bayragi, Offset3_bayragi, Offset4_bayragi], ...]
+# b_vec = [RSSI_olculen, ...]
+sol, residuals, rank, sv = np.linalg.lstsq(A_mat, b_vec, rcond=None)
+P_ref, n, off2, off3, off4 = sol
+</pre>
+
+<h3>4.2. Uzamsal Ortalama (Spatial Averaging) Entegrasyonu</h3>
+<p>Çok Yollu Sönümleme (Multipath Fading) nedeniyle ortaya çıkan ölü noktalardan (nulls) kaçınmak için operasyon prosedürüne "Uzamsal Ortalama" eklenmiştir. Kullanıcı, kalibrasyon sırasında telsizi çeyrek dalga boyu (15-20 cm) çapında hafifçe hareket ettirerek sönümleme çukurlarını filtreler. Toplanan 5 saniyelik verinin medyanı alınarak sisteme pürüzsüz bir değer beslenir.</p>
+
+<h2>5. MASAÜSTÜ / SAHA TESTİ ARAYÜZÜ (RADAR GUI) GELİŞTİRMELERİ</h2>
+<p>Eski radar yazılımındaki sabit kısıtlamalar kaldırılmış, <code>Radar_Kalibrasyon_GUI.py</code> dosyası tamamen güncellenmiştir.</p>
+<p><strong>Çözülen Problemler:</strong></p>
+<ol>
+    <li><strong>Sonsuz Sürüklenme Yanılgısı:</strong> Masaüstü testlerinde dronlar masada sabit durduğu için sinyal gücü farkı hiç kapanmaz. Bu durumda integratör algoritması "daha da ileri gitmeliyim" diyerek sanal hedefi sonsuza taşır (Open-Loop sorunu).</li>
+    <li><strong>Çözüm:</strong> GUI içerisine <code>Masaüstü (Anlık Gösterim)</code> ve <code>Uçuş (İntegratör)</code> olarak iki ayrı mod eklendi. Masaüstü modunda integral (birikim) devreden çıkarılarak hedefin tam o anki konumu ekrana basılır. Bu sayede saha öncesi donanım testleri laboratuvar ortamında sağlıklı yapılabilir hale geldi.</li>
+    <li><strong>Ölü Bölge (Dead Zone):</strong> Fark &plusmn;2 dBm'den küçükse gürültü sayılarak merkezin istemsiz sürüklenmesi (drift) engellendi.</li>
+</ol>
+
+<h2>6. SONUÇ</h2>
+<p>Eylül 2026 itibarıyla TÜBİTAK 123E294 projesi kapsamında yer istasyonu yazılımları, RF kalibrasyon altyapısı ve uçuş algoritmaları tamamen modernize edilmiştir.</p>
+<ul>
+    <li>İntegratör ve PID tabanlı yönelim algoritmaları sayesinde hedefin konumu sorunsuz takip edilebilir hale gelmiştir.</li>
+    <li>Kalman filtreleri ve 13-Noktalı Log-Normal regresyon ile donanımsal limitasyonlar yazılımsal olarak çözülmüştür.</li>
+    <li>Formasyon uçuşu için gerekli olan karmaşık 3B yörünge rotasyonu ve artırılmış nokta matematiği başarılı bir şekilde yazılım diline aktarılmıştır.</li>
+    <li>Sistem, açık alan (arazi) testlerinde çoklu İHA sistemini kapalı döngü (closed-loop) şeklinde otonom yönetmeye hazırdır.</li>
+</ul>
+
+</body>
+</html>
