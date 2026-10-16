@@ -20,13 +20,13 @@ LORA_BAUD = 9600
 # ==============================================================
 # KALİBRASYON DEĞERLERİ (kalibrasyon_sonucu.json'dan)
 # ==============================================================
-P_REF     = -77.41     # 1 metre referans gücü (dBm)
-PATH_N    = 1.354      # Ortam sönümleme katsayısı
+P_REF     = -78.72     # 1 metre referans gücü (dBm)
+PATH_N    = 1.264      # Ortam sönümleme katsayısı
 OFFSETS   = {           # Donanım ofsetleri (dBm)
     1:  0.00,           # D1 Kuzey (referans)
-    2: -0.02,           # D2 Güney
-    3:  3.24,           # D3 Doğu
-    4:  0.65,           # D4 Batı
+    2: -1.32,           # D2 Güney
+    3:  2.38,           # D3 Doğu
+    4:  1.10,           # D4 Batı
 }
 
 # Dron konumları (metre, merkeze göre)

@@ -1,0 +1,232 @@
+TÜBİTAK
+ARAŞTIRMA PROJESİ
+GELİŞME RAPORU
+(Bilimsel Rapor)
+PROGRAM KODU
+PROJE NO
+PROJE SÜRESİ
+RAPOR NO
+RAPOR DÖNEMİ
+PROJE YÜRÜTÜCÜSÜ
+GÜZEY
+
+: 3501
+:123E294
+: 36 ay
+:3
+: 1/04/2025 - 1/01/2025
+: Dr. Öğr. Üyesi Nurbanu
+
+Bilgi Notu:
+- Raporda kullanılacak dilin (Türkçe veya İngilizce), başvuru formunda kullanılan dil ile aynı olması gerekmektedir.
+- TÜBİTAK tarafından kabul edilebilir geçerli bir mazeret bildirilmeksizin; proje gelişme raporlarının sözleşmede belirtilen tarihlerde, proje sonuç
+raporlarının ise, sözleşmede belirtilen proje bitiş tarihinden itibaren 2 (iki) ay içinde gönderilmemesi halinde, ilgili rapor dönemine ait Proje Teşvik
+İkramiyeleri (PTİ) ödenmeyecektir (*).
+- Proje ekibi tarafından, TÜBİTAK desteği ile yürütülmekte/sonuçlandırılmış olan projeler kapsamında yapılan yayınlarda [makale, kitap, bildiri (sözlü
+sunum/poster sunum), tez, yayılım vb.] proje sözleşmesi ve TÜBİTAK Araştırma ve Yayın Etiği Kurulu Yönetmeliği (AYEK) gereğince ilgili proje
+numarası ile birlikte TÜBİTAK desteği belirtilmelidir.
+- Proje kapsamında gerçekleşmiş tüm çıktıların proje sözleşmesi ve Proje Teşvik ve Destekleme Esaslarına İlişkin Yönetmelik Uyarınca Desteklenen
+Projelerde Uygulanacak Fikri Haklar Esasları gereğince Proje Takip Sistemi (PTS) (https://ardeb-pts.tubitak.gov.tr) üzerinden Gruba gönderilmelidir.
+- İlgili rapor döneminde katılım sağlanan yurtiçi/yurtdışı bilimsel toplantı/çalışma ziyaretleri hakkında gerekli bilgiler PTS üzerinden Seyahat Bilgi Formu
+doldurularak Gruba iletilmelidir.
+- Gelişme raporları ile birlikte Fikri Ürün Bildirim Formunun doldurulması zorunludur. Dönem içinde projeden fikri ürün (patent, faydalı model, marka,
+know-how, endüstriyel tasarım, entegre devre topografyası, yeni bitki ve hayvan türleri ve bunların ıslah yöntemleri, bilgisayar programları ve bunların
+kaynak kodları vb.) çıkıp çıkmadığı formda belirtilir. Eğer bir fikri ürün çıkmamışsa formun bu sorunun sorulduğu bölüme kadarki kısmı doldurulur; bu
+soruya gelindiğinde “hayır” seçeneği işaretlenerek yürütücü tarafından imzalanır. Fikri ürün çıkmışsa formun tamamı doldurulur ve hak sahipleri
+tarafından imzalanır. Projeden fikri ürün dışında ortaya çıkan eserler yani, bilgisayar programları ve bunların kaynak kodları hariç 5846 sayılı Fikir ve
+Sanat Eserleri Kanunu kapsamındaki kitap, kitapta bölüm, makale, bildiri, katalog vb. çıktılar için fikri ürün formu doldurulmayacağına dikkat edilir.
+Birden fazla fikri ürün söz konusu ise her bir fikri ürün için ayrı bir form doldurulur. Fikri Ürün Bildirim Formunun sunulmasından itibaren en geç üç ay
+içerisinde ilgili fikri ürünle ilgili tescil başvurusu yapılması gerektiği hususu hatırlanmalıdır.
+
+(*) ARDEB tarafından yürütülen destek programları (1002 ve 3001 hariç) kapsamında “Sonuçlandı” durumunda 3 adet projede yürütücü olarak görev
+almış, TÜBİTAK Araştırma ve Yayın Etiği Kurulu (AYEK) tarafından yaptırım uygulanmamış ve daha önce ARDEB tarafından desteklenen yürütücüsü
+olduğu herhangi bir projesi iptal edilmemiş proje yürütücülerimizin söz konusu destek programları (1002 ve 3001 hariç ARDEB destek programları)
+kapsamında yürürlükte olan projeleri için; talep etmeleri halinde, bilimsel Gelişme Raporu alınmayacak, sadece Sonuç Raporu alınacaktır. Mali
+raporların ise ilgili dönem transferlerinin yapılabilmesi için iletilmesi gerekmektedir.
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+BİLİMSEL GELİŞME RAPORU FORMU
+
+1. BİLİMSEL/TEKNOLOJİK GELİŞMELER
+1.1 Dönem İçinde Gerçekleştirilen Faaliyetler ve Elde Edilen Bulgular/Sonuçlar
+Proje öneri formunun iş-zaman çizelgesinde ilgili gelişme raporu dönemi için planlanan tüm İP’leri ve her İP için ayrı olacak
+şekilde tablolar oluşturulmalı ve bilgi sunulmalıdır.
+İP No
+
+4
+
+İP Adı
+
+Hedef takip uygulaması: 1. İş paketi kapsamında hazırlanan donanımlar ve 2. iş
+paketinde simülasyon ortamında denenen filtreler bu iş paketi kapsamında
+birleştirilecektir. Böylelikle gürültülü sinyal alınması durumunda 4 adet İHA
+kullanılarak hareketli bir hedefin takibi sağlanacaktır.
+
+İP Tamamlanma Durumu
+(Yüzde Belirtilmelidir)
+
+%20
+
+a) İP Kapsamında Yapılan Çalışmalar ve Elde Edilen Bulgular
+İP hedeflerine yönelik yapılan çalışmalar, ulaşılan hedefler ve elde edilen bulgular ilgili literatüre atıflar yapılarak detaylı olarak
+sunulur ve sonuçlar tartışılır. İP kapsamında elde edilen ara çıktılara ilişkin bilgiler verilir. Ana açıklamalar dışında İP kapsamında
+elde edilen ara çıktılar (teknik rapor, liste, diyagram, analiz/ölçüm sonucu, algoritma, yazılım, anket formu, verim, ham veri vb.)
+hakkında bilgi verilir ve ara çıktılar ekler bölümünde sunulur.
+3. gelişme dönemi olan 18–24. aylar kapsamında, proje önerisinde tanımlanan İP-4 “Hedef Takip Uygulaması” çalışmalarına
+başlanmıştır. Bu iş paketinin amacı, 1. iş paketinde geliştirilen donanım altyapısını, 2. iş paketinde simülasyon ortamında
+doğrulanan filtre ve konumlandırma algoritmalarıyla bütünleştirerek, gürültülü ölçüm koşullarında dört İHA kullanımıyla hareketli
+bir hedefin gerçek zamanlı takibini mümkün kılmaktır.
+Dönem boyunca öncelikli hedef, platformların sahada güvenli ve kararlı biçimde görev icra edebilmesi için uçuş sürekliliğinin
+sağlanması olmuştur. Uçuşlar sırasında gözlenen titreşim, kablolama, güç dağıtımı ve elektromanyetik girişim kaynaklı
+aksaklıklar giderilmeye çalışılmaktadır. Haberleşme elektroniği İHA gövde ve aviyoniklerine uygun şekilde entegre edilmiştir. Bu
+entegrasyonun sonucunda dört İHA görev konfigürasyonuna yükseltilmiş, Şekil 1’de tüm platformların montajı tamamlanmış
+durumu, Şekil 2’de ise uçuş esnasındaki görüntüsü sunulmuştur.
+
+Şekil 1 Elektronik ve haberleşme aksamları tamamlanan İHAlar
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+Şekil 2 Uçuş halindeki İHA
+LORA haberleşmesi bu dönemin temel teknik çıktılarından biridir. Bir önceki rapor döneminde geliştirilen konumlandırma
+algoritmalarının pratik uygulamasına geçebilmek için, İHA’lardan elde edilen sinyal gücü ölçümlerinin merkez istasyona anlık ve
+kesintisiz aktarımı sağlanmıştır. Daha önce bağımsız olarak test edilen LORA birimleri bu dönemde İHA’lara entegre edilmiş;
+platformlar yerdeyken ve uçuş esnasında toplanan sinyal gücü verileri sorunsuz biçimde merkez istasyonuna iletilmiştir. Şekil 3,
+SDR antenlerinin İHA üzerine mekanik ve elektriksel açıdan uygun biçimde monte edilmiş hâlini göstermektedir. Bulguların görsel
+kanıtı olarak paylaşılan kısa video kaydında (https://youtube.com/shorts/Ucms8l2GGAs?feature=share), İHA uçuşu sırasında
+hedef kaynaktan alınan sinyal gücünün eşzamanlı olarak yer istasyonuna iletildiği açıkça izlenmektedir.
+
+Şekil 3 İHA üzerine montelenmiş SDR antenleri
+Elde edilen ölçümler, hedef telsiz yayını açıkken sinyal gücünün yaklaşık 0,81 dBm’den 0,91 dBm’e yükseldiğini, yayın
+kapatıldığında ise önce −17 dBm, ardından −39 dBm düzeylerine gerilediğini göstermektedir. Video kaydı ve Şekil 3’teki iz
+düşümleri, bu dinamiklerin sahada tekrarlanabilir biçimde gözlendiğini ortaya koymaktadır. Bu davranış, gerçek zamanlı eşikleme
+ve alarm mekanizmalarının kalibrasyonu ile takip algoritmalarının karar verme katmanlarının sahaya uyarlanması açısından kritik
+bir doğrulama sağlamaktadır. Böylece İP-4 kapsamındaki entegrasyon adımlarının ilk fazı başarıyla tamamlanmış; takip eden
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+fazda simülasyonla doğrulanmış filtrelerin uçuş verisi üzerinde çalıştırılmasına ve çoklu İHA ile hedef takibinin nicel
+performansının değerlendirilmesine doğrudan zemin hazırlanmıştır.
+
+Şekil 4 LORA ile sinyal gücü iletimi.
+
+--------------------------------------------------------------------
+
+b) İP Sonuçlarının İlgili İP’nin Başarı Ölçütleri Göz Önüne Alınarak Gerçekleşme Durumu
+İP’nin tamamlanan rapor dönemi için gerçekleşme durumu, proje önerisinde belirlenmiş başarı ölçütleri dikkate alınarak kendi
+içinde ve proje bütünlüğü kapsamında bir değerlendirmesi yapılır.
+İP-4’te ilk 6 ay için tanımlı başarı ölçütleri eksiksiz karşılandı. Dört İHA’da LORA+SDR entegrasyonu tamamlandı, yerde ve
+uçuşta RSSI verisi merkeze kesintisiz aktarıldı. Yayın açık-kapalı senaryolarında sinyal seviyeleri beklenen biçimde ayrıştı.
+Böylece algoritma entegrasyonuna geçiş için öngörülen altyapı tam ve zamanında hazırlandı.
+İP No
+
+5
+
+İP Adı
+
+Uzaktan tespit uygulaması: 1. İş paketi kapsamında hazırlanan donanımlar ve 3. iş
+paketinde simülasyon ortamında denenen filtreler bu iş paketi kapsamında
+birleştirilecektir. Böylelikle çıkış sinyali gücü bilinmeyen bir hedefin hayali bir küre
+yüzeyinde hareket ettirilen 4 adet İHA ile uzaktan tespiti sağlanacaktır.
+
+İP Tamamlanma Durumu
+(Yüzde Belirtilmelidir)
+
+%20
+
+a) İP Kapsamında Yapılan Çalışmalar ve Elde Edilen Bulgular
+İP hedeflerine yönelik yapılan çalışmalar, ulaşılan hedefler ve elde edilen bulgular ilgili literatüre atıflar yapılarak detaylı olarak
+sunulur ve sonuçlar tartışılır. İP kapsamında elde edilen ara çıktılara ilişkin bilgiler verilir. Ana açıklamalar dışında İP kapsamında
+elde edilen ara çıktılar (teknik rapor, liste, diyagram, analiz/ölçüm sonucu, algoritma, yazılım, anket formu, verim, ham veri vb.)
+hakkında bilgi verilir ve ara çıktılar ekler bölümünde sunulur.
+İP-5, İP-4 ile senkron ve bütünleşik bir ritimde ilerlemektedir. Bu kapsamda platform hazırlığı, uçuşa elverişlilik kontrolleri,
+haberleşme/LORA altyapısının sahaya alınması, SDR tabanlı ölçüm hattının doğrulanması, elektromanyetik girişim ve titreşim
+kaynaklı etkilerin azaltılması, zaman damgalı veri kaydı ve merkez istasyonla kesintisiz veri akışı gibi mühendislik adımları, iş
+paketinin özel hedef ve çıktılarıyla uyarlanarak aynı titizlikte uygulanmıştır. Böylece 4. iş paketinde olgunlaştırılan entegrasyon
+ilkeleri ve doğrulama protokolleri, 5. iş paketinin süreçlerine yansıtılmış; yöntemsel tekrar üretmeden, benzer kilometre taşları bu
+pakette de karşılanmış ve paketler arası teknik tutarlılık sağlanmıştır.
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+b) İP Sonuçlarının İlgili İP’nin Başarı Ölçütleri Göz Önüne Alınarak Gerçekleşme Durumu
+İP’nin tamamlanan rapor dönemi için gerçekleşme durumu, proje önerisinde belirlenmiş başarı ölçütleri dikkate alınarak kendi
+içinde ve proje bütünlüğü kapsamında bir değerlendirmesi yapılır.
+5. iş paketinde, tanımlı başarı ölçütleri İP-4 ile paralel biçimde karşılanmıştır. LORA sürekliliği, uçuş koşullarında SDR ölçüm
+doğrulaması ve yayın açık-kapalı senaryolarındaki beklenen sinyal ayrışmaları eksiksiz sağlanmış; böylece algoritma
+entegrasyonuna geçiş için gerekli altyapı, takvim ve kapsamda sapma olmadan tamamlanmıştır.
+
+1.2 Çalışma Takvimine Uyum
+Projenin öneride belirtildiği şekilde öngörülen çalışma takvimine göre yürütülüp yürütülmediği belirtilir. İş-Zaman Çizelgesinde
+planlanan iş paketlerinin gecikmesi durumunda bunun sebebi detaylı olarak açıklanır ve buna yönelik alınan/alınacak tedbirler
+sunulur. Ayrıca, yaşanan gecikmelerden etkilenecek iş paketleri ve ara çıktılar hakkında da bilgi verilir. Değişiklik yapıldıysa
+güncellenmiş çalışma takvimi sunulur. B planına geçilmesi durumunda Etik Kurul Onay/Yasal/Özel İzin belgelerinin alınması
+gerekmiş ise ilgili belge gelişme raporuyla birlikte sisteme yüklenir.
+Ek süre, ek ödenek, kapsam, yöntem değişikliği, B planını devreye sokulması vb. gibi değişikliklerin TÜBİTAK onayı alınmadan
+gerçekleştirilemeyeceği hususuna dikkat edilir.
+Çalışma takvimine uyum bakımından proje, öneride öngörülen iş-zaman düzenine paralel seyretmiştir. İP-4 ve IP-5 için planlanan
+toplam 18 ayın ilk 6 ayında haberleşme ve LORA altyapısının sahada devreye alınması hedeflenmiş ve bu hedef zamanında
+tamamlanmıştır. Bu dönemde plan dışı bir gecikme yaşanmamış, dolayısıyla B planı, kapsam veya yöntem değişikliğini
+gerektirecek bir sapma oluşmamıştır. Takvimin kalan 12 ayında 2. iş paketinde simülasyon ortamında doğrulanan filtre ve
+konumlandırma algoritmalarının çoklu İHA senaryosunda gerçek uçuş verisiyle çalıştırılması, hedef hareket profilleri altında takip
+performansının ölçülmesi ve nicel metriklerin çıkarılması planlanmaktadır.
+
+1.3 Dönem İçinde Projeyle İlgili İdari ve Mali Gelişmeler
+Proje ekibinin proje önerisinde belirtildiği şekilde öngörülen iş/görev dağılımına ve çalışma takvimine göre yaptıkları çalışmalar
+ve üzerlerine düşen sorumlulukları ne ölçüde yerine getirdikleri hakkında ve proje ekibinde değişiklikler yapılmışsa kısaca bilgi
+verilir. Yürütücü tarafından araştırmacı ve danışmanların ilgili rapor dönemine ait PTİ lerinin ödenip ödenmemesi hususunda
+gerekçeli bilgi verilir. Yürütücü kurum/kuruluş değişikliği, destekleyen kurum/kuruluş değişikliği, yeni kuruluş desteği alma vb.
+değişiklikler yapılmışsa gerekçeleriyle birlikte kısaca açıklanır. Bu tür değişikliklerin TÜBİTAK onayı alınmadan yapılamayacağı
+hususuna dikkat edilir. Destekleyen diğer kuruluşlarla ilgili sorunlar varsa ayrıntıları ve çözüm önerileri de sunulur.
+Proje bütçe kalemlerinin harcanmasında yaşanan sorunlar varsa neler olduğu ve sorunların çözülüp çözülmediği belirtilir.
+Bu rapor döneminde, projenin donanım ayağında görev alan bursiyerler Muhammed Furkan BOZBEK ve Ahmet Turan
+KARAGÖZ, İHA’ların tasarımı ve gömülü yazılım geliştirme süreçlerini başarıyla sürdürmüştür.
+Proje araştırmacısı Doç. Dr. Hacı Mehmet GÜZEY, hem donanım ve yazılım geliştirme aşamalarında hem de filtreleme
+algoritmalarının tasarımı ve teorik analizlerinde proje ekibine teknik destek sağlamaya devam etmektedir.
+Bu rapor döneminde herhangi bir yeni malzeme alımı gerçekleştirilmemiştir.
+
+1.4 Bir Sonraki Dönemde Yapılması Planlanan Çalışmalar
+Bir sonraki dönemde yapılması planlanan çalışmalar hakkında gerektiğinde ilgili iş paketlerine de atıf yapılarak kısaca bilgi verilir.
+Mevcut dönemde bitirilemeyip sonraki dönemde devam edilmesi gereken çalışmalar varsa onlar hakkında da kısaca bilgi verilir.
+Öneri formunda belirtilenlerden farklı risklerin ortaya çıkabileceği düşünülüyorsa, bu riskler ve risklere yönelik alınacak tedbirler
+belirtilir.
+Bir sonraki dönemde, 4. ve 5. iş paketleri kapsamında, 2. ve 3. iş paketlerinde geliştirilen konumlandırma algoritmaları tasarlanan
+İHA’lara gerçek zamanlı olarak entegre edilerek sahada uygulanacaktır. Entegrasyon sonrası temel doğrulama uçuşları yapılarak
+genel performansın uygunluğu gözlemlenecek ve gerekli görülen yerlerde yalın kalibrasyonlar gerçekleştirilecektir.
+Şekil 5 Ham RSSI Ölçümlerini Kullanarak Tahmini ve Gerçek Hedef Pozisyonu
+
+2. ELDE EDİLEN ÇIKTILAR, GERÇEKLEŞEN YAYILIM FAALİYETLERİ VE OLUŞAN ETKİ
+
+2.1 Dönem İçinde Proje Kapsamında Elde Edilen ve Süreci Devam Eden Çıktılar
+Projeden elde edilmiş ve ilgili döneme ait süreci tamamlanmış tüm çıktılar, mutlaka gelişme raporu ile birlikte
+Proje Takip Sistemi’nde (https://ardeb-pts.tubitak.gov.tr) çıktı türleri dikkate alınarak yüklenir.
+Bu bölümde henüz tamamlanmamış ancak süreci devam eden bilimsel/akademik, ekonomik/ticari ve/veya
+araştırmacı yetiştirilmesine yönelik çıktılar varsa, bu çıktıların türü ve sürecin hangi aşamada olduğuyla ilgili kısaca
+bilgi verilir.
+Bu rapor dönemi için yeni bir çıktı bulunmamaktadır.
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+2.2 Dönem İçinde Proje Kapsamında Yapılan Yayılım Faaliyetleri
+Elde edilen bulguların, ara sonuçların/çıktıların ilgili paydaşlar ve potansiyel kullanıcılara ulaştırılması ve
+paylaşılmasına yönelik yapılan yayılım faaliyetleri hakkında bilgi verilir.
+Etkinlik Türü (Toplantı, Çalıştay,
+Eğitim, Web Sitesi, Medya, Fuar,
+Proje Pazarı vb.)
+
+Paydaş / Olası Kullanıcılar
+
+Etkinliğin Zamanı ve
+Süresi
+
+2.3 Projenin Beklenen Etkiyi Oluşturmak Üzere Amaçları Doğrultusunda İlerleme Durumu
+Bu bölümde ilgili rapor döneminde proje kapsamında yapılan faaliyetlerin projede öngörülen etkiyi oluşturma
+potansiyeli kısaca tartışılır.
+
+Bu dönemde LORA hattının uçuşta çalışır hâle getirilmesi, SDR entegrasyonunun doğrulanması ve yayın açıkkapalı durumlarına ait beklenen RSSI değişimlerinin gözlemlenmesi, proje hedeflerine yönelik ilerleme için gerekli
+altyapının bir bölümünü sağlamıştır. Bu adımlar, gerçek zamanlı konumlandırma algoritmalarının bir sonraki
+dönemde sahada denenebilmesi için başlangıç koşullarını oluşturmaktadır. Beklenen etkinin düzeyi, takip eden
+aşamalarda yapılacak algoritma entegrasyonu, doğrulama uçuşları ve elde edilecek nicel performans sonuçlarına
+bağlı olarak daha netleşecektir.
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+

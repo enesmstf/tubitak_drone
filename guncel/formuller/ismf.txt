@@ -1,0 +1,756 @@
+Received 21 August 2024, accepted 23 September 2024, date of publication 25 September 2024,
+date of current version 26 November 2024.
+Digital Object Identifier 10.1109/ACCESS.2024.3467994
+
+Smoother Integral Sliding Mode Filter for
+RSSI-Based Localization
+NURBANU GÜZEY
+Department of Computer Engineering, Sivas University of Science and Technology, 58000 Sivas, Türkiye
+
+e-mail: nurbanu.guzey@sivas.edu.tr
+This work was supported by the Scientific and Technological Research Council of Türkiye (TÜBİTAK) under Grant 123E294.
+
+ABSTRACT This study advances our previous research on radio frequency (RF) source localization using
+unmanned aerial vehicles (UAVs) through a novel geometrical Received Signal Strength Indicator (RSSI)
+approach. Our methodology utilizes four UAVs, split into two groups, which adjust their positions until
+the power received by each UAV matches that of its counterpart, allowing the calculation of intersecting
+lines that pinpoint the source location. Recognizing the challenges posed by environmental noise which
+can alter signal values leading to inaccurate estimations, we introduce a smoother integral sliding mode
+filter. This enhanced filter incorporates the integral of the error into the sliding mode control framework to
+address the high-frequency chattering typically associated with sliding mode filters in noisy environments.
+This adaptation not only reduces the chattering effect but also stabilizes the UAV’s response to fluctuating
+signal strengths, resulting in more accurate and reliable localization. Simulation results demonstrate a marked
+improvement in localization accuracy and robustness against noise.
+INDEX TERMS Localization, received signal strength indicator, sliding mode filter, unmanned aerial
+vehicles.
+I. INTRODUCTION
+
+This The advent of Unmanned Aerial Vehicles (UAVs) has
+revolutionized a myriad of sectors, ranging from agriculture and disaster management to surveillance and logistics.
+These versatile platforms have become indispensable tools in
+the Internet of Things (IoT) ecosystem, offering innovative
+solutions to traditional challenges [1]. Among the myriad of
+applications, localization and tracking stand out as critical
+functionalities, especially in contexts where precision and
+reliability are paramount, such as air traffic control, remote
+sensing, and intelligence, surveillance, and reconnaissance
+(ISR) operations [2].
+Traditional ground-based localization methods have been
+gradually overshadowed by the capabilities offered by UAVs.
+The mobility, flexibility, and elevated vantage points of
+UAVs enhance signal reception and reduce propagation
+uncertainties caused by terrestrial obstacles, thereby improving the accuracy of RF target identification [3]. However,
+the dynamic nature of UAV operations introduces new
+The associate editor coordinating the review of this manuscript and
+approving it for publication was Mouquan Shen
+172410
+
+.
+
+challenges, particularly in signal processing for localization
+in environments where GPS signals are weak or nonexistent [4].
+Our previous research introduced a new geometrical localization method leveraging the Received Signal Strength
+Indicator (RSSI) for UAV groups [5]. This method, distinguished by its simplicity and efficiency, does not require
+knowledge of the path loss exponent or transmit power,
+making it particularly suitable for RF target localization
+with minimal hardware requirements. Despite its promising results, the initial approach was based on an idealistic
+assumption of signal transmission without reflection or distortion, a condition rarely met in real-world scenarios.
+Real-world environments are inherently noisy, with signal
+distortion and reflection being commonplace. These factors
+significantly impact the accuracy of RSSI-based localization methods, necessitating the development of approaches
+that can effectively handle such conditions. Recent studies
+have attempted to address these challenges by incorporating
+advanced signal processing techniques and machine learning
+algorithms to enhance the robustness of RSSI measurements.
+Methods in [5] and [6] have shown promise in improving
+
+2024 The Authors. This work is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 License.
+For more information, see https://creativecommons.org/licenses/by-nc-nd/4.0/
+
+VOLUME 12, 2024
+
+N. Güzey: Smoother Integral Sliding Mode Filter for RSSI-Based Localization
+
+accuracy, but they often come with increased computational
+complexity and the need for extensive training data, making
+them less practical for real-time UAV applications.
+Recognizing this gap, our current study aims to refine
+our previous localization scheme [7] by incorporating environmental noise into the signal processing framework. This
+involves the adoption of a sliding mode filter, a robust control
+method known for its effectiveness in dealing with uncertainties and disturbances, including noise [8], [9].
+The sliding mode filter approach addresses the key challenge of signal noise by filtering the noisy RSSI data [10],
+[11], thereby enhancing the reliability of the localization
+process. However, the application of this method in a UAV
+context revealed a high-frequency chattering phenomenon in
+the calculated angle values, posing a significant challenge
+for the practical implementation of UAV movements [12].
+To overcome this, we introduced the integral of the error in
+the angle calculation process, resulting in smoother and more
+feasible desired angle values for UAV navigation.
+In the pursuit of advancing UAV-based localization techniques, particularly in environments fraught with noise and
+uncertainties, Sliding Mode Filtering (SMF) emerges as a
+compelling solution [13]. Originating from the principles
+of Sliding Mode Control (SMC), a robust control strategy
+distinguished by its resilience against disturbances and model
+in-accuracies, SMF applies these principles to the domain of
+state estimation and filtering [14], [15], [16]
+Sliding Mode Filtering capitalizes on the construction
+of a sliding surface, typically a function of the estimation
+error, and employs a discontinuous control law to drive the
+es-timation errors towards this surface in finite time [8].
+This approach ensures that, once on the sliding surface, the
+system’s estimated states converge to their true values despite
+the presence of noise or other external perturbations. The
+inherent robustness of SMF against uncertainties makes it
+particularly suitable for RSSI-based localization tasks where
+the signal can be significantly affected by multipath effects,
+atmospheric conditions, and other noise sources.
+Recent advancements in sliding mode theory have further
+enhanced the efficacy and applicability of SMF in complex
+systems. For instance, in [17] authors discuss state-of-the-art
+developments in sliding mode techniques, including filters
+that have been tailored for systems with non-linear dynamics and uncertain parameters—characteristics common in
+UAV localization scenarios. Furthermore, the adaptability
+of sliding mode filters in real-time applications underscores
+their potential for improving the accuracy and reliability of
+UAV-based RF source localization [9].
+In RSSI-based systems, precision and the ability to adjust
+to signal fluctuations are crucial for maintaining accurate localization and tracking. The refined filter mechanism
+enhances overall system performance by ensuring smoother
+transition dynamics, making it highly effective in diverse
+engineering applications where robust and adaptable control
+systems are crucial for optimal functionality.
+VOLUME 12, 2024
+
+Incorporating SMF into UAV-based localization systems
+promises significant improvements in the robustness and precision of localization under uncertain conditions. By effectively mitigating the impact of noise on RSSI measurements,
+sliding mode filters pave the way for more accurate and
+dependable localization solutions, addressing one of the primary challenges faced in GPS-denied environments [18].
+This paper expands on our previous work by detailing the
+methodology, simulation results, and comparative analysis of
+the enhanced localization scheme. By addressing the critical
+issue of environmental noise, this study contributes to the
+field of UAV-based localization, offering a more accurate,
+robust, and practical solution for real-world applications.
+The remainder of the paper is arranged as follows: the
+background of RSSI and sliding mode filter are covered
+in Section II. Section III provides the methodology of the
+suggested approach; Section IV discusses simulation results
+to validate the suggested method; and Section V offers the
+study’s conclusion.
+II. BACKGROUND AND PRELIMINARIES
+
+To address the challenges posed by noisy RSSI measurements
+in UAV-based RF source localization, this study introduces
+a background that incorporates sliding mode filters into the
+localization process. The sliding mode filter, known for its
+robustness against disturbances and uncertainties, is applied
+to the RSSI data to produce more accurate distance estimations, thereby improving the localization accuracy of the RF
+source.
+RSSI is a method that determines the power of signal
+strength at the receiver based on a variety of parameters, including transmitting power, receiver and transmitter
+antenna characteristics, and distance between the two. The
+distance between the transmitter and the receiver can be
+calculated using the measured signal strength. In space,
+the power of the signal varies with the seperation between
+the transmitter and the receiver. The follow-ing Friis
+equation [19] can be used to measure this:
+
+
+λ γ
++ N (0, σ )
+(1)
+Pr = Pt Dr Dt
+4πd
+In this formula, Pt represents the power of the signal transmitted, d is the separation between the transmitter and receiver,
+γ denotes the path loss exponent, and λ is the wavelength of
+the signal transmitted. To account for errors from reflections,
+measurements, and other factors, an additive Gaussian noise
+N is incorporated.
+This paper introduces a geometrical approach based on
+RSSI for localizing RF devices when GPS is unavailable.
+The development of this method addresses two significant
+obstacles: the lack of prior location data for the target and
+reliance solely on signal strength measurements by UAVs,
+without additional signal information or direction-finding
+capabilities. To tackle these issues, it is presumed that a
+direct visual connection always exists between the UAVs and
+172411
+
+N. Güzey: Smoother Integral Sliding Mode Filter for RSSI-Based Localization
+
+the target, and that the UAVs can exchange data flawlessly,
+without any communication constraints.
+Sliding Mode Filter (SMF) is an advanced estimation technique that applies the principles of sliding mode control to the
+problem of filtering and state estimation in dynamic systems.
+At its core, SMF aims to robustly estimate the states of a
+system by driving the estimation errors towards a predefined
+sliding surface and ensuring they remain on this surface
+despite disturbances or model uncertainties [14].
+The performance of the sliding mode filter is influenced
+by several critical parameters, including the design of the
+sliding surface, the gain matrix, the coefficient of any integral
+terms, and the characteristics of system noise. The sliding
+surface determines the robustness and convergence speed of
+the system, while the gain matrix controls the response to
+deviations from this surface, where improper tuning can lead
+to chattering or instability [14]. Noise characteristics, such
+as amplitude and frequency, also play a significant role in
+the filter’s effectiveness, as does the system’s sampling rate,
+which impacts the filter’s ability to respond to changes and
+suppress noise. The sensitivity of the filter to these parameters
+requires careful tuning to optimize performance, particularly
+in dynamic environments where real-time adaptation may
+be necessary. Recent advancements in sliding mode control,
+including adaptive techniques, offer promising approaches
+to dynamically adjust these parameters for enhanced performance in varying conditions [15].
+Consider a system described by the given differential
+equation:
+ẋ = f (x, t) + B(x, t)u + w
+
+(2)
+
+where x ∈ Rn represents the state vector of the system. f (x, t)
+is a known function representing the system dynamics. B(x, t)
+is the input matrix and is the control input. w represents the
+process noise or disturbances affecting the system.
+A. SLING SURFACE DESIGN
+
+The sliding surface S(x) is chosen such that the system’s
+behaviour is satisfactory when the system’s trajectory lies on
+this surface. It is typically a function of the estimation error
+e = x − x̂, where x̂ is the estimated state. The design of S(x)
+aims to ensure that the error dynamics are stable and converge
+to zero, i.e., S(x) = 0. A common choice for S(x) in sliding
+mode filters is
+S(x) = C(e) = C(x − x̂)
+
+(3)
+
+where C is a matrix or function designed to shape the error
+dynamics.
+The control law in sliding mode is designated to be discontinuous, forcing the system’s states onto the sliding surface
+in finite time and maintaining it there despite disturbances.
+The control law involves a term that becomes active when
+the system’s states deviate from the sliding surface:
+u = u0 − K .sign(S(x))
+172412
+
+(4)
+
+where L is a gain matrix designed to incorporate the measurement feedback (y) into estimation process. y represents
+the measured output, which is used to update the estimate x̂
+III. METHODOLOGY
+
+The methodology is detailed in subsequent subsections. Initially, the precise 3D Cartesian positions for each UAV are
+determined to enable their movement along two orthogonal
+circles—one in the x-y plane and another in the x-z plane,
+each at a radius R from the center. Then, the angles of
+rotation necessary for the UAVs to orbit the circles while
+preserving a separation of 2R between them are computed.
+These rotational angles are derived based on the variances in
+the power of the signals received. These angles are then used
+to calculate 3 orthogonal vectors for target localization.
+While UAVs offer significant advantages in a wide range
+of applications, their onboard processors typically lack the
+capacity for handling computationally intensive tasks, and
+efficient energy use is crucial for maintaining their mobility and operational endurance. To address these limitations,
+our method offloads the computational burden by having
+UAVs transmit the received signal strength data to a more
+powerful central computer. This central system then calculates the optimal positions for the UAVs by analysing the
+differences in signal strength within the groups, iteratively
+updating and transmitting new position commands to the
+UAVs until they achieve equal signal strength. This approach
+not only conserves the UAVs’ processing power and energy
+but also ensures precise and synchronized adjustments to their
+positions, enhancing the overall accuracy and reliability of the
+localization process which is summarized in Figure 1.
+A. DERIVATION OF FOUR UAVs’ DESIRED INITIAL
+POSTURE
+
+Imagine four UAVs, each outfitted with RSSI receivers, starting from random positions. The initial target locations for
+these UAVs are determined as follows:
+x1d (t0 ) = xc − R cos(α (t0 ))
+yd1 (t0 ) = yc − R sin(α (t0 )) zd1 = zc
+x3d (t0 ) = xc + R cos(α (t0 ))
+yd3 (t0 ) = yc + R sin(α (t0 )) zd3 = zc
+x2d (t0 ) = xc − R sin(β (t0 ))
+yd2 = yc zd3 (t0 ) = zc − R cos(β (t0 ))
+x4d (t0 ) = xc + R cos(β (t0 ))
+yd4 = yc zd4 (t0 ) = zc + R sin(β (t0 ))
+
+(5)
+
+where C(xc , yc , zc ) is the center of the formation, R is the
+radius of the circles, α (t0 ) , and β (t0 ) are the initial rotation
+angles given in Figure 2 defined by user and t0 is the initial
+time. D1 and D3 UAVs form a group in x-y plane while the
+D2 and D4 UAVs form another group in x-z plane.
+The initial positions (5) of the UAVs, operating along the
+x-y and x-z axes, are determined based on two key conditions. Firstly, each UAV must be located at a distance R
+VOLUME 12, 2024
+
+N. Güzey: Smoother Integral Sliding Mode Filter for RSSI-Based Localization
+
+FIGURE 1. The UAVs detect RF signal and communicate with central unit for new position estimates.
+
+In this study, for simplicity, we assume the presence of a
+single UAV on each axis. However, scaling up the number
+of UAVs, for instance to 4n, could potentially improve performance by providing a more robust average of the signals
+received from each group. Nevertheless, such an increase
+in the UAV fleet would come with considerable trade-offs.
+The additional UAVs would not only drive up the financial
+costs, but would also amplify the communication and computational demands, posing significant challenges in managing
+the coordination and data processing for a larger fleet. These
+factors must be carefully considered when balancing performance enhancements against the practical implications of
+scalability.
+B. ROTATING ANGLE ESTIMATION WITH SMOOTHER
+INTEGRAL SLIDING MODE FILTER
+
+The power differences are specified in the following way
+to determine the target’s orientation in both the vertical and
+horizontal planes.
+
+FIGURE 2. The UAVs’ starting and intended positions [5].
+
+from the center. Secondly, the separation between any two
+UAVs should be 2R. Consequently, the UAVs navigate along
+a predefined circle, maintaining a constant distance from each
+other as given in Figure 2. Details on how the rotational angles
+are calculated are provided in the following subsection.
+VOLUME 12, 2024
+
+e1 = P3 − P1
+e2 = P4 − P2
+
+(6)
+
+where P1 , . . . , P4 are acquired powers by D1 , . . . , D4 respectively. e1 is obtained from the difference in signal strengths
+of the first and third UAVs, e2 and is obtained from the
+power differences of the second and fourth UAVs. The error
+dynamics are then presented as
+ė1 = Ṗ3 − Ṗ1
+172413
+
+N. Güzey: Smoother Integral Sliding Mode Filter for RSSI-Based Localization
+
+(7)
+
+ė2 = Ṗ4 − Ṗ2
+
+β̇ = ks1 sign(s2 ) +
+
+and
+
+e2 (τ )dτ
+
+(10)
+
+t0
+
+s1 = ė1 + λe1
+s2 = ė2 + λe2
+
+Then the current rotating angles are found as
+(8)
+
+s1 and s2 are the sliding surfaces which defines the condition
+or manifold that the system’s trajectory is forced to reach and
+maintain. In this study, we want each UAV in the group to
+receive equal power, that is, the power difference between
+them to go to zero.
+when s1 → 0, e1 → 0
+if s1 = 0, ė1 + λe1 = 0, ė1 = −λe1 and e1 (t) = e−λ(t)
+if λ ≫ 0, e1 → 0
+and similar approach to
+if s2 = 0, ė2 + λe2 = 0, ė2 = −λe2 and e2 (t) = e−λ(t)
+if λ≫ 0, e2 → 0
+To determine the target’s horizontal direction, two UAVs
+traveling along the x-y axis are utilized, and to determine
+the target’s vertical direction, UAVs traveling along the x-z
+plane are employed. In order to achieve a zero difference in
+the signal strengths received by the two UAVs, the derivatives
+of α and β are computed. Sliding mode filter is employed and
+derivative of α was defined as the function of s1 and derivative
+of β as the function of s2 .
+The desired rotating angle dynamics are defined as
+α̇ = ks1 sign(s1 )
+β̇ = ks1 sign(s2 )
+
+(9)
+
+with ks1 > 0 and ks2 > 0 are design parameters.
+Chattering in sliding mode control (and by extension, sliding mode filtering) occurs due to the inherent discontinuous
+nature of the control law applied to ensure the system’s
+states reach and stay on the predefined sliding surface. This
+discontinuity arises from the use of a sign function or a similar
+discontinuous function in the control law, which leads to rapid
+switching of the control input.
+In order to mitigate this effect, smoother integral sliding
+mode filter is developed in this study. The error integral is
+incorporated into the algorithm of the traditional sliding mode
+filter to substantially mitigate chattering. This key modification smoothens the control actions, which not only reduces
+noise but also enhances the system’s durability. By integrating
+the error, the filter achieves improved stability and robustness,
+enabling consistent performance even in the face of system
+uncertainties and external disturbances. The integral component of the error also significantly improves tracking accuracy
+and promotes faster error convergence, which is particularly
+valuable in applications such as target tracking with RSSI.
+Then the angle dynamics are calculated as
+α̇ = ks1 sign(s1 ) +
+
+Zt
+e1 (τ )dτ
+t0
+
+172414
+
+Zt
+
+α (t) = α (t0 ) +
+
+Zt
+
+α̇(τ )dτ
+
+t0
+
+β (t) = β (t0 ) +
+
+Zt
+
+β̇(τ )dτ
+
+(11)
+
+t0
+
+Changing α and β in time (11) will automatically change the
+desired locations of the UAVs according to (12). This change
+continues until, e1 and e2 converges to zero or a predefined
+and tolerable error bound.
+x1d (t) = xc − R cos(α (t)) yd1 (t) = yc − R sin(α (t))
+zd1 = zc
+x3d (t) = xc + R cos(α (t)) yd3 (t) = yc + R sin(α (t))
+zd3 = zc
+x2d (t) = xc − R sin(β (t)) yd2 = yc
+zd3 (t) = zc − R cos(β (t))
+x4d (t) = xc + R cos(β (t)) yd4 = yc
+zd4 (t) = zc + R sin(β (t))
+
+(12)
+
+After the angle values are determined, the vector perpendicular to the center of the sphere and the vectors formed by both
+groups of objects will be determined. This vector will pass
+through the source position. To calculate the location of the
+target, it is necessary to find at least two vectors. Different
+vectors can also be calculated by moving the center of the
+system to a different location. The intersection point of these
+vectors calculated at different positions will give the source
+position. The calculation of these vectors is given in the next
+subsection.
+C. DETERMINING THE LINES PASS THROUGH SOURCE
+AND SPHERE CENTER
+
+Let us assume that the sphere center was changed N times
+and N different angle values were calculated according to the
+final position of the UAVs. The final angles for ith iteration,
+where i = 1, . . . , N , at their final value are represented as
+α tf αi and β tf βi where tf αi and tf βi are time instants that
+the angles reached their final value. The final positions of the
+UAVs in each iteration are defined as
+
+
+x1d tf αi = xc − R cos α tf αi
+
+
+yd1 tf αi = yc − R sin α tf αi
+zd1 = zc
+
+
+x3d tf αi = xc + R cos α tf αi
+
+ d
+yd3 tf αi = yc + R sin α tf αi
+z3 = zc
+
+
+d
+x2 tf βi = xc − R sin β tf βi
+
+
+yd2 = yc zd3 tf βi = zc − R cos β tf βi
+VOLUME 12, 2024
+
+N. Güzey: Smoother Integral Sliding Mode Filter for RSSI-Based Localization
+
+FIGURE 3. Rotation of UAVs and line passing through source location and formation center [5].
+
+FIGURE 4. Received signal strengths of UAVs until they reach equal received power.
+
+
+
+x4d tf βi = xc + R cos β tf βi
+
+
+yd4 = yc zd4 tf βi = zc + R sin β tf βi
+(13)
+VOLUME 12, 2024
+
+To calculate the source position, first define a vector through
+D1 and D3, similarly with D2 and D4. These vectors are
+172415
+
+N. Güzey: Smoother Integral Sliding Mode Filter for RSSI-Based Localization
+
+FIGURE 5. Filtered received powers of the UAVs.
+
+perpendicular to each other and they intersect in the center
+of the sapphire that the UAV’s move around. The vector
+perpendicular to these two vectors will pass through target
+position. The vector defined between D1 and D3 is
+
+
+−
+→
+v = [R cos α t
+, R sin α t
+, 0]
+(14)
+f αi
+
+1
+
+f αi
+
+and similarly, between D2 and D4 is
+
+−
+→
+v = [R cos β t
+, 0,R sin β t
+2
+
+f βi
+
+f βi
+
+
+]
+
+(15)
+
+→
+→
+→
+v3 = −
+v1 × −
+v2 is calculated as follows.
+The cross product −
+
+
+
+ 2
+R sin α tf αi 
+sin β tf βi 
+,
+−
+→
+v3 =  −R2 cos α tf αi sin β tf βi  , 
+(16)
+−R2 sin α tf αi cos β tf βi
+→
+Given −
+v and knowing the line passes through the target
+3
+
+position is
+x = R2 sin α tf αi
+
+
+sin β tf βi t
+
+
+y = −R2 cos α tf αi sin β tf βi t
+
+
+z = z − R2 sin α tf αi cos β tf βi t
+
+
+(17)
+
+where t is a parameter. The given procedure is demonstrated
+in Figure 3.
+172416
+
+IV. RESULTS
+
+The suggested method’s performance is described in this
+section. For simulation experiments, target localization
+within a 1 × 1 km2 search area was taken into consideration.
+It is presumed that the target is lying on the ground. UAVs first
+look through the GPS-denied area until they come cross an
+RF signal. Following that, they revolve around the designated
+circles until each group of UAVs has an equal amount of
+power.
+After UAVs detect the presence of the target, they continue their rotation movements until they receive equal signal
+strength. However, as can be seen from the figure, the fluctuation in signal strengths is a bit high. This causes erroneous
+results in location determination which is demonstrated in
+Figure 4.
+Figure 5 shows the signal strengths with the smoother integral sliding mode filter applied, demonstrating significantly
+reduced fluctuations compared to the unfiltered. data. This
+stabilization is critical as it directly correlates with more
+precise location estimates of the RF source. By filtering out
+the noise and minimizing the influence of environmental
+variables, the smoother integral sliding mode filter ensures
+that the UAVs achieve a more consistent and reliable signal
+VOLUME 12, 2024
+
+N. Güzey: Smoother Integral Sliding Mode Filter for RSSI-Based Localization
+
+FIGURE 6. Rotation angles of the UAVs in their predetermined plane.
+
+FIGURE 7. Source localization using proposed algorithm.
+
+reception. The fixing of the rotation angles at the end of the
+algorithm, when equal signal strength is reached, is shown in
+Figure 6.
+When the UAVs in the groups reach equal signal strength,
+the line section passing through the center of the sphere and
+the target location is calculated as specified in (13). The
+rotation movement of the UAVs to receive equal power and
+the calculated line are shown Figure 2. As stated in previous
+work [5], a single accurate target location is insufficient to
+calculate it. For this, the system center is shifted, the UAVs
+come to the position where they will receive equal power, and
+the line calculation is performed again. The point where these
+lines intersect, provides the source location.
+Figure 7 illustrates the process of target detection when
+the received signal strength deviates from the expected
+VOLUME 12, 2024
+
+theoretical signal power, as detailed in equation (1). The analysis was conducted with the sphere center positioned at three
+distinct locations. By calculating the nearest common point
+among the perpendicular lines generated from each scanning
+position [5], this point was identified as the estimated location
+of the target. A series of 100 Monte Carlo simulations were
+conducted, with the RF source’s position randomly varied
+in each instance. The results showed an average error of
+23.7 meters, attributed to a noise variance of 4% in signal
+power.
+V. CONCLUSION
+
+This paper has presented an advanced method for RF source
+localization using UAVs, employing a smoother integral sliding mode filter to enhance the accuracy and reliability of
+172417
+
+N. Güzey: Smoother Integral Sliding Mode Filter for RSSI-Based Localization
+
+RSSI-based localization techniques. Through the integration
+of the error integral into the sliding mode control framework,
+we have successfully mitigated the common issues of chattering and noise sensitivity, which are prevalent in conventional
+sliding mode filters.
+Our simulations demonstrate a significant improvement in
+localization accuracy and robustness against environmental
+noise, underscoring the effectiveness of the smoother integral
+sliding mode filter. This approach not only stabilizes the
+signal fluctuations but also ensures more consistent UAV
+positioning, which is crucial for accurate source detection
+and localization in complex, real-world environments.
+This study primarily focuses on the application of the
+smoother integral sliding mode filter under Gaussian noise
+conditions, commonly encountered in UAV operations. However, future work will expand on these tests by incorporating different noise structures and additional environmental
+factors, such as multipath interference and atmospheric conditions. These extended studies aim to further enhance the
+robustness of our localization method under real-world scenarios.
+To further enhance the filter’s performance in highly
+dynamic environments, future work can incorporate adaptive
+or learning-based approaches. These methods will enable
+the filter to dynamically adjust its parameters in real-time,
+ensuring robust performance even as signal characteristics
+rapidly change.
+While the proposed method demonstrates significant
+potential, there are certain considerations to keep in mind.
+The requirement for a minimum of four UAVs, may present
+challenges in scenarios where resources are constrained.
+Additionally, the method assumes reliable communication
+between UAVs, which could face occasional disruptions
+due to environmental factors such as signal interference or
+obstacles. Although the smoother integral sliding mode filter
+effectively reduces the impact of environmental noise, the
+method’s performance might still be influenced by extreme
+noise conditions or highly complex environments, such as
+dense urban areas. These limitations may create new study
+topics in the future.
+This study contributes to the field of UAV-based localization by providing a robust, practical solution that can be
+deployed in GPS-denied environments, potentially benefiting
+a wide range of applications from military operations to
+emergency response.
+REFERENCES
+[1] H. Shakhatreh, A. H. Sawalmeh, A. Al-Fuqaha, Z. Dou, E. Almaita,
+I. Khalil, N. S. Othman, A. Khreishah, and M. Guizani, ‘‘Unmanned
+aerial vehicles (UAVs): A survey on civil applications and key research
+challenges,’’ IEEE Access, vol. 7, pp. 48572–48634, 2019.
+[2] A. Guerra, B. Guerreiro, and J. Sousa, ‘‘UAV navigation for target tracking
+and 3D localization,’’ IEEE Trans. Aerosp. Electron. Syst., vol. 54, no. 4,
+pp. 1884–1899, Jan. 2018.
+
+172418
+
+[3] Y. Zeng, R. Zhang, and T. J. Lim, ‘‘Wireless communications with
+unmanned aerial vehicles: Opportunities and challenges,’’ IEEE Commun.
+Mag., vol. 54, no. 5, pp. 36–42, May 2016.
+[4] R. Kapoor, K. Bhamidipati, and S. A. Smolka, ‘‘Localization challenges
+in UAV communication networks,’’ IEEE Commun. Mag., vol. 57, no. 1,
+pp. 70–75, May 2019.
+[5] A. Dey, T. Chattopadhyay, and T. Paul, ‘‘Adaptive RSSI-based indoor
+localization using machine learning,’’ IEEE Sensors J., vol. 21, no. 6,
+pp. 7981–7988, May 2021.
+[6] H. Liu, X. Zhang, and L. Zhou, ‘‘RSSI-based indoor localization using
+unmanned aerial vehicle in wireless sensor networks,’’ Sensors, vol. 17,
+no. 10, pp. 1–22, Jun. 2017.
+[7] N. Güzey, ‘‘RF source localization using multiple UAVs through a novel
+geometrical RSSI approach,’’ Drones, vol. 6, no. 12, p. 417, Dec. 2022.
+[8] Y. Shtessel, C. Edwards, L. Fridman, and A. Levant, Sliding Mode Control
+and Observation. Cham, Switzerland: Springer, 2014.
+[9] V. Utkin and A. Poznyak, Advances in Sliding Mode Control: Concept,
+Theory and Implementation. Cham, Switzerland: Springer, 2013.
+[10] S. Jin, R. Kikuuwe, and M. Yamamoto, ‘‘Real-time quadratic sliding mode
+filter for removing noise,’’ Adv. Robot., vol. 26, nos. 8–9, pp. 877–896,
+May 2012.
+[11] M. T. S. Aung, Z. Shi, and R. Kikuuwe, ‘‘A new noise-reduction filter with
+sliding mode and low-pass filtering,’’ in Proc. IEEE Conf. Control Appl.
+(CCA), Oct. 2014, pp. 1029–1034.
+[12] F. Demim, A. Rouigueb, H. Belaidi, A. Messaoui, K. Bensseghieur,
+A. Allam, M. Benatia, A. Nouri, and A. Nemra, ‘‘Smooth sliding mode
+control based technique of an autonomous underwater vehicle based
+localization using obstacle avoidance strategy,’’ in Proc. 20th Int. Conf.
+Informat. Control, Autom. Robot., 2023, pp. 529–537.
+[13] S. Modali and S. Ghosh, ‘‘Sliding mode-based guidance for UAV landing
+on a stationary or moving ground vehicle,’’ IFAC-PapersOnLine, vol. 53,
+no. 1, pp. 453–458, 2020.
+[14] V. Utkin, J. Guldner, and J. Shi, Sliding Mode Control in ElectroMechanical Systems. Boca Raton, FL, USA: CRC Press, 2009.
+[15] S. Spurgeon, ‘‘Adaptive sliding mode control for nonlinear systems: Realtime parameter estimation and control,’’ IEEE Control Syst. Mag., vol. 28,
+no. 5, pp. 19–34, Apr. 2018.
+[16] C. Edwards and S. K. Spurgeon, Sliding Mode Control: Theory and Applications. New York, NY, USA: Taylor & Francis, 1998.
+[17] L. Fridman, J. Moreno, and R. Iriarte, Sliding Modes After the First Decade
+of the 21st Century: State of the Art. Cham, Switzerland: Springer, 2011.
+[18] V. Utkin, Sliding Modes in Control and Optimization. Cham, Switzerland:
+Springer, 2013.
+[19] J. H. Lee and R. M. Buehrer, ‘‘Fundamentals of received signal strengthbased position location,’’ in Handbook of Position Location: Theory,
+Practice, and Advance. Hoboken, NJ, USA: Wiley, 2012, pp. 359–394.
+
+NURBANU GÜZEY was born in Yozgat, Türkiye,
+in 1984. She received the B.S. degree in electronics and communication engineering from Yıldız
+Technical University, İstanbul, Türkiye, in 2006,
+the M.S. degree in electrical engineering from The
+University of Texas at Dallas, Dallas, TX, USA,
+in 2011, and the Ph.D. degree in electrical engineering from Missouri University of Science and
+Technology, Rolla, MO, USA, in 2015.
+She is currently an Assistant Professor with the
+Department of Computer Engineering, Sivas University of Science and Technology, Türkiye. She has authored and co-authored several journal articles
+and conference papers. Her research interests include tracking, localization,
+passive devices, array of antennas, and signal processing.
+
+VOLUME 12, 2024
+
+

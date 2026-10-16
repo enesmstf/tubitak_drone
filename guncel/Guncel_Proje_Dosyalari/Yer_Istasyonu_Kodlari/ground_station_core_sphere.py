@@ -73,6 +73,8 @@ import threading
 import math
 import socket
 import json
+import csv
+from datetime import datetime
 
 try:
     import serial
@@ -94,7 +96,7 @@ FORMATION_ALT_M    = 15.0      # Dronların uçuş irtifası (merkez z_c)
 
 MAX_CENTER_DRIFT_M = 50.0      # Merkezin origin'den max sapması
 
-RSSI_MAX_AGE_S = 30.0
+RSSI_MAX_AGE_S = 10.0
 RSSI_MAX_AGE_S = max(RSSI_MAX_AGE_S, 6.0)
 
 ADJUST_ORIGIN_FOR_DRONE1_POSITION = True
@@ -102,43 +104,64 @@ ADJUST_ORIGIN_FOR_DRONE1_POSITION = True
 COMMAND_LOOP_HZ = 0.2          # 5 saniyede bir döngü (dt = 5s)
 
 # ==========================================
-# KALMAN FİLTRESİ AYARLARI (Rapor 2)
+# FİLTRE VE AÇI KONTROLCÜSÜ SEÇİMİ (AÇMA/KAPAMA ANAHTARLARI)
 # ==========================================
-KALMAN_Q = 1.0
-KALMAN_R = 20.0
+# USE_KALMAN     : True ise RSSI ham verileri Kalman Filtresinden geçirilir (Rapor 2).
+#
+# AÇI KONTROLÜ / SMF MODU (CONTROLLER_MODE):
+#   "SISMF_2026" : N. Güzey, SCI_4 (Mart 2026) Makalesi: s = e + λ·∫e dτ
+#                  (Türevsiz yeni kayan yüzey, chattering tamamen sıfır, en kararlı)
+#   "ISMF_2024"  : N. Güzey, IEEE Access (2024) Makalesi: s = ė + λ·e
+#   "PID"        : Klasik PID kontrolcüsü
+USE_KALMAN      = True
+CONTROLLER_MODE = "SISMF_2026"  # "SISMF_2026", "ISMF_2024", "PID"
 
 # ==========================================
-# PID KONTROL PARAMETRELERİ (Denklem 32)
+# KALMAN FİLTRESİ AYARLARI (Rapor 2, Denklem 24-28)
 # ==========================================
-# α̇ = Kp·e1 + Ki·∫e1·dτ + Kd·ė1
-# β̇ = Kp·e2 + Ki·∫e2·dτ + Kd·ė2
-#
-# Bu katsayılar dönme açısının türevini (radyan/saniye) belirler.
-# Güç farkı dBm cinsinden geldiği için, 1 dB fark ≈ Kp rad/s
-# dönme hızına karşılık gelir.
-#
-# Çok büyük Kp → hızlı ama salınımlı dönüş
-# Çok küçük Kp → yavaş ama kararlı dönüş
-# Ki → kalıcı hatayı (steady-state error) sıfırlar
-# Kd → ani değişimleri sönümler
+KALMAN_Q = 1.0     # Süreç gürültüsü kovaryansı
+KALMAN_R = 20.0    # Ölçüm gürültüsü kovaryansı
+
+# ==========================================
+# SCI_4 (MART 2026) SISMF PARAMETRELERİ (N. Güzey, IJSS 2026)
+# ==========================================
+# s = e + λ · ∫ e dτ
+# α̇ = k · tanh(s / φ) + κ · ∫ e dτ
+SISMF_2026_LAMBDA = 1.0   # λ: Kayan yüzey integral kazancı (SCI_4 Bölüm 4.1)
+SISMF_2026_K      = 0.2   # k: Sign/tanh kazancı (rad/s)
+SISMF_2026_KAPPA  = 0.05  # κ: Düzeltici integral kazancı
+SISMF_2026_PHI    = 2.0   # φ: Sınır katmanı kalınlığı
+SISMF_2026_INTEGRAL_MAX = 30.0
+
+# ==========================================
+# S-ISMF PARAMETRELERİ (Güzey 2024, IEEE Access)
+# ==========================================
+ISMF_KS     = 0.08    # rad/s (sign kazancı)
+ISMF_KI     = 0.008   # rad/s per dBm·s (integral kazancı)
+ISMF_LAMBDA = 1.0     # kayan yüzey eğimi
+ISMF_INTEGRAL_MAX = 20.0
+
+# ==========================================
+# PID KONTROL PARAMETRELERİ (Güzey 2022, Denklem 32)
+# ==========================================
 PID_KP = 0.02     # rad/s per dBm fark
 PID_KI = 0.005    # rad/s per dBm·s (integral)
 PID_KD = 0.01     # rad/s per dBm/s (türev)
-
-# İntegral windup koruması (birikim sınırı)
 PID_INTEGRAL_MAX = 50.0
 
 # Güç farkı bu eşiğin altına düştüğünde "yakınsadı" sayılır (dBm)
 CONVERGENCE_THRESHOLD_DBM = 1.0
 
 # ==========================================
-# KALİBRASYON OFSETLERİ
+# KALİBRASYON OFSETLERİ (kalibrasyon_sonucu_saha.json)
 # ==========================================
+# Saha kalibrasyon verileri (RMSE = 2.29 dB, en düşük hata)
+# P_ref = -78.72 dBm, n = 1.264
 CALIBRATION_OFFSET_DB = {
-    1: -2.1,
-    2:  1.9,
-    3: -0.1,
-    4:  0.2,
+    1:  0.00,    # D1 Kuzey (referans)
+    2: -1.32,    # D2 Güney
+    3:  2.38,    # D3 Doğu
+    4:  1.10,    # D4 Batı
 }
 
 # ==========================================
@@ -166,6 +189,149 @@ def compute_checksum(payload: str) -> int:
 # ==========================================
 # KALMAN FİLTRESİ (Rapor 2, Denklem 24-28)
 # ==========================================
+
+# ==========================================
+# SCI_4 (MART 2026) SMOOTHER INTEGRAL SLIDING MODE FILTER (SISMF)
+# ==========================================
+class SmootherIntegralSlidingModeFilter2026:
+    """
+    N. Güzey, "A smoother integral sliding mode filter approach for
+    distributed moving target tracking", International Journal of Systems
+    Science, March 2026 (SCI_4.pdf).
+
+    Makaledeki Denklemler (Eq 3 - 6):
+      e1 = P1,+ - P1,-  (veya P3 - P1)
+      e2 = P2,+ - P2,-  (veya P4 - P2)
+
+      Yeni Kayan Yüzey (Türevsiz, Doğrudan Hata İntegrali ile, Denklem 3 & 5):
+        s1(t) = e1(t) + λ · ∫ e1(τ) dτ
+        s2(t) = e2(t) + λ · ∫ e2(τ) dτ
+
+      Yumuşatılmış Açı Dinamiği (Denklem 4 & 6):
+        α̇(t) = k · tanh(s1 / φ) + κ · ∫ e1(τ) dτ
+        β̇(t) = k · tanh(s2 / φ) + κ · ∫ e2(τ) dτ
+
+      Açı Güncellemesi:
+        α(t + dt) = α(t) + α̇ · dt
+        β(t + dt) = β(t) + β̇ · dt
+    """
+    def __init__(self, lambda_param=SISMF_2026_LAMBDA, k=SISMF_2026_K,
+                 kappa=SISMF_2026_KAPPA, phi=SISMF_2026_PHI,
+                 integral_max=SISMF_2026_INTEGRAL_MAX):
+        self.lambda_param = float(lambda_param)
+        self.k = float(k)
+        self.kappa = float(kappa)
+        self.phi = float(phi)
+        self.integral_max = float(integral_max)
+        self.error_integral = 0.0
+
+    def compute(self, error, dt):
+        """error = e (dBm), dt = döngü periyodu (s). Döndürür: açı türevi (rad/s)."""
+        self.error_integral += error * dt
+        self.error_integral = max(min(self.error_integral, self.integral_max), -self.integral_max)
+
+        # Denklem 3 & 5: Türevsiz doğrudan integral kayan yüzey
+        s = error + self.lambda_param * self.error_integral
+
+        # Chattering önleyici sınır katmanı
+        soft_sign = math.tanh(s / self.phi)
+
+        # Denklem 4 & 6: Yumuşatılmış açı türevi
+        angle_dot = (self.k * soft_sign) + (self.kappa * self.error_integral)
+
+        # Güvenlik sınırı (max 0.5 rad/s)
+        max_rad_per_sec = 0.5
+        angle_dot = max(min(angle_dot, max_rad_per_sec), -max_rad_per_sec)
+        return angle_dot
+
+    def reset(self):
+        self.error_integral = 0.0
+
+
+class SmootherIntegralSlidingModeFilter:
+    """
+    N. Güzey, "Smoother Integral Sliding Mode Filter for RSSI-Based
+    Localization", IEEE Access, vol. 12, pp. 172410-172418, 2024.
+    DOI: 10.1109/ACCESS.2024.3467994
+
+    Makaledeki denklemler:
+      Güç farkları (Denklem 6):
+        e1 = P3 - P1,  e2 = P4 - P2
+
+      Hata türevleri (Denklem 7):
+        ė1 = Ṗ3 - Ṗ1,  ė2 = Ṗ4 - Ṗ2
+
+      Kayan yüzey (Denklem 8):
+        s1 = ė1 + λ·e1
+        s2 = ė2 + λ·e2
+
+      Klasik SMF - chattering sorunlu (Denklem 9):
+        α̇ = ks · sign(s1)
+        β̇ = ks · sign(s2)
+
+      Yumuşatılmış S-ISMF - chattering YOK (Denklem 10):
+        α̇ = ks · sign(s1) + ki · ∫ e1(τ) dτ
+        β̇ = ks · sign(s2) + ki · ∫ e2(τ) dτ
+
+      Açı güncellemesi (Denklem 11):
+        α(t) = α(t₀) + ∫ α̇(τ) dτ    (sayısal: α += α̇ · dt)
+        β(t) = β(t₀) + ∫ β̇(τ) dτ
+
+    Girdi:  error = e (dBm cinsinden güç farkı)
+    Çıktı:  açı türevi α̇ veya β̇ (rad/s)
+    """
+    def __init__(self, k_s=ISMF_KS, k_i=ISMF_KI, lambda_param=ISMF_LAMBDA,
+                 integral_max=ISMF_INTEGRAL_MAX):
+        self.k_s = k_s                     # ks: sign kazancı
+        self.k_i = k_i                     # ki: integral kazancı
+        self.lambda_param = lambda_param    # λ: kayan yüzey eğimi
+        self.integral_max = integral_max    # Windup koruma sınırı
+        self.error_integral = 0.0           # ∫ e(τ) dτ (birikim)
+        self.prev_error = None              # İlk döngü sıçramasını önlemek için None
+
+    def compute(self, error, dt):
+        """error = e (dBm), dt = döngü periyodu (s). Döndürür: açı türevi (rad/s)."""
+        # İlk döngüde türev sıçramasını önle
+        if self.prev_error is None:
+            self.prev_error = error
+
+        # ── Denklem 7: Hata türevi (sayısal yaklaşım) ──
+        if dt > 0:
+            e_dot = (error - self.prev_error) / dt
+        else:
+            e_dot = 0.0
+
+        # ── Denklem 8: Kayan yüzey ──
+        s = e_dot + self.lambda_param * error
+
+        # ── Sınır katmanlı sign(s) fonksiyonu (Chattering önleyici) ──
+        # sign(s) yerine tanh(s / phi) kullanarak dt=5s olan ayrık zamanda
+        # eksen etrafında titreşimi (chattering) engelliyoruz.
+        phi = 2.0  # Sınır katmanı kalınlığı
+        soft_sign = math.tanh(s / phi)
+
+        # ── Denklem 10: Hata integrali (windup korumalı) ──
+        self.error_integral += error * dt
+        self.error_integral = max(min(self.error_integral, self.integral_max),
+                                  -self.integral_max)
+
+        # ── Denklem 10: Yumuşatılmış açı türevi ──
+        angle_dot = (self.k_s * soft_sign) + (self.k_i * self.error_integral)
+
+        # Güvenlik: Döngü başına maksimum dönüş hızını sınırla (örn: max 0.5 rad/s)
+        max_rad_per_sec = 0.5
+        angle_dot = max(min(angle_dot, max_rad_per_sec), -max_rad_per_sec)
+
+        # ── Sonraki adım için hatayı kaydet ──
+        self.prev_error = error
+        return angle_dot
+
+    def reset(self):
+        """Yeni iterasyon (merkez kaydırma) öncesi sıfırla."""
+        self.error_integral = 0.0
+        self.prev_error = None
+
+
 class ScalarKalmanFilter:
     """
     Tek durumlu skaler Kalman filtresi.
@@ -303,10 +469,24 @@ class DroneLink:
             self.thread.start()
 
     def _reader_loop(self):
+        last_gcs_heartbeat = 0.0
         while not self._stop:
             try:
+                # ── GCS Heartbeat Gönderimi (Failsafe önleme) ──
+                now = time.time()
+                if now - last_gcs_heartbeat > 1.0:
+                    try:
+                        self.connection.mav.heartbeat_send(
+                            mavutil.mavlink.MAV_TYPE_GCS,
+                            mavutil.mavlink.MAV_AUTOPILOT_INVALID,
+                            0, 0, 0
+                        )
+                        last_gcs_heartbeat = now
+                    except Exception:
+                        pass
+
                 msg = self.connection.recv_match(
-                    type=["HEARTBEAT", "GLOBAL_POSITION_INT"],
+                    type=["HEARTBEAT", "GLOBAL_POSITION_INT", "SYS_STATUS"],
                     blocking=True, timeout=1.0
                 )
                 if msg is None:
@@ -322,14 +502,40 @@ class DroneLink:
                         self.lon = msg.lon / 1e7
                         self.relative_alt_m = msg.relative_alt / 1000.0
                         self.last_position_time = time.time()
+                elif msg.get_type() == "SYS_STATUS":
+                    with self.lock:
+                        if not hasattr(self, 'battery_remaining'):
+                            self.battery_remaining = 100
+                        self.battery_remaining = msg.battery_remaining
             except Exception as e:
                 print(f"[UYARI MAVLINK] Drone {self.drone_id}: {e}")
                 time.sleep(1.0)
+
+    def trigger_rtl(self):
+        """Drone'u RTL veya LAND moduna alır (Kritik batarya durumu)."""
+        try:
+            print(f"[ACİL DURUM] Drone {self.drone_id} RTL moduna geçiriliyor!")
+            self.connection.mav.set_mode_send(
+                self.connection.target_system,
+                mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+                6  # ArduCopter RTL mode
+            )
+        except Exception as e:
+            print(f"[UYARI MAVLINK] Drone {self.drone_id} RTL tetiklenemedi: {e}")
 
     def is_ready_for_commands(self):
         with self.lock:
             if time.time() - self.last_heartbeat_time > MAVLINK_HEARTBEAT_TIMEOUT_S:
                 return False, "heartbeat kaybı"
+                
+            # Batarya Kontrolü
+            battery = getattr(self, 'battery_remaining', 100)
+            if battery != -1 and battery < 20:
+                if not getattr(self, 'rtl_triggered', False):
+                    self.trigger_rtl()
+                    self.rtl_triggered = True
+                return False, f"KRİTİK BATARYA (%{battery}) - RTL TETİKLENDİ"
+                
             if not self.armed:
                 return False, "armed değil"
             if self.flightmode != "GUIDED":
@@ -369,6 +575,7 @@ class GroundStation:
     """
 
     # Durum sabitleri
+    STATE_SETUP     = "SETUP"
     STATE_ORBIT     = "ORBIT"
     STATE_CONVERGED = "CONVERGED"
 
@@ -400,33 +607,77 @@ class GroundStation:
         self.alpha = math.pi / 4.0   # x-y düzlemi (D1, D3)
         self.beta  = math.pi / 4.0   # x-z düzlemi (D2, D4)
 
-        # PID kontrolcüler
-        self.pid_alpha = PIDController()  # e1 → α̇
-        self.pid_beta  = PIDController()  # e2 → β̇
+        # ── Açı Kontrolcüsü Seçimi ──
+        if CONTROLLER_MODE == "SISMF_2026":
+            self.angle_controller_alpha = SmootherIntegralSlidingModeFilter2026(
+                lambda_param=SISMF_2026_LAMBDA, k=SISMF_2026_K, kappa=SISMF_2026_KAPPA, phi=SISMF_2026_PHI)
+            self.angle_controller_beta  = SmootherIntegralSlidingModeFilter2026(
+                lambda_param=SISMF_2026_LAMBDA, k=SISMF_2026_K, kappa=SISMF_2026_KAPPA, phi=SISMF_2026_PHI)
+            angle_ctrl = "SISMF (SCI_4.pdf Mart 2026 - Türevsiz Yeni Kayan Yüzey)"
+        elif CONTROLLER_MODE == "ISMF_2024":
+            self.angle_controller_alpha = SmootherIntegralSlidingModeFilter(
+                k_s=ISMF_KS, k_i=ISMF_KI, lambda_param=ISMF_LAMBDA)
+            self.angle_controller_beta  = SmootherIntegralSlidingModeFilter(
+                k_s=ISMF_KS, k_i=ISMF_KI, lambda_param=ISMF_LAMBDA)
+            angle_ctrl = "S-ISMF (Güzey 2024, IEEE Access)"
+        else:
+            self.angle_controller_alpha = PIDController(kp=PID_KP, ki=PID_KI, kd=PID_KD)
+            self.angle_controller_beta  = PIDController(kp=PID_KP, ki=PID_KI, kd=PID_KD)
+            angle_ctrl = "PID (Klasik)"
 
         # Durum makinesi
-        self.state = self.STATE_ORBIT
+        self.state = self.STATE_SETUP  # Formasyon Kurulum Fazı ile başla
         self.convergence_count = 0  # Kaç ardışık döngüde yakınsadı
 
         # Hedef doğruları (iterasyon bazında biriktirme)
         self.direction_lines = []   # [(C, A), ...]
 
         self._lora_stop = False
+        self._start_time = time.time()
+
+        # --- DENEY LOG KAYDI (CSV) ---
+        self.csv_filename = f"sphere_deney_log_{int(time.time())}.csv"
+        try:
+            self.csv_file = open(self.csv_filename, "w", newline="", encoding="utf-8")
+            self.csv_writer = csv.writer(self.csv_file)
+            self.csv_writer.writerow([
+                "Timestamp", "Gecen_Sure_Sn", "Drone_ID",
+                "Ham_RSSI", "Kalman_RSSI", "Kontrolcu_Modu",
+                "Alpha_Deg", "Beta_Deg",
+                "Merkez_Kuzey_M", "Merkez_Dogu_M", "Merkez_Irtifa_M"
+            ])
+            self.csv_file.flush()
+            print(f"[LOG KAYIT] Küre deney verileri kaydediliyor -> {self.csv_filename}")
+        except Exception as e:
+            print(f"[UYARI LOG] CSV dosyası oluşturulamadı: {e}")
+            self.csv_file = None
+            self.csv_writer = None
 
         # ── Başlangıç Mesajları ──
+        kalman_status = "✅ AÇIK" if USE_KALMAN else "❌ KAPALI"
+
         print("=" * 60)
         print("  🌐 KÜRE FORMASYONU YER İSTASYONU 🌐")
-        print("  TÜBİTAK 123E294 - Güzey vd. (2022)")
+        print("  TÜBİTAK 123E294 - Güzey vd. (2022 + 2024 + 2026)")
         if platform_label:
             print(f"  Platform: {platform_label}")
         print("=" * 60)
         print(f"Mod: {'SİMÜLASYON' if simulation else 'GERÇEK UÇUŞ'}")
         print(f"R={FORMATION_RADIUS_M}m | ALT={FORMATION_ALT_M}m | "
               f"Geofence=±{MAX_CENTER_DRIFT_M}m")
-        print(f"PID: Kp={PID_KP}, Ki={PID_KI}, Kd={PID_KD}")
-        print(f"Kalman: Q={KALMAN_Q}, R={KALMAN_R}")
-        print(f"Kalibrasyon: {CALIBRATION_OFFSET_DB}")
-        print(f"Yakınsama eşiği: ±{CONVERGENCE_THRESHOLD_DBM} dBm")
+        print(f"")
+        print(f"  FİLTRELER VE KONTROLCÜ:")
+        print(f"    Kalman Filtresi (RSSI Gürültü):  {kalman_status} (Q={KALMAN_Q}, R={KALMAN_R})")
+        print(f"    Açı Kontrolcüsü / SMF:           {angle_ctrl}")
+        if CONTROLLER_MODE == "SISMF_2026":
+            print(f"      SISMF_2026: λ={SISMF_2026_LAMBDA}, k={SISMF_2026_K}, κ={SISMF_2026_KAPPA}, φ={SISMF_2026_PHI}")
+        elif CONTROLLER_MODE == "ISMF_2024":
+            print(f"      ISMF_2024:  ks={ISMF_KS}, ki={ISMF_KI}, λ={ISMF_LAMBDA}")
+        else:
+            print(f"      PID:        Kp={PID_KP}, Ki={PID_KI}, Kd={PID_KD}")
+        print(f"")
+        print(f"  Kalibrasyon (Saha): {CALIBRATION_OFFSET_DB}")
+        print(f"  Yakınsama eşiği: ±{CONVERGENCE_THRESHOLD_DBM} dBm")
 
         if BENCH_TEST_MODE:
             print("\n" + "!" * 60)
@@ -559,22 +810,54 @@ class GroundStation:
             drone_id = int(parts[0])
             if len(parts) != 3:
                 return
-            rssi = int(parts[1])
+            
+            # Checksum'ı orijinal ham string (parts) üzerinden doğrula!
+            body = f"N{parts[0]},{parts[1]}"
             chk = int(parts[2])
-            body = f"N{drone_id},{rssi}"
             if chk != compute_checksum(body):
                 print(f"[UYARI] Checksum hatalı: '{line}'")
                 return
+
+            drone_id = int(parts[0])
+            rssi = float(parts[1])
+            
             if drone_id not in self.pixhawk_ports and not self.simulation:
                 return
 
             with self.rssi_lock:
                 cal = rssi + CALIBRATION_OFFSET_DB.get(drone_id, 0.0)
-                if drone_id not in self.kalman_filters:
-                    self.kalman_filters[drone_id] = ScalarKalmanFilter(cal)
-                filt = self.kalman_filters[drone_id].update(cal)
+
+                # ── Kalman Filtresi (açma/kapama) ──
+                if USE_KALMAN:
+                    if drone_id not in self.kalman_filters:
+                        self.kalman_filters[drone_id] = ScalarKalmanFilter(cal)
+                    filt = self.kalman_filters[drone_id].update(cal)
+                else:
+                    filt = cal   # Ham kalibrasyon uygulanmış değer
+
                 self.rssi_data[drone_id] = (filt, time.time())
                 self.window_samples.setdefault(drone_id, []).append(filt)
+
+                # CSV'ye anlık veri kaydet
+                if getattr(self, "csv_writer", None):
+                    try:
+                        elapsed = time.time() - self._start_time
+                        self.csv_writer.writerow([
+                            datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3],
+                            f"{elapsed:.2f}",
+                            drone_id,
+                            f"{cal:.2f}",
+                            f"{filt:.2f}",
+                            CONTROLLER_MODE,
+                            f"{math.degrees(self.alpha):.2f}",
+                            f"{math.degrees(self.beta):.2f}",
+                            f"{self.center_y:.2f}",
+                            f"{self.center_x:.2f}",
+                            f"{self.center_z:.2f}"
+                        ])
+                        self.csv_file.flush()
+                    except Exception:
+                        pass
 
                 # UDP yayını (Radar GUI)
                 try:
@@ -673,34 +956,33 @@ class GroundStation:
             4: (d4_north, d4_east, d4_alt),
         }
 
-    def compute_augmented_point(self):
+    def compute_direction_vector(self):
         """
-        Geçiş noktası A hesabı (Rapor Denklem 36):
-          ra   = |R · cos(β)|
-          zaug = zc + R · sin(α) · sin(β)
-          xaug = xc - ra · sin(α)
-          yaug = yc - ra · cos(α)
+        Merkez C'den hedefe giden yön vektörünü çapraz çarpım (v1 x v2) ile bulur.
+        (Makale Denklem 16-17)
         """
         R = FORMATION_RADIUS_M
-        ra = abs(R * math.cos(self.beta))
-        x_aug = self.center_x - ra * math.sin(self.alpha)
-        y_aug = self.center_y - ra * math.cos(self.alpha)
-        z_aug = self.center_z + R * math.sin(self.alpha) * math.sin(self.beta)
+        # Grup 1 (D1-D3) yatay ekseni: (cos_a, sin_a, 0)
+        v1 = (R * math.cos(self.alpha), R * math.sin(self.alpha), 0.0)
+        
+        # Grup 2 (D2-D4) dikey ekseni: (cos_b, 0, sin_b)
+        # Not: Bench modunda da v2'yi normal şekilde hesaplıyoruz, sadece
+        # hareketi MAVLink'e yatayda gönderiyoruz. Vektör hesabı 3D kalmalı.
+        v2 = (R * math.cos(self.beta), 0.0, R * math.sin(self.beta))
 
-        return x_aug, y_aug, z_aug
+        # Çapraz çarpım: v3 = v1 x v2
+        v3_x = v1[1] * v2[2] - v1[2] * v2[1]
+        v3_y = v1[2] * v2[0] - v1[0] * v2[2]
+        v3_z = v1[0] * v2[1] - v1[1] * v2[0]
 
-    def compute_direction_vector(self, x_aug, y_aug, z_aug):
-        """
-        Merkez C'den geçiş noktası A'ya yön vektörü.
-        Bu vektör, hedefin konumunu gösterir (Denklem 37).
-        """
-        dx = self.center_x - x_aug
-        dy = self.center_y - y_aug
-        dz = self.center_z - z_aug
-        mag = math.sqrt(dx*dx + dy*dy + dz*dz)
-        if mag < 0.001:
+        if BENCH_TEST_MODE:
+            v3_z = 0.0  # Sadece yatay hareket
+
+        mag = math.sqrt(v3_x**2 + v3_y**2 + v3_z**2)
+        if mag < 1e-6:
             return 0.0, 0.0, 0.0
-        return dx / mag, dy / mag, dz / mag
+            
+        return v3_x / mag, v3_y / mag, v3_z / mag
 
     def update_rotation_angles(self, rssi_snap, dt):
         """
@@ -718,23 +1000,29 @@ class GroundStation:
         alpha_dot = 0.0
         beta_dot  = 0.0
 
+        MAX_ANGLE_STEP_RAD = math.radians(8)
+
         # ── Grup 1: D1, D3 → α ──
         if have_g1:
-            e1 = rssi_snap[3] - rssi_snap[1]
-            alpha_dot = self.pid_alpha.compute(e1, dt)
-            self.alpha += alpha_dot * dt
-            # α'yı 0..2π arasında tut
-            self.alpha = self.alpha % (2 * math.pi)
+             e1 = rssi_snap[3] - rssi_snap[1]
+             alpha_dot = self.angle_controller_alpha.compute(e1, dt)
+             delta_alpha = alpha_dot * dt
+             delta_alpha = max(min(delta_alpha, MAX_ANGLE_STEP_RAD), -MAX_ANGLE_STEP_RAD)
+             self.alpha += delta_alpha
+             # α'yı 0..2π arasında tut
+             self.alpha = self.alpha % (2 * math.pi)
         else:
-            missing = [d for d in [1, 3] if d not in rssi_snap]
-            print(f"[UYARI] Grup 1 (D1/D3) taze değil. Eksik: {missing}. α sabit.")
+             missing = [d for d in [1, 3] if d not in rssi_snap]
+             print(f"[UYARI] Grup 1 (D1/D3) taze değil. Eksik: {missing}. α sabit.")
 
         # ── Grup 2: D2, D4 → β ──
         if have_g2 and not BENCH_TEST_MODE:
-            e2 = rssi_snap[4] - rssi_snap[2]
-            beta_dot = self.pid_beta.compute(e2, dt)
-            self.beta += beta_dot * dt
-            self.beta = self.beta % (2 * math.pi)
+             e2 = rssi_snap[4] - rssi_snap[2]
+             beta_dot = self.angle_controller_beta.compute(e2, dt)
+             delta_beta = beta_dot * dt
+             delta_beta = max(min(delta_beta, MAX_ANGLE_STEP_RAD), -MAX_ANGLE_STEP_RAD)
+             self.beta += delta_beta
+             self.beta = self.beta % (2 * math.pi)
         elif have_g2 and BENCH_TEST_MODE:
             e2 = rssi_snap[4] - rssi_snap[2]
             # β donduruldu ama e2'yi logluyoruz
@@ -772,6 +1060,19 @@ class GroundStation:
 
         positions = self.compute_drone_positions()
 
+        # ── Güvenlik: Minimum mesafe / çarpışma kontrolü ──
+        MIN_DRONE_DIST_M = 3.0  # Dronlar arası olması gereken minimum mesafe (m)
+        points = list(positions.values())
+        for i in range(len(points)):
+            for j in range(i + 1, len(points)):
+                d1 = points[i]
+                d2 = points[j]
+                dist = math.sqrt((d1[0]-d2[0])**2 + (d1[1]-d2[1])**2 + (d1[2]-d2[2])**2)
+                if dist < MIN_DRONE_DIST_M:
+                    print(f"[KRİTİK GÜVENLİK] ÇARPIŞMA RİSKİ! İki hedef arası mesafe sadece {dist:.1f}m. Komutlar IPTAL!")
+                    # TODO: Otonom modda LOITER'e geçirilebilir, şimdilik tehlikeli pozisyona gitmesini engelliyoruz.
+                    return
+
         for drone_id, (north_m, east_m, alt_m) in positions.items():
             link = self.drone_links.get(drone_id)
             if link is None:
@@ -786,26 +1087,32 @@ class GroundStation:
                 self.origin_lat, self.origin_lon, north_m, east_m
             )
 
+            # MAVLink type_mask: x, y, z VE YAW aktif (diğerleri iptal).
+            # 0b0000101111111000 = 0x0BF8 = 3064
+            # Bit 11=0 (yaw'ı kullan), Bit 12=1 (yaw_rate yoksay)
+            type_mask = 0x0BF8
+            fixed_yaw_rad = 0.0  # Sabit kuzeye bak (anten polarizasyonunu sabit tut)
+
             conn = link.connection
             if hasattr(conn, "mav"):
                 conn.mav.set_position_target_global_int_send(
                     0,
                     conn.target_system, conn.target_component,
                     mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT_INT,
-                    0b0000111111111000,
+                    type_mask,
                     int(target_lat * 1e7),
                     int(target_lon * 1e7),
                     alt_m,
-                    0, 0, 0, 0, 0, 0, 0, 0
+                    0, 0, 0, 0, 0, 0, fixed_yaw_rad, 0
                 )
                 print(f"[MAVLINK] Drone {drone_id} -> "
                       f"LAT:{target_lat:.6f} LON:{target_lon:.6f} ALT:{alt_m:.1f}m "
-                      f"(N:{north_m:.1f}m E:{east_m:.1f}m)")
+                      f"(N:{north_m:.1f}m E:{east_m:.1f}m) YAW:0°")
             else:
                 conn.set_position_target_global_int_send(
-                    0, 0, 0, 6, 0,
+                    0, 0, 0, 6, type_mask,
                     int(target_lat * 1e7), int(target_lon * 1e7), alt_m,
-                    0, 0, 0, 0, 0, 0, 0, 0
+                    0, 0, 0, 0, 0, 0, fixed_yaw_rad, 0
                 )
 
     # ─────────────────────────────────────────────
@@ -813,12 +1120,36 @@ class GroundStation:
     # ─────────────────────────────────────────────
     def shift_center_toward_target(self):
         """
-        Yakınsama sağlandığında geçiş noktası A hesaplanır,
-        C→A doğrusu boyunca merkez 3 metre kaydırılır.
-        Ardından PID sıfırlanır ve yeni iterasyona geçilir.
+        Yakınsama sağlandığında yön vektörü hesaplanır ve
+        merkez, bu doğru boyunca adım adım kaydırılır.
+        Yön (işaret) belirsizliğini ortalama RSSI değişimiyle çözer.
         """
-        x_aug, y_aug, z_aug = self.compute_augmented_point()
-        dir_x, dir_y, dir_z = self.compute_direction_vector(x_aug, y_aug, z_aug)
+        dir_x, dir_y, dir_z = self.compute_direction_vector()
+
+        # ── İşaret Belirsizliği Çözümü (±v3) ──
+        # Kaydırma öncesi ortalama sinyal gücünü al (Thread-safe)
+        current_avg_rssi = -100.0
+        with self.rssi_lock:
+            if self.rssi_data:
+                current_avg_rssi = sum(v[0] for v in self.rssi_data.values()) / len(self.rssi_data)
+        
+        if not hasattr(self, 'last_shift_avg_rssi'):
+            self.last_shift_avg_rssi = None
+            self.direction_sign = 1.0
+
+        if self.last_shift_avg_rssi is not None:
+            # Gürültü histerezisi: Sinyal bariz düştüyse (örn. -1.0 dBm) yönü çevir.
+            if current_avg_rssi < self.last_shift_avg_rssi - 1.0:
+                print(f"[UYARI] Sinyal bariz zayıfladı ({self.last_shift_avg_rssi:.1f} -> {current_avg_rssi:.1f} dBm). Yön ters çevriliyor!")
+                self.direction_sign *= -1.0
+            else:
+                print(f"[BİLGİ] Sinyal güçlendi veya sabit ({current_avg_rssi:.1f} dBm). Yön doğru.")
+                
+        self.last_shift_avg_rssi = current_avg_rssi
+
+        dir_x *= self.direction_sign
+        dir_y *= self.direction_sign
+        dir_z *= self.direction_sign
 
         step_m = 3.0  # Her iterasyonda merkez 3m kaydırılır
 
@@ -827,22 +1158,22 @@ class GroundStation:
         if not BENCH_TEST_MODE:
             self.center_z += dir_z * step_m
 
-        # Geofence
+        # ── Geofence (Yatay ve Dikey) ──
+        MIN_ALT_M = 5.0
+        MAX_ALT_M = 30.0
         self.center_x = max(min(self.center_x, MAX_CENTER_DRIFT_M), -MAX_CENTER_DRIFT_M)
         self.center_y = max(min(self.center_y, MAX_CENTER_DRIFT_M), -MAX_CENTER_DRIFT_M)
+        self.center_z = max(min(self.center_z, MAX_ALT_M), MIN_ALT_M)
 
         # Doğruyu kaydet
         self.direction_lines.append({
             'center': (self.center_x, self.center_y, self.center_z),
-            'augmented': (x_aug, y_aug, z_aug),
             'direction': (dir_x, dir_y, dir_z),
             'alpha_deg': math.degrees(self.alpha),
             'beta_deg': math.degrees(self.beta),
         })
 
         print(f"\n{'*' * 55}")
-        print(f"[YAKINSAMA] Geçiş noktası A = "
-              f"({x_aug:.1f}, {y_aug:.1f}, {z_aug:.1f})m")
         print(f"[YAKINSAMA] Hedef yön vektörü = "
               f"({dir_x:.3f}, {dir_y:.3f}, {dir_z:.3f})")
         print(f"[YAKINSAMA] Merkez {step_m}m kaydırıldı → "
@@ -851,10 +1182,49 @@ class GroundStation:
         print(f"{'*' * 55}\n")
 
         # PID sıfırla, yeni iterasyona başla
-        self.pid_alpha.reset()
-        self.pid_beta.reset()
+        self.angle_controller_alpha.reset()
+        self.angle_controller_beta.reset()
         self.convergence_count = 0
         self.state = self.STATE_ORBIT
+
+    def check_formation_reached(self):
+        """
+        Dronların fiziksel olarak atanmış hedeflerine (slotlarına)
+        ulaşıp ulaşmadığını kontrol eder.
+        """
+        if self.origin_lat is None or self.origin_lon is None:
+            return False
+
+        positions = self.compute_drone_positions()
+        TOLERANCE_M = 3.5  # Slot'a ulaşma toleransı (m) - GPS gürültüsü düşünülerek esnetildi
+        
+        all_reached = True
+        for drone_id, (north_m, east_m, alt_m) in positions.items():
+            link = self.drone_links.get(drone_id)
+            if not link or not link.armed or link.lat is None:
+                all_reached = False
+                break
+            
+            target_lat, target_lon = offset_latlon(
+                self.origin_lat, self.origin_lon, north_m, east_m
+            )
+            
+            # 3D mesafe hesabı (haversine + irtifa)
+            dlat = (link.lat - target_lat) * math.pi / 180.0
+            dlon = (link.lon - target_lon) * math.pi / 180.0
+            a = math.sin(dlat/2)**2 + math.cos(target_lat * math.pi / 180.0) * \
+                math.cos(link.lat * math.pi / 180.0) * math.sin(dlon/2)**2
+            c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+            dist_xy = EARTH_RADIUS_M * c
+            dist_z = alt_m - link.relative_alt_m
+            
+            dist_3d = math.sqrt(dist_xy**2 + dist_z**2)
+            
+            if dist_3d > TOLERANCE_M:
+                print(f"[SETUP] Drone {drone_id} hedefine uzağında: {dist_3d:.1f}m (Tolerans: {TOLERANCE_M}m)")
+                all_reached = False
+                
+        return all_reached
 
     # ─────────────────────────────────────────────
     # ANA DÖNGÜ
@@ -862,6 +1232,9 @@ class GroundStation:
     def run(self):
         print("\n[BİLGİ] Küre Formasyonu Döngüsü Başlıyor. Ctrl+C ile durdurun.")
         dt = 1.0 / COMMAND_LOOP_HZ  # 5 saniye
+        
+        setup_start = time.time()
+        SETUP_TIMEOUT_S = 120
 
         while True:
             loop_start = time.monotonic()
@@ -873,22 +1246,66 @@ class GroundStation:
                   f"E:{self.center_x:.1f}m N:{self.center_y:.1f}m "
                   f"ALT:{self.center_z:.1f}m")
 
-            # 1) Açı güncelleme (PID)
-            e1, e2 = self.update_rotation_angles(rssi, dt)
-
-            # 2) Drone pozisyonlarını hesapla ve gönder
-            self.send_mavlink_commands()
-
-            # 3) Yakınsama kontrolü
-            if self.convergence_count >= 3:
-                print("[DURUM] → CONVERGED! Merkez kaydırılıyor...")
-                self.state = self.STATE_CONVERGED
-                self.shift_center_toward_target()
+            if self.state == self.STATE_SETUP:
+                # Sadece pozisyon gönder, PID/Açı güncelleme
+                self.send_mavlink_commands()
+                print("[SETUP] Dronların başlangıç pozisyonlarına ulaşması bekleniyor...")
+                if self.check_formation_reached():
+                    print("[SETUP] Tüm dronlar formasyonda! ORBIT moduna geçiliyor.")
+                    self.state = self.STATE_ORBIT
+                elif time.time() - setup_start > SETUP_TIMEOUT_S:
+                    print(f"[UYARI] Setup aşamasında {SETUP_TIMEOUT_S}s zaman aşımı! Toleransla ORBIT moduna geçiliyor.")
+                    self.state = self.STATE_ORBIT
+                    
+            elif self.state in [self.STATE_ORBIT, self.STATE_CONVERGED]:
+                # 1) Açı güncelleme (PID)
+                e1, e2 = self.update_rotation_angles(rssi, dt)
+    
+                # 2) Drone pozisyonlarını hesapla ve gönder
+                self.send_mavlink_commands()
+    
+                # 3) Yakınsama kontrolü
+                if self.convergence_count >= 3:
+                    print("[DURUM] → CONVERGED! Merkez kaydırılıyor...")
+                    self.state = self.STATE_CONVERGED
+                    self.shift_center_toward_target()
 
             print("=" * 55 + "\n")
 
             elapsed = time.monotonic() - loop_start
             time.sleep(max(0.0, dt - elapsed))
+
+    def compute_target_least_squares(self):
+        """
+        Biriken doğrulardan (direction_lines) hedefin konumunu
+        En Küçük Kareler (Least Squares) yöntemi ile kestirir.
+        """
+        if len(self.direction_lines) < 2:
+            return None
+            
+        import numpy as np
+        
+        # M = sum(I - v*v^T)
+        # b = sum((I - v*v^T) * p)
+        M = np.zeros((3, 3))
+        b = np.zeros(3)
+        I = np.eye(3)
+        
+        for dl in self.direction_lines:
+            c = np.array(dl['center'])
+            v = np.array(dl['direction'])
+            # Normalize v just in case
+            v = v / np.linalg.norm(v)
+            
+            projection = I - np.outer(v, v)
+            M += projection
+            b += projection.dot(c)
+            
+        try:
+            target = np.linalg.solve(M, b)
+            return target
+        except np.linalg.LinAlgError:
+            return None
 
     def shutdown(self):
         self._lora_stop = True
@@ -900,16 +1317,30 @@ class GroundStation:
         except Exception:
             pass
 
+        # CSV dosyasını kapat
+        if getattr(self, "csv_file", None):
+            try:
+                self.csv_file.flush()
+                self.csv_file.close()
+                print(f"[LOG KAYIT] Deney verileri başarıyla kapatıldı -> {self.csv_filename}")
+            except Exception:
+                pass
+
         # Son rapor
         if self.direction_lines:
             print("\n" + "=" * 55)
             print("[RAPOR] Hesaplanan hedef doğruları:")
             for i, dl in enumerate(self.direction_lines, 1):
                 c = dl['center']
-                a = dl['augmented']
                 d = dl['direction']
                 print(f"  #{i}: C=({c[0]:.1f},{c[1]:.1f},{c[2]:.1f}) "
-                      f"A=({a[0]:.1f},{a[1]:.1f},{a[2]:.1f}) "
                       f"Yön=({d[0]:.3f},{d[1]:.3f},{d[2]:.3f}) "
                       f"α={dl['alpha_deg']:.1f}° β={dl['beta_deg']:.1f}°")
+                      
+            target = self.compute_target_least_squares()
+            if target is not None:
+                print(f"\n[HEDEF] En Küçük Kareler Kestirimi (Least Squares):")
+                print(f"        Doğu(X): {target[0]:.2f}m")
+                print(f"        Kuzey(Y): {target[1]:.2f}m")
+                print(f"        İrtifa(Z): {target[2]:.2f}m")
             print("=" * 55)

@@ -53,6 +53,8 @@ import threading
 import math
 import socket
 import json
+import csv
+from datetime import datetime
 
 try:
     import serial
@@ -73,7 +75,7 @@ FORMATION_DISTANCE_M = 5.0
 FORMATION_ALT_M = 15.0
 
 # Geofence: sanal merkezin origin'den sapabileceği maksimum mesafe (metre)
-MAX_CENTER_DRIFT_M = 20.0
+MAX_CENTER_DRIFT_M = 50.0
 
 # RSSI verisinin "taze" sayılacağı maksimum yaş
 RSSI_MAX_AGE_S = 30.0
@@ -85,19 +87,33 @@ ADJUST_ORIGIN_FOR_DRONE1_POSITION = True
 COMMAND_LOOP_HZ = 0.2  # 1/0.2 = 5 saniyede bir döngü (okunması kolay olsun diye yavaşlatıldı)
 
 # ==========================================
-# KALMAN FİLTRESİ AYARLARI (Rapor 2'deki yönteme göre)
+# FİLTRE VE KONTROL MODU SEÇİMİ
 # ==========================================
-# Q: SÜREÇ gürültüsü varyansı - gerçek RSSI değerinin örnekler arasında ne
-#    kadar değişebileceğine dair beklentimiz. Büyütülürse filtre yeni
-#    ölçümlere daha hızlı güven duyar (daha az gecikme, daha az yumuşatma).
-# R: ÖLÇÜM gürültüsü varyansı - LoRa/RSSI donanımınızın tek bir ölçümdeki
-#    tipik gürültü seviyesi (dB^2 cinsinden). Büyütülürse filtre ölçümlere
-#    daha az güvenir, daha ağır yumuşatma yapar.
-# Bu iki sabit, sahada gözlemlediğiniz gerçek RSSI gürültü seviyesine göre
-# kalibre edilmelidir (rapordaki gibi: durağan bir kaynağın RSSI'sının
-# std sapmasını ölçüp R'yi ona göre ayarlayın).
+# NOT: Deney verisi (CSV) toplanırken bu ayarlara dokunmanıza GEREK YOKTUR!
+#      Kod her pakette 4 senaryoyu da (Ham, Kalman, SISMF, Kalman+SISMF)
+#      aynı anda hesaplayıp kaydeder.
+#
+# Bu ayarlar sadece İHA'ların fiziki formasyon sürüşünde hangisini baz alacağını belirler:
+# 1) USE_KALMAN = True  ve USE_SISMF = True  -> ZİNCİR COMBO (Kalman + SISMF)
+# 2) USE_KALMAN = False ve USE_SISMF = True  -> Sadece SISMF (SCI_4 2026) [ÖNERİLEN]
+# 3) USE_KALMAN = True  ve USE_SISMF = False -> Sadece Kalman (Rapor 2)
+# 4) Her ikisi False                         -> HAM (Filtresiz ham RSSI)
+USE_KALMAN = True  # True ise Kalman Filtresi devrede
+USE_SISMF  = True   # True ise SCI_4 (2026) Smoother Integral Sliding Mode Filter devrede
+
+# --- KALMAN PARAMETRELERİ (Rapor 2) ---
 KALMAN_Q = 1.0
 KALMAN_R = 20.0
+
+# --- S-ISMF PARAMETRELERİ (N. Güzey, SCI_4.pdf, Mart 2026) ---
+# s(t) = e(t) + λ · ∫ e(τ) dτ
+# ẋ(t) = k · tanh(s(t) / φ) + κ · ∫ e(τ) dτ
+# Ayrık LoRa telemetri frekansı (dt ≈ 1-2 sn) için optimize edilmiş değerler:
+SISMF_LAMBDA = 0.02   # λ: Kayan yüzey integral kazancı
+SISMF_K      = 0.3    # k: Kayan yüzey sign/tanh hız kazancı (dB/s)
+SISMF_KAPPA  = 0.008  # κ: Düzeltici integral kazancı
+SISMF_PHI    = 2.5    # φ: Sınır katmanı kalınlığı (chattering sönümleyici)
+SISMF_INTEGRAL_MAX = 5.0 # Windup koruması (aşırı birikimi engelleme sınırı)
 
 # ==========================================
 # DRONE KALİBRASYON OFSETLERİ (donanım dengesizliğini düzeltir)
@@ -112,7 +128,7 @@ CALIBRATION_OFFSET_DB = {
 # ==========================================
 # TEST MODU AYARI (PERVANESİZ MASAÜSTÜ TEST İÇİN)
 # ==========================================
-BENCH_TEST_MODE = True
+BENCH_TEST_MODE = False
 
 if BENCH_TEST_MODE:
     AIRBORNE_RELATIVE_ALT_THRESHOLD_M = -10.0
@@ -170,6 +186,104 @@ class ScalarKalmanFilter:
         self.p = (1.0 - w) * p_pred
 
         return self.x
+
+
+# ==========================================
+# SCI_4 (MART 2026) SMOOTHER INTEGRAL SLIDING MODE FILTER (SISMF)
+# ==========================================
+class SmootherIntegralSlidingModeFilter2026:
+    """
+    N. Güzey, "A smoother integral sliding mode filter approach for
+    distributed moving target tracking", International Journal of Systems
+    Science, March 2026 (SCI_4.pdf).
+
+    Skaler RSSI Sinyal Filtresi (Durum Gözlemcisi):
+      e(t) = measurement - state
+      I_e(t) = ∫ e(τ) dτ
+      s(t) = e(t) + λ · I_e(t)               (Denklem 3 & 5)
+      ẋ(t) = k · tanh(s(t) / φ) + κ · I_e(t) (Denklem 4 & 6)
+      state(t + dt) = state(t) + ẋ(t) · dt
+    """
+    def __init__(self, initial_value, lambda_param=SISMF_LAMBDA, k=SISMF_K,
+                 kappa=SISMF_KAPPA, phi=SISMF_PHI, integral_max=SISMF_INTEGRAL_MAX):
+        self.state = float(initial_value)
+        self.lambda_param = float(lambda_param)
+        self.k = float(k)
+        self.kappa = float(kappa)
+        self.phi = float(phi)
+        self.integral_max = float(integral_max)
+        self.error_integral = 0.0
+        self.last_time = None
+
+    def update(self, measurement, current_time=None):
+        if current_time is None:
+            current_time = time.time()
+
+        if self.last_time is None:
+            dt = 1.0
+        else:
+            dt = max(min(current_time - self.last_time, 5.0), 0.05)
+        self.last_time = current_time
+
+        error = float(measurement) - self.state
+        self.error_integral += error * dt
+        self.error_integral = max(min(self.error_integral, self.integral_max), -self.integral_max)
+
+        # Kayan yüzey (SCI_4 Denklem 3 & 5)
+        s = error + self.lambda_param * self.error_integral
+
+        # Yumuşatılmış sign (Chattering önleyici)
+        soft_sign = math.tanh(s / self.phi)
+
+        # Türev ve durum güncellemesi (SCI_4 Denklem 4 & 6)
+        state_dot = (self.k * soft_sign) + (self.kappa * self.error_integral)
+        self.state += state_dot * dt
+        return self.state
+
+    def reset(self):
+        self.error_integral = 0.0
+        self.last_time = None
+
+
+class AxisSISMFController:
+    """
+    SCI_4 (2026) Makalesindeki Denklem 3-6'nın Artı Formasyonu Eksenel
+    (Kuzey-Güney ve Doğu-Batı) Diferansiyel Karar Motoruna Uygulanması.
+
+    Hata sinyali: e = delta_dbm (örn: Kuzey - Güney)
+    Kayan yüzey : s = e + λ · ∫ e dτ
+    Hız komutu  : v = k · tanh(s / φ) + κ · ∫ e dτ
+    Adım (m)    : shift = clip(v * dt, -5.0, 5.0)
+    """
+    def __init__(self, lambda_param=SISMF_LAMBDA, k=0.5, kappa=0.02,
+                 phi=SISMF_PHI, integral_max=SISMF_INTEGRAL_MAX):
+        self.lambda_param = float(lambda_param)
+        self.k = float(k)           # Kayan yüzey bileşeni
+        self.kappa = float(kappa)   # İntegral bileşeni
+        self.phi = float(phi)
+        self.integral_max = float(integral_max)
+        self.error_integral = 0.0
+
+    def update_shift(self, error, dt=5.0):
+        if error is None:
+            return 0.0
+        
+        self.error_integral += error * dt
+        self.error_integral = max(min(self.error_integral, self.integral_max), -self.integral_max)
+
+        # Kayan yüzey (SCI_4 Denklem 3 & 5)
+        s = error + self.lambda_param * self.error_integral
+
+        # Yumuşatılmış sign
+        soft_sign = math.tanh(s / self.phi)
+
+        # Hız ve Adım
+        velocity = (self.k * soft_sign) + (self.kappa * self.error_integral)
+        shift = max(min(velocity * dt, 5.0), -5.0)
+        return shift
+
+    def reset(self):
+        self.error_integral = 0.0
 
 
 # ==========================================
@@ -232,6 +346,7 @@ class DroneLink:
         self.lat = None
         self.lon = None
         self.relative_alt_m = None
+        self.battery_remaining = 100
         self.last_heartbeat_time = 0.0
         self.last_position_time = 0.0
 
@@ -243,6 +358,7 @@ class DroneLink:
             self.lat = connection.lat
             self.lon = connection.lon
             self.relative_alt_m = connection.relative_alt_m
+            self.battery_remaining = 100
             self.last_heartbeat_time = time.time()
             self.last_position_time = time.time()
         else:
@@ -253,7 +369,7 @@ class DroneLink:
         while not self._stop:
             try:
                 msg = self.connection.recv_match(
-                    type=["HEARTBEAT", "GLOBAL_POSITION_INT"],
+                    type=["HEARTBEAT", "GLOBAL_POSITION_INT", "SYS_STATUS"],
                     blocking=True,
                     timeout=1.0
                 )
@@ -272,6 +388,11 @@ class DroneLink:
                         self.lon = msg.lon / 1e7
                         self.relative_alt_m = msg.relative_alt / 1000.0
                         self.last_position_time = time.time()
+                
+                elif msg.get_type() == "SYS_STATUS":
+                    with self.lock:
+                        if msg.battery_remaining != -1:
+                            self.battery_remaining = msg.battery_remaining
 
             except Exception as e:
                 print(f"[UYARI MAVLINK] Drone {self.drone_id} okuma hatası: {e}")
@@ -287,6 +408,11 @@ class DroneLink:
                 return False, f"mod GUIDED değil ({self.flightmode})"
             if self.relative_alt_m is None or self.relative_alt_m < AIRBORNE_RELATIVE_ALT_THRESHOLD_M:
                 return False, "havada değil (irtifa eşiği altında)"
+            if self.battery_remaining < 20:
+                if self.flightmode != "RTL" and not self.simulation:
+                    print(f"[KRİTİK GÜVENLİK] Drone {self.drone_id} bataryası kritik (%{self.battery_remaining}). Lütfen RTL alın!")
+                    # GCS üzerinde FS_GCS_ENABLE veya manuel müdahale beklenir.
+                return False, f"batarya kritik (%{self.battery_remaining})"
             return True, "hazır"
 
     def stop(self):
@@ -314,9 +440,15 @@ class GroundStation:
         self.drone_links = {}
 
         self.rssi_lock = threading.Lock()
-        self.rssi_data = {}          # drone_id -> (kalman_filtrelenmis_rssi, son_zaman)
+        self.rssi_data = {}          # drone_id -> (filtrelenmis_rssi, son_zaman)
         self.window_samples = {}     # drone_id -> [bu 5sn penceresinde alinan filtrelenmis degerler]
         self.kalman_filters = {}     # drone_id -> ScalarKalmanFilter
+        self.sismf_filters = {}      # drone_id -> SmootherIntegralSlidingModeFilter2026 (SCI_4)
+        self.sismf_combo_filters = {}  # drone_id -> SISMF (Kalman çıktısını girdi olarak alır)
+
+        # Artı formasyonu eksenel SISMF karar kontrolcüleri
+        self.axis_sismf_y = AxisSISMFController()
+        self.axis_sismf_x = AxisSISMFController()
 
         self.origin_lat = None
         self.origin_lon = None
@@ -325,6 +457,34 @@ class GroundStation:
         self.virtual_center_y = 0.0  # Kuzey (North)
 
         self._lora_stop = False
+        self._start_time = time.time()
+
+        # Aktif filtre etiketi
+        if USE_SISMF and USE_KALMAN:
+            self.active_filter_label = "ZİNCİR COMBO (Kalman + SISMF)"
+        elif USE_SISMF:
+            self.active_filter_label = "SISMF (SCI_4.pdf 2026)"
+        elif USE_KALMAN:
+            self.active_filter_label = "Kalman (Rapor 2)"
+        else:
+            self.active_filter_label = "HAM (Filtresiz)"
+
+        # --- DENEY LOG KAYDI (CSV) ---
+        self.csv_filename = f"kalman_deney_log_{int(time.time())}.csv"
+        try:
+            self.csv_file = open(self.csv_filename, "w", newline="", encoding="utf-8")
+            self.csv_writer = csv.writer(self.csv_file)
+            self.csv_writer.writerow([
+                "Timestamp", "Gecen_Sure_Sn", "Drone_ID",
+                "Ham_RSSI", "Kalman_RSSI", "SISMF_RSSI", "KalmanSISMF_RSSI",
+                "Aktif_Mod", "Sanal_Merkez_Kuzey_M", "Sanal_Merkez_Dogu_M"
+            ])
+            self.csv_file.flush()
+            print(f"[LOG KAYIT] Deney verileri otomatik kaydediliyor -> {self.csv_filename}")
+        except Exception as e:
+            print(f"[UYARI LOG] CSV dosyası oluşturulamadı: {e}")
+            self.csv_file = None
+            self.csv_writer = None
 
         print("=" * 40)
         print("  🚁 OTONOM SÜRÜ YER İSTASYONU 🚁")
@@ -332,10 +492,13 @@ class GroundStation:
             print(f"  Platform: {platform_label}")
         print("=" * 40)
         print(f"Mod: {'SİMÜLASYON (TEST)' if simulation else 'GERÇEK DONANIM UÇUŞU'}")
+        print(f"Aktif Filtre: {self.active_filter_label} | "
+              f"USE_SISMF={USE_SISMF} | USE_KALMAN={USE_KALMAN}")
         print(f"RSSI_MAX_AGE_S={RSSI_MAX_AGE_S}s | "
               f"ADJUST_ORIGIN_FOR_DRONE1_POSITION={ADJUST_ORIGIN_FOR_DRONE1_POSITION} | "
-              f"Geofence=±{MAX_CENTER_DRIFT_M}m | "
-              f"KALMAN_Q={KALMAN_Q} | KALMAN_R={KALMAN_R}")
+              f"Geofence=±{MAX_CENTER_DRIFT_M}m")
+        print(f"SISMF Parametreleri: λ={SISMF_LAMBDA}, k={SISMF_K}, κ={SISMF_KAPPA}, φ={SISMF_PHI}")
+        print(f"Kalman Parametreleri: Q={KALMAN_Q}, R={KALMAN_R}")
         print(f"Kalibrasyon Ofsetleri (dB): {CALIBRATION_OFFSET_DB}")
 
         if BENCH_TEST_MODE:
@@ -500,14 +663,18 @@ class GroundStation:
 
             if len(parts) != 3:
                 return
-            rssi = int(parts[1])
+            
+            # Checksum'ı orijinal ham string üzerinden hesapla!
+            body = f"N{parts[0]},{parts[1]}"
             received_checksum = int(parts[2])
-            body = f"N{drone_id},{rssi}"
             expected_checksum = compute_checksum(body)
 
             if received_checksum != expected_checksum:
                 print(f"[UYARI GÜVENLİK] Checksum uyuşmadı, paket reddedildi: '{line}'")
                 return
+
+            rssi = float(parts[1])
+            drone_id = int(parts[0])
 
             if drone_id not in self.pixhawk_ports and not self.simulation:
                 print(f"[UYARI] Tanınmayan drone ID'sinden paket, reddedildi: '{line}'")
@@ -519,14 +686,62 @@ class GroundStation:
                 # yüzden kalibrasyon burada, checksum'dan SONRA uygulanır.
                 calibrated_rssi = rssi + CALIBRATION_OFFSET_DB.get(drone_id, 0.0)
 
-                # --- KALMAN FİLTRESİ (Rapor 2'deki yöntem) ---
+                # --- KALMAN FİLTRESİ HESAPLAMASI ---
                 if drone_id not in self.kalman_filters:
                     self.kalman_filters[drone_id] = ScalarKalmanFilter(initial_value=calibrated_rssi)
-                filtered_rssi = self.kalman_filters[drone_id].update(calibrated_rssi)
+                kalman_val = self.kalman_filters[drone_id].update(calibrated_rssi)
+
+                # --- SCI_4 (2026) SMOOTHER INTEGRAL SLIDING MODE FILTER (SISMF) ---
+                # Tek başına SISMF: Ham kalibre edilmiş RSSI'yı giriş olarak alır
+                if drone_id not in self.sismf_filters:
+                    self.sismf_filters[drone_id] = SmootherIntegralSlidingModeFilter2026(initial_value=calibrated_rssi)
+                sismf_val = self.sismf_filters[drone_id].update(calibrated_rssi)
+
+                # --- KALMAN + SISMF ZİNCİR FİLTRE (COMBO) ---
+                # Kalman çıktısını SISMF'ye girdi olarak vererek iki filtrenin
+                # birlikte ne kadar etki ettiğini ölçeriz
+                if drone_id not in self.sismf_combo_filters:
+                    self.sismf_combo_filters[drone_id] = SmootherIntegralSlidingModeFilter2026(initial_value=kalman_val)
+                combo_val = self.sismf_combo_filters[drone_id].update(kalman_val)
+
+                # Aktif filtre seçimi (formasyon kontrolünde hangisi kullanılacak)
+                if USE_SISMF and USE_KALMAN:
+                    final_rssi = combo_val
+                    active_mode = "KALMAN+SISMF"
+                elif USE_SISMF:
+                    final_rssi = sismf_val
+                    active_mode = "SISMF"
+                elif USE_KALMAN:
+                    final_rssi = kalman_val
+                    active_mode = "KALMAN"
+                else:
+                    final_rssi = calibrated_rssi
+                    active_mode = "HAM"
                 # ------------------------------------------------
 
-                self.rssi_data[drone_id] = (filtered_rssi, time.time())
-                self.window_samples.setdefault(drone_id, []).append(filtered_rssi)
+                self.rssi_data[drone_id] = (final_rssi, time.time())
+                self.window_samples.setdefault(drone_id, []).append(final_rssi)
+
+                # --- CSV'YE ANLIK DENEY VERİSİNİ KAYDET ---
+                # 4 senaryo tek seferde: Ham, Kalman, SISMF, Kalman+SISMF
+                if getattr(self, "csv_writer", None):
+                    try:
+                        elapsed = time.time() - self._start_time
+                        self.csv_writer.writerow([
+                            datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3],
+                            f"{elapsed:.2f}",
+                            drone_id,
+                            f"{calibrated_rssi:.2f}",
+                            f"{kalman_val:.2f}",
+                            f"{sismf_val:.2f}",
+                            f"{combo_val:.2f}",
+                            active_mode,
+                            f"{self.virtual_center_y:.2f}",
+                            f"{self.virtual_center_x:.2f}"
+                        ])
+                        self.csv_file.flush()
+                    except Exception:
+                        pass
 
                 # --- RADAR GUI ICIN UDP YAYINI ---
                 try:
@@ -622,17 +837,24 @@ class GroundStation:
 
         if have_ns:
             delta_y_dbm = rssi_data[1] - rssi_data[2]   # Kuzey - Güney
-            shift_y = max(min(delta_y_dbm * K_GAIN, 5.0), -5.0)
+            if USE_SISMF:
+                shift_y = self.axis_sismf_y.update_shift(delta_y_dbm)
+            else:
+                shift_y = max(min(delta_y_dbm * K_GAIN, 5.0), -5.0)
         else:
             print("[UYARI] Kuzey-Güney çifti (Drone 1/2) taze değil, bu eksen sabit tutuluyor.")
 
         if have_ew:
             delta_x_dbm = rssi_data[3] - rssi_data[4]   # Doğu - Batı
-            shift_x = max(min(delta_x_dbm * K_GAIN, 5.0), -5.0)
+            if USE_SISMF:
+                shift_x = self.axis_sismf_x.update_shift(delta_x_dbm)
+            else:
+                shift_x = max(min(delta_x_dbm * K_GAIN, 5.0), -5.0)
         else:
             print("[UYARI] Doğu-Batı çifti (Drone 3/4) taze değil, bu eksen sabit tutuluyor.")
 
-        print(f"[KARAR MOTORU] Kalman-Filtrelenmiş Güç Farkları -> "
+        mode_str = "SISMF (SCI_4)" if USE_SISMF else ("Kalman" if USE_KALMAN else "HAM")
+        print(f"[KARAR MOTORU] [{mode_str}] Güç Farkları -> "
               f"K/G: {delta_y_dbm:.1f}dB" if delta_y_dbm is not None else "K/G: N/A", end="")
         print(f", D/B: {delta_x_dbm:.1f}dB" if delta_x_dbm is not None else ", D/B: N/A")
         print(f"[KARAR MOTORU] Adım (biriktirilecek) -> KUZEYE: {shift_y:.1f}m, DOĞUYA: {shift_x:.1f}m")
@@ -670,6 +892,16 @@ class GroundStation:
             4: (self.virtual_center_y, self.virtual_center_x - FORMATION_DISTANCE_M),
         }
 
+        # --- ÇARPIŞMA KORUMASI (GÜVENLİK) ---
+        MIN_DRONE_DIST_M = 3.0
+        for id1, (n1, e1) in offsets.items():
+            for id2, (n2, e2) in offsets.items():
+                if id1 >= id2: continue
+                dist = math.hypot(n1 - n2, e1 - e2)
+                if dist < MIN_DRONE_DIST_M:
+                    print(f"[KRİTİK GÜVENLİK] Drone {id1} ve {id2} hedefleri çok yakın ({dist:.1f}m < {MIN_DRONE_DIST_M}m)! Komutlar durduruldu.")
+                    return
+
         for drone_id, (north_m, east_m) in offsets.items():
             link = self.drone_links.get(drone_id)
             if link is None:
@@ -683,26 +915,29 @@ class GroundStation:
             target_lat, target_lon = offset_latlon(self.origin_lat, self.origin_lon, north_m, east_m)
 
             connection = link.connection
+            type_mask = 0x0BF8
+            fixed_yaw_rad = 0.0
+
             if hasattr(connection, "mav"):
                 connection.mav.set_position_target_global_int_send(
                     0,
                     connection.target_system, connection.target_component,
                     mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT_INT,
-                    0b0000111111111000,
+                    type_mask,
                     int(target_lat * 1e7),
                     int(target_lon * 1e7),
                     FORMATION_ALT_M,
                     0, 0, 0,
                     0, 0, 0,
-                    0, 0
+                    fixed_yaw_rad, 0
                 )
                 print(f"[MAVLINK] Drone {drone_id} -> LAT: {target_lat:.6f}, LON: {target_lon:.6f}, "
-                      f"ALT: {FORMATION_ALT_M}m")
+                      f"ALT: {FORMATION_ALT_M}m, YAW: 0°")
             else:
                 connection.set_position_target_global_int_send(
-                    0, 0, 0, 6, 0,
+                    0, 0, 0, 6, type_mask,
                     int(target_lat * 1e7), int(target_lon * 1e7), FORMATION_ALT_M,
-                    0, 0, 0, 0, 0, 0, 0, 0
+                    0, 0, 0, 0, 0, 0, fixed_yaw_rad, 0
                 )
 
     # -------------------------------------------------
@@ -734,3 +969,9 @@ class GroundStation:
                 self.lora.close()
         except Exception:
             pass
+        if getattr(self, "csv_file", None):
+            try:
+                self.csv_file.close()
+                print(f"[LOG KAYIT] Deney verisi kaydedildi ve kapatıldı: {self.csv_filename}")
+            except Exception:
+                pass

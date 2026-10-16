@@ -19,13 +19,13 @@ from ground_station_core_sphere import GroundStation
 # ==========================================
 SIMULATION_MODE = False
 
-LORA_PORT = "/dev/ttyUSB3"
+LORA_PORT = "/dev/ttyUSB4"
 
 PIXHAWK_PORTS = {
-    1: "/dev/ttyUSB2",
-    2: "/dev/ttyUSB1",
-    3: "/dev/ttyUSB0",
-    4: "/dev/ttyUSB4",
+    1: "/dev/ttyUSB0",
+    2: "/dev/ttyUSB2",
+    3: "/dev/ttyUSB1",
+    4: "/dev/ttyUSB3",
 }
 
 if __name__ == "__main__":

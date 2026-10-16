@@ -1,0 +1,472 @@
+TÜBİTAK
+ARAŞTIRMA PROJESİ
+GELİŞME RAPORU
+(Bilimsel Rapor)
+PROGRAM KODU
+PROJE NO
+PROJE SÜRESİ
+RAPOR NO
+RAPOR DÖNEMİ
+PROJE YÜRÜTÜCÜSÜ
+GÜZEY
+
+: 3501
+:123E294
+: 36 ay
+:1
+: 1/11/2023 - 1/11/2024
+: Dr. Öğr. Üyesi Nurbanu
+
+Bilgi Notu:
+- Raporda kullanılacak dilin (Türkçe veya İngilizce), başvuru formunda kullanılan dil ile aynı olması gerekmektedir.
+- TÜBİTAK tarafından kabul edilebilir geçerli bir mazeret bildirilmeksizin; proje gelişme raporlarının sözleşmede belirtilen tarihlerde, proje sonuç
+raporlarının ise, sözleşmede belirtilen proje bitiş tarihinden itibaren 2 (iki) ay içinde gönderilmemesi halinde, ilgili rapor dönemine ait Proje Teşvik
+İkramiyeleri (PTİ) ödenmeyecektir (*).
+- Proje ekibi tarafından, TÜBİTAK desteği ile yürütülmekte/sonuçlandırılmış olan projeler kapsamında yapılan yayınlarda [makale, kitap, bildiri (sözlü
+sunum/poster sunum), tez, yayılım vb.] proje sözleşmesi ve TÜBİTAK Araştırma ve Yayın Etiği Kurulu Yönetmeliği (AYEK) gereğince ilgili proje
+numarası ile birlikte TÜBİTAK desteği belirtilmelidir.
+- Proje kapsamında gerçekleşmiş tüm çıktıların proje sözleşmesi ve Proje Teşvik ve Destekleme Esaslarına İlişkin Yönetmelik Uyarınca Desteklenen
+Projelerde Uygulanacak Fikri Haklar Esasları gereğince Proje Takip Sistemi (PTS) (https://ardeb-pts.tubitak.gov.tr) üzerinden Gruba gönderilmelidir.
+- İlgili rapor döneminde katılım sağlanan yurtiçi/yurtdışı bilimsel toplantı/çalışma ziyaretleri hakkında gerekli bilgiler PTS üzerinden Seyahat Bilgi
+Formu doldurularak Gruba iletilmelidir.
+- Gelişme raporları ile birlikte Fikri Ürün Bildirim Formunun doldurulması zorunludur. Dönem içinde projeden fikri ürün (patent, faydalı model, marka,
+know-how, endüstriyel tasarım, entegre devre topografyası, yeni bitki ve hayvan türleri ve bunların ıslah yöntemleri, bilgisayar programları ve bunların
+kaynak kodları vb.) çıkıp çıkmadığı formda belirtilir. Eğer bir fikri ürün çıkmamışsa formun bu sorunun sorulduğu bölüme kadarki kısmı doldurulur; bu
+soruya gelindiğinde “hayır” seçeneği işaretlenerek yürütücü tarafından imzalanır. Fikri ürün çıkmışsa formun tamamı doldurulur ve hak sahipleri
+tarafından imzalanır. Projeden fikri ürün dışında ortaya çıkan eserler yani, bilgisayar programları ve bunların kaynak kodları hariç 5846 sayılı Fikir ve
+Sanat Eserleri Kanunu kapsamındaki kitap, kitapta bölüm, makale, bildiri, katalog vb. çıktılar için fikri ürün formu doldurulmayacağına dikkat edilir.
+Birden fazla fikri ürün söz konusu ise her bir fikri ürün için ayrı bir form doldurulur. Fikri Ürün Bildirim Formunun sunulmasından itibaren en geç üç ay
+içerisinde ilgili fikri ürünle ilgili tescil başvurusu yapılması gerektiği hususu hatırlanmalıdır.
+
+(*) ARDEB tarafından yürütülen destek programları (1002 ve 3001 hariç) kapsamında “Sonuçlandı” durumunda 3 adet projede yürütücü olarak görev
+almış, TÜBİTAK Araştırma ve Yayın Etiği Kurulu (AYEK) tarafından yaptırım uygulanmamış ve daha önce ARDEB tarafından desteklenen
+yürütücüsü olduğu herhangi bir projesi iptal edilmemiş proje yürütücülerimizin söz konusu destek programları (1002 ve 3001 hariç ARDEB destek
+programları) kapsamında yürürlükte olan projeleri için; talep etmeleri halinde, bilimsel Gelişme Raporu alınmayacak, sadece Sonuç Raporu
+alınacaktır. Mali raporların ise ilgili dönem transferlerinin yapılabilmesi için iletilmesi gerekmektedir.
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+BİLİMSEL GELİŞME RAPORU FORMU
+
+1. BİLİMSEL/TEKNOLOJİK GELİŞMELER1.1 Dönem İçinde Gerçekleştirilen Faaliyetler ve Elde Edilen
+Bulgular/Sonuçlar
+Proje öneri formunun iş-zaman çizelgesinde ilgili gelişme raporu dönemi için planlanan tüm İP’leri ve her İP için ayrı
+olacak şekilde tablolar oluşturulmalı ve bilgi sunulmalıdır.
+İP No
+
+1
+
+İP Adı
+İP Tamamlanma Durumu
+(Yüzde Belirtilmelidir)
+
+Donanım tedariği ve sistem entegrasyonu
+
+70
+
+a) İP Kapsamında Yapılan Çalışmalar ve Elde Edilen Bulgular
+İP hedeflerine yönelik yapılan çalışmalar, ulaşılan hedefler ve elde edilen bulgular ilgili literatüre
+atıflar yapılarak detaylı olarak sunulur ve sonuçlar tartışılır. İP kapsamında elde edilen ara çıktılara
+ilişkin bilgiler verilir. Ana açıklamalar dışında İP kapsamında elde edilen ara çıktılar (teknik rapor,
+liste, diyagram, analiz/ölçüm sonucu, algoritma, yazılım, anket formu, verim, ham veri vb.) hakkında
+bilgi verilir ve ara çıktılar ekler bölümünde sunulur.
+Projenin 0-12 aylık dönemini kapsayan ilk gelişme döneminde, İP 1’in gerçekleştirilmesi öngörülmüştür. Bu iş paketi
+kapsamında belirlenen hedefler aşağıdaki gibi sıralanmaktadır:
+
+
+
+
+Donanım tedariği ve sistem entegrasyonu: İHA parçalarının temini ve birleştirilerek uçuşa hazır hale getirilmesi.
+Yer istasyonu ile İHA’lar arasındaki haberleşme kanallarının sağlanması.
+Kurulacak donanım düzenekleri sayesinde İHA’lar hedeften almış oldukları sinyal gücünü merkeze göndermesi,
+merkezin de İHA’lara anlık görev iletmesi.
+
+
+
+Donanım tedariği ve sistem entegrasyonu: İHA parçalarının temini ve birleştirilip uçuşa hazır hale
+getirilmesi.
+
+Bu hedefler doğrultusunda, donanım tedariği ve sistem entegrasyonu aşamasında projenin ilk adımı olarak Mart 2024'te
+gerekli envanter temin edilmiş ve ilk etapta bir adet İHA üzerinde yoğunlaşılmıştır. Tek bir İHA'nın tasarımı ve test
+edilmesi, kullanılacak parçaların performansının değerlendirilmesi ve sistemin genel işleyişinin doğrulanması açısından
+önemli bir adım olmuştur.
+İHA Tasarım ve Teknik Özellikleri: Tasarlanan ilk İHA’nın teknik özellikleri, projenin ihtiyaç duyduğu manevra kabiliyeti,
+sinyal tespiti, veri iletimi gibi işlevleri yerine getirebilmesi için özenle seçilmiştir. Özellikle, İHA’nın hızlı veri iletimi, sinyal
+gücü tespiti göz önünde bulundurularak çeşitli testler yapılmıştır. Bu İHA, projenin ilerleyen aşamalarında kullanılacak
+diğer İHA’lara referans oluşturacak şekilde geliştirilmiştir.
+S500 drone Frame (Gövde): Bu projede kullanılan İHA’nın ana gövdesi, hafiflik ve
+dayanıklılığı bir araya getiren bileşenlerden oluşmuştur. PCB lehim noktası ile merkezi
+plaka, elektronik bileşenlerin güvenli bir şekilde yerleştirilmesini ve enerji dağıtımını
+sağlamaktadır. Bu, sistemin kararlılığını artırmaktadır.
+Karbon fiber iniş takımları, İHA’nın ağırlığını azaltırken dayanıklılık sağlar. 500 mm dingil
+mesafesi, stabiliteyi artırarak uzun süreli uçuşlara olanak tanımaktadır.
+İHA’nın 405 gramlık ağırlığı, hafif bir yapı sunarak manevra kabiliyetini yükseltir ve enerji
+verimliliğini destekler. Bu, sinyal tespiti gibi görevler için uzun uçuş sürelerine katkı
+sağlamaktadır.
+Pixhawk 2.4.8 Uçuş Kontrol Kartı: Projemizde, gelişmiş özellikleri ve güvenilir otonom
+uçuş yetenekleri sayesinde tercih edilmiştir. Bu kart, Ardupilot mega (APM) ve PX4 gibi
+açık kaynaklı sistemlerle uyumlu olmasıyla hem sabit kanatlı hem de çok rotorlu
+araçlarda kullanılabilen, esnek ve çok yönlü bir otopilot çözümü sunmaktadır.
+Pixhawk 2.4.8, yüksek performanslı 32-bit ARM Cortex-M4 işlemci ile çalışır ve NuttX
+RTOS gerçek zamanlı işletim sistemi ile karmaşık görevlerin yürütülmesini sağlar. 14
+PWM çıkışı, çoklu motor kontrolüne olanak tanıyarak projedeki dört İHA’nın bağımsız ve
+koordineli bir şekilde çalışabilmesini destekler. UART, I2C, SPI ve CAN gibi veri yolu
+arayüzleri, sensörler ve diğer bileşenler arasında yüksek hızda ve güvenilir veri
+aktarımına olanak tanır.
+Projede otonom sinyal tespiti yapacak İHAlar için
+Pixhawk’ın sağladığı otomatik ve manuel uçuş modları, görev sırasında manuel
+müdahaleye gerek duymadan görevlerin yürütülmesini sağlar.
+Güç modülü, 6S pil desteği ile maksimum 90A akım algılayabilir, bu da yüksek enerji
+ihtiyacı olan İHA sistemlerinin uzun süreli uçuşlarda güvenilir bir şekilde enerji almasını
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+sağlar. Bu sayede projede önerilen geniş pil seçenekleriyle uyumlu bir güç yönetimi sunulmaktadır.
+Pixhawk’ın pakete dahil edilen titreşim önleyici amortisör seti, uçuş sırasında İHA üzerinde oluşabilecek titreşimleri
+azaltarak sensörlerin ve uçuş kontrol sisteminin daha stabil çalışmasını sağlar. Bu, sinyal tespiti gibi hassas görevlerde
+kritik öneme sahiptir,
+çünkü titreşimlerden kaynaklı veri hatalarının önüne geçilmiş olur. Bu özellikler sayesinde,
+Pixhawk 2.4.8 uçuş kontrol kartı, projedeki dört İHA’nın otonom görevleri güvenilir ve yüksek doğrulukla
+gerçekleştirmesine olanak tanımaktadır.
+Hobbywing Xrotor 40A Multicopter XRT40W ESC (Elektronik Hız Kontrol
+Cihazı), projede motorların hızını hassas ve verimli bir şekilde kontrol etmek
+amacıyla tercih edilmiştir. ESC, kumanda sinyallerini motorlara ileterek İHA’ların
+hızını artırma veya azaltma gibi komutları güvenli ve kararlı bir şekilde
+gerçekleştirmektedir. Bu da sinyal tespiti görevleri sırasında İHA’ların hassas
+manevralar ve hız kontrolleri yapmasına olanak sağlamıştır.
+ESC’nin sunduğu sürekli maksimum 40A akım kapasitesi, motorların yüksek enerji
+ihtiyacını karşılayarak güvenilir ve sürekli bir güç sağlamaktadır. 60A anlık
+maksimum akım kapasitesi, ani hızlanma ya da güç gerektiren durumlarda
+motorların sorunsuz bir şekilde çalışmasına yardımcı olmuştur. 3-4S LiPo pillerle uyumlu olması, geniş bir pil aralığında
+verimli çalışma sağlanmasına olanak tanımıştır.
+26 gramlık ağırlığı, İHA’nın toplam ağırlığını düşük tutarak uzun süreli uçuşlarda enerji verimliliğini artırmıştır. 621Hz+
+gaz sinyal desteği, motorların hızlı tepki vermesini sağlayarak projede kullanılan İHA’ların sinyal tespiti sırasında gerekli
+hassas manevraları ve hız kontrollerini başarıyla gerçekleştirmesine yardımcı olmuştur
+Sonuç olarak, Hobbywing Xrotor 40A ESC, bu projede motor performansını optimize etmek ve İHA’ların stabil uçuşunu
+sağlamak amacıyla ideal bir seçim olmuştur.
+Sunnysky 3108 720KV motor, bu projede güçlü, verimli ve dayanıklı bir motor çözümü
+sağlamak amacıyla tercih edilmiştir. Dayanıklı Japon NMB bilyalı rulmanlar, motorun
+uzun ömürlü ve sorunsuz çalışmasını sağlamakta, yüksek hızda dönerken bile motorun
+dengeli ve düşük sürtünmeli çalışmasına olanak tanımaktadır. Bu da sinyal tespiti gibi
+görevler sırasında İHA’ların stabil uçuşunu desteklemiştir.
+Motorun içinde kullanılan Japon Kawasaki stator çelikleri, yüksek verimlilik sunarak
+enerji kayıplarını minimuma indirmiş ve böylece daha uzun uçuş süreleri elde edilmiştir.
+Nadir toprak neodim mıknatıslar, motorun güçlü manyetik alan oluşturmasını sağlarken,
+yüksek sıcaklıklarda bile (180°C'ye kadar) performans kaybı yaşamadan çalışmasına
+olanak tanımıştır.
+Motorun sargılarında kullanılan 180°C'ye kadar dayanabilen polyesterimid emaye
+oksijensiz bakır teller, yüksek sıcaklıklara dayanıklı olup, uzun süreli uçuşlarda dahi motorun verimli bir şekilde
+çalışmasına katkıda bulunmuştur. CNC ile işlenmiş ve anotlanmış alüminyum kasa, motorun hafif ve sağlam olmasını
+sağlarken, aynı zamanda ısı dağılımını da optimize etmiştir.
+Lazerle oyulmuş motor modeli ve KV numarası, motorun kolay tanımlanmasını sağlarken, yumuşak silikon tel uçları
+montaj ve bağlantı işlemlerini kolaylaştırmıştır. Motorun üretiminde kullanılan patentli denge teknikleri, titreşimleri en aza
+indirerek İHA’nın stabil ve güvenilir bir uçuş gerçekleştirmesine yardımcı olmuştur.
+Sonuç olarak, Sunnysky 3108 720KV motor, projede yüksek performanslı, güvenilir ve verimli bir motor çözümü
+sağlamak amacıyla tercih edilmiştir.
+Karbon katkılı 1045 pervane, projede kullanılan Sunnysky 3108 720KV motor ile uyumlu
+olacak şekilde tercih edilmiştir. Bu pervane, motorun ürettiği gücü verimli bir şekilde havaya
+aktararak İHA’nın stabil bir uçuş gerçekleştirmesini sağlamaktadır. 1045 ifadesi, pervanenin
+çapının 10 inç, stili ise 4.5 inç pitch (eğim) olduğunu belirtir. Bu ölçüler, projede kullanılan
+motorun devri ve torkuyla optimum uyum sağlayarak İHAun hem manevra kabiliyetini hem
+de kalkış sırasında gerekli kaldırma kuvvetini artırmıştır.
+Sunnysky 3108 720KV motorun düşük devirli ancak yüksek torklu yapısıyla uyumlu olan
+1045 pervane, özellikle verimli enerji kullanımı sağlayarak uçuş süresini uzatmıştır. Ayrıca,
+pervanelerin hafif yapısı ve sağlam malzemesi, hem enerji tasarrufu sağlamış hem de
+İHA’nın dengesini ve manevra kabiliyetini iyileştirmiştir. Sonuç olarak, 1045 pervane,
+Sunnysky 3108 720KV motor ile optimum performans sağlayacak şekilde seçilmiş, verimli
+uçuş ve stabilite sunmuştur.
+14.8V 6200mAh 40C Li-Po pil, bu projede yüksek enerji gereksinimlerini karşılamak
+amacıyla tercih edilmiştir. Yüksek deşarjlı Li-Polimer pil teknolojisi sayesinde, yüksek akım
+taleplerini karşılayabilen bir yapıya sahiptir. 4S konfigürasyonu ile 14.8V gerilim sunarak,
+projedeki motorlar ve elektronik bileşenler için gerekli gücü sağlamaktadır.
+6200mAh minimum kapasite, uzun süreli uçuşlar için gerekli olan enerjiyi temin ederken,
+sürekli deşarj akımı olan 40C (248A), motorların yüksek güç taleplerine hızlı bir şekilde
+yanıt verebilmesini sağlamaktadır. Bu özellik, İHA’nın ani hızlanma ve manevra
+kabiliyetlerini artırırken, aynı zamanda sinyal tespiti görevleri sırasında gereken performansı
+sunmaktadır.
+Ayrıca, patlamaya karşı akım (10 saniye için) olan 80C (496A), ani güç talepleri sırasında
+güvenilir bir destek sunarak motorların yüksek akım ihtiyacını karşılamaktadır. Şarj hızı ise 1-2C (maksimum 5C) ile
+yüksek verimlilikte şarj olmasını sağlamaktadır, bu da zaman kaybını en aza indirmektedir.
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+Paket ağırlığı olan 575 gram, İHA’nın toplam ağırlığını optimize ederek manevra kabiliyetini artırmakta ve uzun uçuş
+sürelerine katkıda bulunmaktadır. Batarya boyutları (L 160 x Y 50 x Y 32 mm), İHAun tasarımına uyumlu olup, uygun bir
+montaj alanı sağlamakta ve dengeli bir dağılım oluşturmaktadır.
+Son olarak, JST-XHR şarj konektörü ve XT60 plug, pilin güvenli bir şekilde bağlanmasını sağlayarak kullanıcı dostu bir
+deneyim sunmaktadır. Bu özellikler, 14.8V 6200mAh 40C Li-Po pilin projedeki İHA için ideal bir enerji kaynağı olmasını
+sağlamıştır.
+HERE3+ GPS, projenin hassas konumlandırma gereksinimlerini karşılamak amacıyla
+tercih edilmiştir. u-blox M8 yüksek hassasiyetli GNSS modülleri (M8P) kullanarak GPS,
+GLONASS ve BeiDou sistemleriyle uyumlu çalışmaktadır.
+Konumlandırma doğruluğu, 3D FIX için 2,5 m ve RTK modda 0,025 m olarak
+belirlenmiştir. Bu özellik, İHA’nın hassas görevlerde kullanılmasını sağlamaktadır.
+İşlemci, yüksek performans sunarak konum bilgilerini anlık olarak güncelleyebilmekte,
+böylece hareket halindeyken doğru veri akışı sağlanmaktadır. Navigasyon güncelleme
+hızı maksimum 8 Hz ile, İHA’nın anlık konum verilerini sık sık güncelleyerek hedefe daha
+doğru yönlendirilmesini sağlamaktadır.
+Çalışma sıcaklığı -40 ila 85 °C aralığında, zorlu hava koşullarında dayanıklılığını
+korumakta ve güvenilir performans sunmaktadır. Sonuç olarak, HERE3+ GPS, projenin
+konumlandırma ihtiyaçlarını karşılamak için etkili bir çözüm sunmaktadır.
+Radyo Telemetrisi 915MHz 500mW: Bu telemetri sistemini projemizde kullanmamızın
+temel nedeni, İHA’nın güvenilir bir şekilde veri iletimi yapabilmesi ve uzun mesafelerde
+etkili bir kontrol sağlamış olmasıdır. 500 mW verici gücü ve 5000 metreye kadar olan
+aralık, geniş alanlarda rahatça çalışmamıza olanak tanımıştır. 915 MHz frekansı,
+parazitlere karşı dayanıklılık sunmuş; 57600 baud hızı, hızlı veri akışı elde etmemizi ve
+İHA’nın gerçek zamanlı performansını izlememizi sağlamıştır. Ayrıca, geniş sıcaklık ve
+nem aralıkları, farklı hava koşullarında bile telemetri sistemimizin güvenilirliğini
+korumasına yardımcı olmuştur. Boyutları ve hafifliği ise İHA’nın aerodinamik yapısını
+etkilemeden verimli bir şekilde çalışmasını sağlamıştır. Bu özellikler, projemizin başarısı
+için kritik öneme sahip olmuştur.
+
+1. Tasarım ve Planlama: Projemizde kullanılacak tüm bileşenlerin ve sistemlerin tasarımı yapılmıştır. Uçuş kontrolü için
+Pixhawk 2.4.8 uçuş kontrol kartı, enerji yönetimi için Hobbywing Xrotor 40A ESC ve güç kaynağı için 14.8V 6200 mAh
+40C LiPo pil gibi ana bileşenlerin özellikleri dikkate alınarak yapılandırmalar belirlenmiştir.
+Proje kapsamında, 3 boyutlu yazıcı kullanılarak çeşitli parçalar tasarlanmış ve üretilmiştir. Bu tasarımlar, İHA’nın
+işlevselliğini ve dayanıklılığını artırmak amacıyla özel olarak geliştirilmiş olup darbeye dayanıklı PLA+ malzemesi
+kullanılarak baskılar gerçekleştirilmiştir. Bu tasarım ve planlama çalışmaları, projenin ihtiyaç duyduğu güvenilirlik ve
+dayanıklılığı artırmak için özenle yapılmıştır.
+SDR yuvası: Yazılım tanımlı radyo (SDR) sisteminin İHA üzerine güvenli bir şekilde monte edilmesi için özel bir yuva
+tasarlanmıştır. Bu yuva, SDR cihazının sabit kalmasını sağlar ve gerektiğinde kolayca çıkarılabilmesine olanak tanır.
+Tasarım, cihazın boyutlarına uygun olarak yapılmış ve gerekli bağlantı noktaları optimize edilmiştir.
+SDR Anten Tutucu: Antenin doğru pozisyonda durmasını sağlamak için özel bir anten tutucu geliştirilmiştir. Antenin
+sinyal alımını optimize etmek amacıyla uygun açılarda yerleştirilmesi sağlanmıştır. Bu tutucu, antenin hareket etmesini
+engelleyerek sinyal kalitesini artırmaya yardımcı olur.
+Kep: Genel elektroniği korumak amacıyla tasarlanan kep, İHA içinde yer alan tüm elektronik bileşenleri dış etkenlerden
+korur. Tasarım, hava akışını engellemeyecek şekilde düzenlenmiş olup, bileşenlerin güvenliğini sağlamaktadır.
+
+Şekil 1.a. SDR yuvası
+
+Şekil 1.b. SDR Anten Tutucu
+
+Şekil 1.c. Kep
+
+2. Ana Gövdenin Montajı: Projemizin ana gövdesi, belirlenen tasarım planına uygun olarak yüksek dayanıklılık ve
+hafiflik sağlayan karbon fiber malzemeden üretilmiş ve birleştirilmiştir. Montaj sürecinde, stabiliteyi artırmak amacıyla
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+yüksek kaliteli karbon fiber iniş takımları ve PCB lehim noktaları ile merkezi bir plaka kullanılmıştır. Bu yapı, İHA’nın stabil
+ve güvenilir bir şekilde çalışmasını sağlamaktadır ve dayanıklılığı artırarak uçuş güvenliğini desteklemektedir.
+
+Şekil 2. Ana gövdenin montaj aşamaları
+3. Elektronik Bileşenlerin Kurulumu: Pixhawk 2.4.8 uçuş kontrol kartı, gücünü sağlamak için uygun bir konumda
+monte edilmiştir. Hobbywing Xrotor 40A ESC'ler, motorların kontrolü için motor bağlantı kabloları ile bağlanmıştır. FSiA6B alıcısı, FS-i6X kumanda vericisinden gelen sinyalleri almak üzere uygun bir yere yerleştirilmiştir.
+
+Şekil 3. Elektronik bileşenlerin montajı
+4. Motor ve Pervane Montajı: Sunnysky 3108 720KV motorlar, 1045 pervanelerle birlikte montajlanmıştır. Pervaneler,
+motorların verimliliğini artırmak amacıyla dikkatlice yerleştirilmiştir.
+
+Şekil 4. Motor ve pervaneler
+5. Otonom Uçuş ve Ara yüz
+Otonom uçuş ve arayüz sistemlerinin kurulmasının ardından, İHA’ların otonom yeteneklerinin doğru çalıştığından emin
+olmak için kapsamlı bir test süreci başlatılmıştır. İlk aşamada, farklı uçuş senaryoları simüle edilerek İHA’ların belirlenen
+rotaları bağımsız bir şekilde takip etme becerisi detaylı bir şekilde değerlendirilmiştir. Bu senaryolar, çeşitli hava koşulları,
+farklı engeller ve değişken ortamlar içerecek şekilde tasarlanmış, İHA’ların otonom karar verme yetenekleri
+gözlemlenmiştir.
+Testlerin bir diğer önemli yönü, ara yüzün kullanıcı dostu olmasını sağlamaktır. Ara yüz tasarımı, operatörlerin sistemle
+kolay ve etkili bir şekilde etkileşimde bulunabilmesi için sade ve anlaşılır bir şekilde geliştirilmiştir. Bu kapsamda,
+operatörlerin sistem üzerindeki kontrollerini, veri görüntüleme seçeneklerini ve geri bildirim mekanizmalarını kullanma
+becerileri çeşitli senaryolarla test edilmiştir.
+Bu süreçte, İHA’ların uçuş sırasında karşılaştığı sorunlar ve bunlara verdiği tepkiler dikkatlice analiz edilmiştir. Toplanan
+veriler, otonom uçuşun güvenilirliğini ve etkinliğini artırmak amacıyla yazılım güncellemeleri ve sistem iyileştirmeleri için
+bir temel oluşturmuştur. Sonuç olarak, bu testler, otonom sistemlerin güvenli ve etkili bir şekilde çalışmasını sağlayarak,
+gelecekteki operasyonlar için sağlam bir zemin hazırlamıştır.
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+Şekil 5. Uçuş analizleri
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+Şekil 6. Otonom uçuş için kullanılan ara yüz
+
+
+Yer istasyonu ile İHA’lar arasındaki haberleşme kanallarının sağlanması.
+
+Yer istasyonu ile İHA’lar arasındaki haberleşme kanallarının sağlanması, hava aracı yönetimi ve veri iletimi açısından
+hayati bir rol oynamaktadır. Tasarlanan İHA, yer kontrol istasyonu ile 433 MHz frekansında çalışan, 500 mW çıkış
+gücüne sahip telemetreler kullanarak iletişim kurmaktadır. Bu sistem, İHA’nın yer istasyonuna gerçek zamanlı veri
+gönderimini ve komut alımını mümkün kılar. Telemetreler sayesinde, İHA2nın konum, hız, batarya durumu gibi kritik
+bilgileri sürekli izlenebilirken, yer istasyonu da anlık müdahalelerde bulunarak uçuş güvenliğini artırmaktadır.
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+Şekil 7. Otonom uçuş ara yüzünde telemetri verileri de bulunmaktadır
+
+
+
+Kurulacak donanım düzenekleri sayesinde İHA’lar hedeften almış oldukları sinyal gücünü merkeze
+gönderecek, merkez de sinyalleri işleyerek İHA’lara anlık görev iletecektir.
+
+Proje kapsamında, hedef cihaz olarak Baofeng Bf-V8 PMR telsiz kullanılmıştır. Bu telsizden alınan sinyal verileri, İHA’lar
+tarafından tespit edilerek merkezi birime iletilmektedir. Sinyal verilerinin İHA’lar tarafından algılanması amacıyla RTLSDR v3 (USB Dongle) (Software Defined Radio) kullanılmıştır. Bu cihaz, 500 kHz ile 1.7 GHz arasındaki frekansları
+tarayarak, ortamda bulunan elektronik cihazların frekans bilgilerine ulaşılmasını sağlar.
+Projede kullanılan telsizin 446.000 MHz bandında çalışması nedeniyle, arama frekans spektrumunda 446.300 MHz ile
+446.600 MHz aralığında yoğunlaştırılmıştır. Bu arama sonucunda, spektrumda en yüksek sinyal gücünün 446.450 MHz
+olduğu belirlenmiştir. Bu şekilde, hedef cihazın frekansı ve sinyal gücü doğru bir şekilde saptanmıştır.
+
+Şekil 8.a. RTL-SDR v3 (USB Dongle)
+
+Şekil 8.b. Baofeng Bf-V8 PMR telsiz
+
+Projemizde kullanılan RTL-SDR cihazı, Raspberry Pi Zero 2W üzerinde gerekli sürücüler yüklenerek entegre edilmiştir.
+Raspberry Pi Zero 2W, SDR (Software Defined Radio) yazılımını çalıştıran, verileri işleyen, aynı zamanda bir web
+sunucusu oluşturarak bu verileri web sunucusuna aktaran küçük boyutlu bir bilgisayar olarak işlev görmektedir. RTLSDR sürücüleri ile birlikte gelen rtl_power programı, telsizden gelen sinyal gücünü almak için kullanılmıştır. Bu işlem, ek
+bir Python betiğiyle desteklenmiş ve elde edilen veriler kurulan web sunucusuna kaydedilmiştir.
+Üretilen kodlamalara https://github.com/Retr0spik3/tubitak reposundan ulaşılabilir.
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+Şekil 9. SDR cihazının belirtilen frekans bandındaki tarama sonuçları
+
+Şekil 10. Frekans Gücünün çekildiği veri seti dosyası
+Sinyal gücü, uzayda Friis modeli temel alınarak ilerler. Bu model, sinyal gücünün mesafe ile nasıl azaldığını hesaplamak
+için kullanılır ve projemizde sinyal gücünün mesafe ile ilişkisini belirlemede önemli bir rol oynamaktadır.
+
+
+  
+Pr  Pt Dr Dt 
+  N (0,  )
+ 4 d 
+Burada Pt verici tarafından iletilen sinyal gücü, d verici ile alıcı arasındaki mesafe,  yol kaybı üsteli ve  iletilen
+sinyalin dalga boyudur. Yansımalar, ölçümler ve benzerlerinden kaynaklanan modelleme hatasını denkleme bir ek
+Gauss gürültüsü, N, olarak dahil edilir. Yol kaybı üsteli, farklı çevre koşullarından dolayı 2 ile 4 arasında bir değer alabilir.
+Bazı özel durumlarda da bu sınırı aşabilmektedir Chan vd. (2012).
+SDR cihazından alınan sinyal gücü test verileri Şekil 11’da gösterilmiştir. SDR cihazıyla İHA üzerinden web servera
+aktarılan sinyal gücü verisi merkezi bilgisayar tarafından konumlandırma algoritmasında sonraki iş paketlerinde
+kullanılacaktır.
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+Şekil 11. Hedeften 2m uzaklıktaki sinyal gücü verisi
+Referanslar:
+1. Chan, Y. T., Lee, B. H., Inkol, R. J., Chan, F. 2012. “Estimation of emitter power, location, and path loss exponent”,
+In Proceedings of CCECE, 1–5.
+
+b) İP Sonuçlarının İlgili İP’nin Başarı Ölçütleri Göz Önüne Alınarak Gerçekleşme Durumu
+İP’nin tamamlanan rapor dönemi için gerçekleşme durumu, proje önerisinde belirlenmiş başarı ölçütleri dikkate alınarak
+kendi içinde ve proje bütünlüğü kapsamında bir değerlendirmesi yapılır.
+Tamamlanan iş paketinin başarı ölçütleri olan ‘Proje kapsamında geliştirilecek dört rotorlu İHA’lar
+
+
+‘Hedeften gelen sinyali tespit eden antenleri taşıyacak’ Titizlikle tasarlanan İHA, hedeften gelen sinyali tespit
+edecek SDR cihazı ve antenleri, sinyalleri iletmede kullanılacak Raspberry Pi Zero, İHA’nın merkezi bilgisayarla
+iletişimini sağlayan telemetri cihazını taşımaktadır.
+
+
+
+‘Merkezden gelen uçuş rotalarını otonom takip edecek’ Merkezden gelen otonom uçuş rotaları tamamlanan bir
+İHA ile takip edilmektedir.
+
+‘Hedeften aldıkları sinyal gücünü merkeze göndereceklerdir’ Hedeften gelen sinyaller İHA’ya monte edilen SDR
+cihazı ile tespit edilip merkezi bilgisayara aktarılmaktadır. Bir sonraki iş paketlerinde bu sinyaller konumlandırma
+algoritmalarında kullanılacaktır.
+Diğer üç İHA’nın malzeme tedariki tamamlandığında başarı ölçütleri ivedilikle karşılanacaktır.
+
+1.2 Çalışma Takvimine Uyum
+Projenin öneride belirtildiği şekilde öngörülen çalışma takvimine göre yürütülüp yürütülmediği belirtilir. İş-Zaman
+Çizelgesinde planlanan iş paketlerinin gecikmesi durumunda bunun sebebi detaylı olarak açıklanır ve buna yönelik
+alınan/alınacak tedbirler sunulur. Ayrıca, yaşanan gecikmelerden etkilenecek iş paketleri ve ara çıktılar hakkında da bilgi
+verilir. Değişiklik yapıldıysa güncellenmiş çalışma takvimi sunulur. B planına geçilmesi durumunda Etik Kurul
+Onay/Yasal/Özel İzin belgelerinin alınması gerekmiş ise ilgili belge gelişme raporuyla birlikte sisteme yüklenir.
+Ek süre, ek ödenek, kapsam, yöntem değişikliği, B planını devreye sokulması vb. gibi değişikliklerin TÜBİTAK onayı
+alınmadan gerçekleştirilemeyeceği hususuna dikkat edilir.
+Proje, öneride belirtilen çalışma takvimine uygun olarak yürütülmeye çalışılmakta, ancak donanım tedarikinde yaşanan
+gecikmeler nedeniyle bazı iş paketlerinde aksamalar yaşanmaktadır. Özellikle İHA parçalarının temin sürecinde,
+tedarikçilerin stok sorunları nedeniyle beklenenden daha uzun süreli gecikmeler meydana gelmiştir. Bu durum, proje
+takvimindeki ilerlemeyi kısmen etkilemiş ve belirtilen zaman çerçevesinde tamamlanması planlanan iş paketlerinde
+gecikmeye yol açmıştır.
+İş-Zaman Çizelgesindeki Gecikme ve Alınan Tedbirler:
+Donanım Tedariki ve Sistem Entegrasyonu: İlk rapor dönemi içinde, öncelikle tek bir İHA için gerekli malzemeler
+sağlanmış, parçalar birleştirilmiş ve uçuşa hazır hale getirilmiştir. Bu İHA, yer istasyonu ile haberleşme kanalları
+kurularak hedef sinyalini merkezi bilgisayara iletmiş ve merkezi bilgisayardan gelen komutlarla otonom uçuş
+gerçekleştirmiştir. İlk İHA’nın başarıyla test edilmesi, sistemin işlevselliğini doğrulamış ve sonraki adımlar için güven
+sağlamıştır.
+Diğer İHA’ların Tedariki ve Entegrasyonu: Projede kullanılan bazı parçaların stoklarda uzun süre bulunamaması
+nedeniyle, üç İHA için donanım tedariki gecikmiştir. Distribütör firmalardan alınan bilgiye göre, kalan birkaç ürün için
+gümrük işlemleri sürmektedir. Bu işlemler tamamlanır tamamlanmaz, diğer üç İHA’nın da uçuşa ve veri alışverişine hazır
+hale getirilmesi planlanmaktadır. Bu durumun proje üzerinde oluşturabileceği zaman kaybını minimize etmek amacıyla
+malzemeler geldikçe hızlı montaj ve test çalışmaları yapılacaktır.
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+1.3 Dönem İçinde Projeyle İlgili İdari ve Mali Gelişmeler
+Proje ekibinin proje önerisinde belirtildiği şekilde öngörülen iş/görev dağılımına ve çalışma takvimine göre yaptıkları
+çalışmalar ve üzerlerine düşen sorumlulukları ne ölçüde yerine getirdikleri hakkında ve proje ekibinde değişiklikler
+yapılmışsa kısaca bilgi verilir. Yürütücü tarafından araştırmacı ve danışmanların ilgili rapor dönemine ait PTİ lerinin
+ödenip ödenmemesi hususunda gerekçeli bilgi verilir. Yürütücü kurum/kuruluş değişikliği, destekleyen kurum/kuruluş
+değişikliği, yeni kuruluş desteği alma vb. değişiklikler yapılmışsa gerekçeleriyle birlikte kısaca açıklanır. Bu tür
+değişikliklerin TÜBİTAK onayı alınmadan yapılamayacağı hususuna dikkat edilir. Destekleyen diğer kuruluşlarla ilgili
+sorunlar varsa ayrıntıları ve çözüm önerileri de sunulur.
+Proje bütçe kalemlerinin harcanmasında yaşanan sorunlar varsa neler olduğu ve sorunların çözülüp çözülmediği belirtilir.
+Proje önerisinde belirtilen görev dağılımı ve çalışma takvimine uygun olarak ekip, çalışmalarını büyük ölçüde öngörülen
+plana göre yürütmüştür. Ancak, proje ekibinde belirli değişiklikler yapılması gerekmiştir. Başlangıçta iki yüksek lisans ve
+bir doktora öğrencisi bursiyer olarak öngörülmüştü; ancak beklenen niteliklerde yüksek lisans öğrencisi bulunamaması
+nedeniyle TÜBİTAK’a yapılan talep doğrultusunda, projede şu anda iki lisans ve bir yüksek lisans öğrencisi yer
+almaktadır.
+Projede görev dağılımı şu şekildedir:
+Lisans öğrencileri, İHA’ların teknik tasarım ve geliştirme süreçlerinde, ara yüzlerin oluşturulması, sinyal iletişimi gibi temel
+teknik alanlarda aktif olarak çalışmaktadır.
+Ahmet Turan Karagöz, elektronik ve donanımsal tasarımlar konusunda projeye katkı sağlamaktadır.
+Muhammed Furkan Bozbek, yazılımsal ara yüzlerin geliştirilmesinden sorumludur.
+Gökhan Çoban, projenin teorik kısmında, lineer olmayan filtreleme ve özellikle Kalman filtresi uygulamaları üzerine
+çalışmakta olup, RSSI verilerinden doğru konumlandırma yapılmasını sağlayacak lokalizasyon yöntemlerinin
+geliştirilmesine odaklanmıştır.
+Doç. Dr. Hacı Mehmet Güzey ise İHA ve sürü İHA denetimi alanındaki uzmanlığıyla projeye teorik ve teknik destek
+sağlamaktadır.
+İdari ve Mali Gelişmeler: Proje, ürün tedarikinde yaşanan bazı gecikmeler dışında planlanan takvime uygun şekilde
+ilerlemektedir. Tedarik sürecindeki aksamalar, özellikle bazı malzemelerin temininde yaşanan stok sıkıntılarından
+kaynaklanmaktadır. Bu gecikmelerin, bir sonraki dönemde hızla giderilmesi planlanmaktadır. İdari olarak TÜBİTAK onayı
+alınarak proje ekibinde yapılan değişiklikler, projenin verimliliğini artırma amacı taşımaktadır.
+Mali Gelişmeler: Proje bütçesi dahilinde ihtiyaç duyulan malzemeler, ilk aşamada detaylı şekilde gözden geçirilmiş ve
+bazı malzemeler değiştirilmiş veya eklenmiştir. Riski en aza indirmek amacıyla, öncelikle bir adet İHA için gerekli tüm
+malzemeler alınmış, montaj ve testler haziran ayında tamamlanmıştır. Bu süreçten elde edilen geri bildirimler
+doğrultusunda, diğer üç İHA için gerekli malzemeler de temin edilmeye başlanmış, ancak stok sıkıntıları nedeniyle
+alımlar kademeli olarak yapılmaktadır. Eksik kalan malzemelerin tedarik süreci devam etmekte olup, gelecek dönem
+içerisinde tamamlanması hedeflenmektedir.
+Bu değişiklikler ve alınan tedbirler, proje kapsamında öngörülen çıktılara ulaşılmasını sağlamak ve herhangi bir
+mali veya teknik aksaklık yaşanmasının önüne geçmek amacıyla gerçekleştirilmiştir.
+
+1.4 Bir Sonraki Dönemde Yapılması Planlanan Çalışmalar
+Bir sonraki dönemde yapılması planlanan çalışmalar hakkında gerektiğinde ilgili iş paketlerine de atıf yapılarak kısaca
+bilgi verilir. Mevcut dönemde bitirilemeyip sonraki dönemde devam edilmesi gereken çalışmalar varsa onlar hakkında da
+kısaca bilgi verilir. Öneri formunda belirtilenlerden farklı risklerin ortaya çıkabileceği düşünülüyorsa, bu riskler ve risklere
+yönelik alınacak tedbirler belirtilir.
+Bir sonraki dönemde, "Hedef takip için teorik filtreleme" başlıklı iş paketi üzerinde yoğunlaşılması planlanmaktadır. Bu iş
+paketinde, hedefe yönelme yoluyla konumlandırma sırasında gürültünün etkisini en aza indirmek amacıyla çeşitli
+filtreleme yöntemlerinin uygulanması hedeflenmektedir. Halihazırda, bu doğrultuda Kalman filtresi, kayan mod (sliding
+mode) filtresi ve diğer uygun filtreleme yöntemleri üzerine çalışmalar devam etmektedir. Bir sonraki dönemde bu
+filtrelerin performansları değerlendirilecek ve en etkili yöntemin seçimi yapılacaktır.
+Ayrıca, önceki dönemde tamamlanamayan üç adet İHA’nın tasarımı ve uçuşa hazırlanması işlemleri de
+tamamlanacaktır. Bu İHA’lar da uçuş ve sinyal iletişim testlerinden geçirilerek projeye dahil edilecektir.
+Öngörülen Riskler ve Alınacak Tedbirler:
+Önümüzdeki dönemde, filtreleme yöntemleri üzerindeki çalışmalar ise çeşitli filtrelerin başarı oranına göre
+ilerletileceğinden, teorik kısmın planlanan zaman diliminde tamamlanması için kaynakların etkin kullanımı sağlanacaktır.
+Bu önlemler sayesinde, projede öngörülmeyen aksaklıklar yaşanması durumunda gerekli esneklik sağlanarak projenin
+zamanında ve başarılı bir şekilde ilerlemesi hedeflenmektedir.
+
+2. ELDE EDİLEN ÇIKTILAR, GERÇEKLEŞEN YAYILIM FAALİYETLERİ VE OLUŞAN ETKİ
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+2.1 Dönem İçinde Proje Kapsamında Elde Edilen ve Süreci Devam Eden Çıktılar
+Projeden elde edilmiş ve ilgili döneme ait süreci tamamlanmış tüm çıktılar, mutlaka gelişme raporu ile birlikte Proje
+Takip Sistemi’nde (https://ardeb-pts.tubitak.gov.tr) çıktı türleri dikkate alınarak yüklenir.
+Bu bölümde henüz tamamlanmamış ancak süreci devam eden bilimsel/akademik, ekonomik/ticari ve/veya araştırmacı
+yetiştirilmesine yönelik çıktılar varsa, bu çıktıların türü ve sürecin hangi aşamada olduğuyla ilgili kısaca bilgi verilir.
+
+2.2 Dönem İçinde Proje Kapsamında Yapılan Yayılım Faaliyetleri
+Elde edilen bulguların, ara sonuçların/çıktıların ilgili paydaşlar ve potansiyel kullanıcılara ulaştırılması ve
+paylaşılmasına yönelik yapılan yayılım faaliyetleri hakkında bilgi verilir.
+Etkinlik Türü (Toplantı, Çalıştay,
+Eğitim, Web Sitesi, Medya, Fuar,
+Proje Pazarı vb.)
+
+Paydaş / Olası Kullanıcılar
+
+Etkinliğin Zamanı ve
+Süresi
+
+2.3 Projenin Beklenen Etkiyi Oluşturmak Üzere Amaçları Doğrultusunda İlerleme Durumu
+Bu bölümde ilgili rapor döneminde proje kapsamında yapılan faaliyetlerin projede öngörülen etkiyi oluşturma potansiyeli
+kısaca tartışılır.
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+

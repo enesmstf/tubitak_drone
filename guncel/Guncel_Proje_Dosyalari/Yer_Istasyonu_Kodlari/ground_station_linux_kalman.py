@@ -24,13 +24,13 @@ from ground_station_core_kalman import GroundStation
 # ==========================================
 SIMULATION_MODE = False
 
-LORA_PORT = "/dev/ttyUSB7"
+LORA_PORT = "/dev/ttyUSB0"
 
 PIXHAWK_PORTS = {
-    1: "/dev/ttyUSB3",  # Drone 1 (ORIGIN referansı bu drone'dan alınır)
-    2: "/dev/ttyUSB0",  # Drone 2
-    3: "/dev/ttyUSB5",  # Drone 3
-    4: "/dev/ttyUSB6",  # Drone 4
+    1: "/dev/ttyUSB2",  # Drone 1 (ORIGIN referansı bu drone'dan alınır)
+    2: "/dev/ttyUSB3",  # Drone 2
+    3: "/dev/ttyUSB1",  # Drone 3
+    4: "/dev/ttyUSB4",  # Drone 4
 }
 
 

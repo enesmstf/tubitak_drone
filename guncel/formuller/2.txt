@@ -1,0 +1,1178 @@
+TÜBİTAK
+ARAŞTIRMA PROJESİ
+GELİŞME RAPORU
+(Bilimsel Rapor)
+PROGRAM KODU
+PROJE NO
+PROJE SÜRESİ
+RAPOR NO
+RAPOR DÖNEMİ
+PROJE YÜRÜTÜCÜSÜ
+GÜZEY
+
+: 3501
+:123E294
+: 36 ay
+:2
+: 1/11/2024 - 1/04/2025
+: Dr. Öğr. Üyesi Nurbanu
+
+Bilgi Notu:
+- Raporda kullanılacak dilin (Türkçe veya İngilizce), başvuru formunda kullanılan dil ile aynı olması gerekmektedir.
+- TÜBİTAK tarafından kabul edilebilir geçerli bir mazeret bildirilmeksizin; proje gelişme raporlarının sözleşmede belirtilen tarihlerde, proje sonuç
+raporlarının ise, sözleşmede belirtilen proje bitiş tarihinden itibaren 2 (iki) ay içinde gönderilmemesi halinde, ilgili rapor dönemine ait Proje Teşvik
+İkramiyeleri (PTİ) ödenmeyecektir (*).
+- Proje ekibi tarafından, TÜBİTAK desteği ile yürütülmekte/sonuçlandırılmış olan projeler kapsamında yapılan yayınlarda [makale, kitap, bildiri (sözlü
+sunum/poster sunum), tez, yayılım vb.] proje sözleşmesi ve TÜBİTAK Araştırma ve Yayın Etiği Kurulu Yönetmeliği (AYEK) gereğince ilgili proje
+numarası ile birlikte TÜBİTAK desteği belirtilmelidir.
+- Proje kapsamında gerçekleşmiş tüm çıktıların proje sözleşmesi ve Proje Teşvik ve Destekleme Esaslarına İlişkin Yönetmelik Uyarınca Desteklenen
+Projelerde Uygulanacak Fikri Haklar Esasları gereğince Proje Takip Sistemi (PTS) (https://ardeb-pts.tubitak.gov.tr) üzerinden Gruba gönderilmelidir.
+- İlgili rapor döneminde katılım sağlanan yurtiçi/yurtdışı bilimsel toplantı/çalışma ziyaretleri hakkında gerekli bilgiler PTS üzerinden Seyahat Bilgi Formu
+doldurularak Gruba iletilmelidir.
+- Gelişme raporları ile birlikte Fikri Ürün Bildirim Formunun doldurulması zorunludur. Dönem içinde projeden fikri ürün (patent, faydalı model, marka,
+know-how, endüstriyel tasarım, entegre devre topografyası, yeni bitki ve hayvan türleri ve bunların ıslah yöntemleri, bilgisayar programları ve bunların
+kaynak kodları vb.) çıkıp çıkmadığı formda belirtilir. Eğer bir fikri ürün çıkmamışsa formun bu sorunun sorulduğu bölüme kadarki kısmı doldurulur; bu
+soruya gelindiğinde “hayır” seçeneği işaretlenerek yürütücü tarafından imzalanır. Fikri ürün çıkmışsa formun tamamı doldurulur ve hak sahipleri
+tarafından imzalanır. Projeden fikri ürün dışında ortaya çıkan eserler yani, bilgisayar programları ve bunların kaynak kodları hariç 5846 sayılı Fikir ve
+Sanat Eserleri Kanunu kapsamındaki kitap, kitapta bölüm, makale, bildiri, katalog vb. çıktılar için fikri ürün formu doldurulmayacağına dikkat edilir.
+Birden fazla fikri ürün söz konusu ise her bir fikri ürün için ayrı bir form doldurulur. Fikri Ürün Bildirim Formunun sunulmasından itibaren en geç üç ay
+içerisinde ilgili fikri ürünle ilgili tescil başvurusu yapılması gerektiği hususu hatırlanmalıdır.
+
+(*) ARDEB tarafından yürütülen destek programları (1002 ve 3001 hariç) kapsamında “Sonuçlandı” durumunda 3 adet projede yürütücü olarak görev
+almış, TÜBİTAK Araştırma ve Yayın Etiği Kurulu (AYEK) tarafından yaptırım uygulanmamış ve daha önce ARDEB tarafından desteklenen yürütücüsü
+olduğu herhangi bir projesi iptal edilmemiş proje yürütücülerimizin söz konusu destek programları (1002 ve 3001 hariç ARDEB destek programları)
+kapsamında yürürlükte olan projeleri için; talep etmeleri halinde, bilimsel Gelişme Raporu alınmayacak, sadece Sonuç Raporu alınacaktır. Mali
+raporların ise ilgili dönem transferlerinin yapılabilmesi için iletilmesi gerekmektedir.
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+BİLİMSEL GELİŞME RAPORU FORMU
+
+1. BİLİMSEL/TEKNOLOJİK GELİŞMELER
+1.1 Dönem İçinde Gerçekleştirilen Faaliyetler ve Elde Edilen Bulgular/Sonuçlar
+Proje öneri formunun iş-zaman çizelgesinde ilgili gelişme raporu dönemi için planlanan tüm İP’leri ve her İP için ayrı
+olacak şekilde tablolar oluşturulmalı ve bilgi sunulmalıdır.
+İP No
+
+2
+
+İP Adı
+
+Hedef takip için teorik filtreleme: Hedefin üzerine yönelme ile konumlandırma
+yönteminde gürültünün etkisini azaltmak için filtreleme yöntemlerinin belirlenmesi.
+
+İP Tamamlanma Durumu
+(Yüzde Belirtilmelidir)
+
+%100
+
+a) İP Kapsamında Yapılan Çalışmalar ve Elde Edilen Bulgular
+İP hedeflerine yönelik yapılan çalışmalar, ulaşılan hedefler ve elde edilen bulgular ilgili literatüre atıflar yapılarak detaylı
+olarak sunulur ve sonuçlar tartışılır. İP kapsamında elde edilen ara çıktılara ilişkin bilgiler verilir. Ana açıklamalar dışında
+İP kapsamında elde edilen ara çıktılar (teknik rapor, liste, diyagram, analiz/ölçüm sonucu, algoritma, yazılım, anket
+formu, verim, ham veri vb.) hakkında bilgi verilir ve ara çıktılar ekler bölümünde sunulur.
+12-18 Aylık dönemi kapsayan 2. Gelişme döneminde proje önerisinde İP 2’nin gerçekleştireceği belirtilmiştir. Bu
+kapsamda
+
+
+Uzaktan tespit için teorik filtreleme: Hedefin üzerine yönelmeden konumlandırma yönteminde gürültünün
+etkisini azaltmak için filtreleme yöntemlerinin belirlenmesi sağlanmıştır.
+KALMAN FİLTRESİ KULLANILARAK KONUM TESPİTİ
+İnsansız hava araçlarının (İHA) sağladığı yüksek irtifa, geniş görüş alanı ve dinamik hareket kabiliyeti, RF kaynak
+lokalizasyonunda özellikle afet yönetimi, arama-kurtarma, tarım, uzaktan algılama ve akıllı şehir uygulamalarında önemli
+avantajlar sağlamaktadır (Danilov vd., 2015; Tsouros vd., 2019; Spyridis vd., 2021; Griffin, 2014; Półka vd., 2017; AlMousa vd., 2019; Noor vd., 2018). Bu özellikler, geleneksel yer tabanlı lokalizasyon yöntemlerinin (örneğin RSSI, varış
+zamanı ve varış açısı temelli yöntemler) çevresel engeller, sinyal yansıması ve saçılma dezavantajlarının üstesinden
+gelmesini mümkün kılmaktadır. Ancak bu yöntemler, çevresel gürültü nedeniyle yüksek ölçüm hatalarına maruz kalarak
+hedef lokalizasyonunun doğruluğunu olumsuz etkilemektedir (Hasanzade vd., 2018). Önceki araştırmalarda yalnızca
+İHA’ların aldığı RSSI verilerine dayalı geometrik yöntemler geliştirilmiş olsa da (Güzey, 2022), bu çalışmalar çevresel
+gürültü ve sinyal dalgalanmalarını tam anlamıyla hesaba katmamaktadır (Dey vd., 2021). Bu nedenle, bu çalışmada
+geometrik yöntemin avantajları ile İHA’ların koordineli hareket kabiliyeti birleştirilerek, ham RSSI verilerindeki gürültü ve
+ölçüm hatalarının azaltılmasına yönelik Kalman filtresi kullanılması önerilmektedir (Hasanzade vd., 2018; Güzey, 2022;
+Dey vd., 2021; Liu vd., 2017). Kalman filtresi, her bir İHA’dan gelen ölçümleri gerçek zamanlı işleyerek beklenen
+sapmaları filtreler ve böylece hem hedefin doğru konumunun tespitine hem de İHA formasyonunun korunarak koordineli
+hareketine imkân verir. Bu sayede GPS sinyallerinin zayıf veya mevcut olmadığı senaryolarda bile RF hedef
+lokalizasyonunda güvenilir sonuçlar elde edilebileceği öngörülmektedir.
+Materyal Method
+RSSI, alıcıdaki sinyal gücünü, iletim gücü, alıcı ve verici antenlerinin özellikleri, alıcı ve verici arasındaki mesafe gibi
+farklı parametrelerin fonksiyonu olarak hesaplayan tekniktir Lee vd. (2012). Ölçülen sinyal gücü, verici ile alıcı arasındaki
+mesafeye dönüştürülebilir. Uzayda verici ile alıcı arasındaki mesafe değiştikçe sinyal gücü de değişir. Alıcı ve verici
+arasındaki sinyal gücü değişimi Friis denklemi kullanılarak ölçülebilir Lee vd. (2012):
+
+
+  
+Pr  Pt Dr Dt 
+  N (0,  )
+ 4 d 
+
+(1)
+
+Burada Pt verici tarafından iletilen sinyal gücü, d verici ile alıcı arasındaki mesafe,  yol kaybı üsteli ve  iletilen
+sinyalin dalga boyudur. Yansımalar, ölçümler ve benzerlerinden kaynaklanan modelleme hatasını denkleme bir ek
+Gauss gürültüsü, N, olarak dahil edilir.
+Bu çalışmada, RF cihazlarının konum tespiti sorununa RSSI tabanlı geometrik çözümler önerilmiştir. Algoritma, iki ana
+zorluğun varlığında türetilmiştir:
+• Hedefin konumu hakkında ön bilgi yoktur,
+• İHA'lar tarafından ölçülen tek şey sinyal gücüdür; sinyalin zaman damgası, yön bulma donanımı veya diğer yararlı
+bilgileri yoktur.
+Problemi çözmek için aşağıdaki iki koşul varsayılır:
+• İHA'lar ile hedef arasında her zaman net bir görüş hattı vardır.
+• Herhangi bir iletişim sınırlaması yoktur; İHA'lar bilgi kaybetmeden veri gönderip alabilir.
+Projede gerçekleştirilecek olan ilk yöntemde takip edilmek istenen hedefin yer düzleminde olduğu farz edilmiştir. Bu
+çalışmada x ekseninin doğu-batı yönünde ve y ekseninin kuzey-güney doğrultusunda olduğu varsayılmıştır. '+' dizilişinde
+uçan 4n sayısında İHA, n=1,2,.., doğu, batı, kuzey ve güney olmak üzere 4 ana gruba ayrılıyor. İHA'lar x ekseninde
+doğu grubu ile batı grubunun sinyal güçlerinin farkından, y ekseninde kuzey ve güney gruplarının güç farkından sürülür.
+İHA’lar hedeften gelen gücü tespit ettikten sonra doğu ve batı grubundaki İHA’lar kendi içlerinde, kuzey ve güney
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+grubundaki İHA’lar kendi içlerinde alınan toplam sinyal gücü eşit oluncaya kadar hareket ederler. Eşit güçleri elde
+ettiklerinde hedef kaynağın üzerinde formasyonu koruyarak konumlanmış olurlar. Böylelikle sistemin merkezinin
+konumu hedefinde x-y düzlemindeki konumunu vermektedir (Güzey vd. 2022).
+Şekil 1’de gösterildiği gibi ‘+’ şekline sahip iki anten dizisi kullanılarak, x ve ye yönündeki alınan sinyal gücü farkları
+aşağıdaki gibi tanımlanmıştır
+ px  PxL  PxR ,  py  PyL  PyR
+(2)
+burada PxL , PxR , PyL , PyR İHA grupları tarafından alınan sinyal gücünü göstermektedir . Ayrıca system merkezinin
+yükseklik hatası
+
+ z  z  zd
+
+(3)
+olarak tanımlanır. Konumlandırma işleminde x ve y yönündeki grupların alınan sinyal gücü farkları ve yükseklik hatası 0
+olacak şekilde İHA’lar hareket ettirilir. Her bir İHA (2) ve (3)’deki hataları sıfır yapacak şekilde kontrol algoritması
+üzerinden sürülmektedir. Böylece, her bir İHA’nın üretmiş olduğu kontrol sinyali aynı olacağından, olağan üstü durumlar
+ve gürültüler olmadığı durumda istenilen ‘+’ formasyonunu bozmayacaklardır. Gürültü vb etkiler ile ‘+’ formasyonu
+bozulduğunda, İHA’ları istenen formasyona getirecek formasyon kontrolü de, yine önceki çalışmamızda Güzey vd.
+(2022). geliştirilmiştir. Yöntemin detaylarına Güzey vd. (2022)’dan ulaşılabilir. Ayrıca proje kapsamında sensörlerden
+alınan RSSI değerlerindeki gürültü etkisinin filtreleme yöntemleri ile azaltılması hedeflenmektedir.
+
+Şekil 1 Hedef ve ‘+’ formasyonunda uçan İHA’lar
+
+Radyo sinyal gücüne dayalı konumlandırma sistemlerinde kullanılan Alınan Sinyal Gücü Göstergesi (RSSI), çevresel
+faktörlerden, çok yollu yayınım (multipath), donanımsal hatalar ve elektromanyetik parazit gibi birçok etkenden dolayı
+önemli ölçüde gürültülenir. Bu gürültü, ölçüm doğruluğunu ve dolayısıyla konumlandırma algoritmasının performansını
+olumsuz etkiler.
+Proje kapsamında, RSSI tabanlı konumlama algoritmalarının karşılaştığı en büyük sorunlardan biri olan ölçüm
+gürültüsünün etkilerini azaltmak amacıyla Kalman filtresi kullanılmıştır. Kalman filtresi, ölçüm gürültüsünü istatistiksel
+olarak modelleyerek sistem durumunu — bu çalışmada alınan sinyal gücü (RSSI) — daha doğru ve kararlı bir biçimde
+tahmin etmeye olanak sağlar. Yalnızca mevcut ölçüme değil, geçmiş durum bilgisine de dayanan bu filtreleme yaklaşımı,
+klasik yöntemlere kıyasla daha etkin bir hata azaltımı sunar. Kalman filtresi, ani dalgalanmalara ve çevresel parazitlere
+maruz kalan RSSI gibi verilerin yumuşatılmasında önemli avantajlar sağlar. Ayrıca, geçmiş verilere dayalı tahmin
+yeteneği sayesinde veri kayıplarının veya ölçüm gecikmelerinin olduğu durumlarda sistemin sürekliliğini korur. Basit
+matris işlemlerine dayalı yapısı sayesinde düşük hesaplama yükü ile gerçek zamanlı sistemlerde uygulanabilir. Dahası,
+doğrusal ve Gauss dağılımlı sistemlerde teorik olarak minimum hata kovaryansını sağlayan optimal çözüm olması,
+Kalman filtresini sinyal işleme ve konum tahmini gibi uygulamalar için vazgeçilmez kılmaktadır. Aşağıda, kullanılan
+Kalman filtresi algoritmasının adımları detaylandırılmış ve her bir adımın sistem düzeyindeki işlevi açıklanmıştır.
+Durum Tahmini (Prediction of the Next State)
+̂(k + 1|k) = FX
+̂(k|k)
+X
+
+(4)
+
+Bu adımda sistemin bir sonraki zamandaki durumu tahmin edilir. RSSI sinyali zamanla yavaş değişen bir süreç
+olduğundan, bu tahmin genellikle birim matris F=I ile yapılır ve “mevcut RSSI değeri bir sonraki durumda da benzer
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+olacak” varsayımı kabul edilir. Bu adımın amacı, yeni ölçüm gelmeden önce sistemin ne durumda olması gerektiğini
+belirlemektir.
+Tahmin Kovaryansı (Prediction Covariance Update)
+𝑃(𝑘 + 1|𝑘) = 𝐹𝑃(𝑘│𝑘) 𝐹′ + 𝑄(𝑘)
+
+(5)
+
+Bu adımda, yapılan durum tahmininin belirsizliği hesaplanır. Buradaki Q(k), sistem modelindeki belirsizlikleri temsil
+eden süreç gürültüsü kovaryansıdır. Bu ifade, tahminin kesinlik derecesini belirtir. Eğer sistemde beklenmedik
+değişiklikler varsa, bu belirsizlik artar. Yani, “ne kadar eminim?” sorusuna verilen cevaptır.
+Kalman Kazancı Hesaplama (Measurement Weighting)
+𝑊(𝑘 + 1) = 𝑃(𝑘 + 1|𝑘)𝐻(𝑘 + 1)′ (𝐻(𝑘 + 1)𝑃(𝑘 + 1|𝑘)𝐻(𝑘 + 1)′ + 𝑅)−1
+
+(6)
+
+Kalman kazancı, yeni ölçüm geldiğinde bu ölçüme ne kadar güvenileceğini belirler. Ölçüm gürültüsü RRR büyükse,
+filtre ölçüme daha az güvenir ve önceki tahmini daha fazla dikkate alır. Küçükse, ölçüme daha fazla önem verir. Bu
+adım sistemin adaptif davranmasını sağlar: güvenilir ölçümlerle filtre hızla güncellenirken, gürültülü ölçümlerde daha
+temkinli hareket edilir.
+Durum Güncellemesi (State Correction Based on Measurement)
+̂(k + 1|k) = X
+̂(k + 1|k) + W(k + 1)(𝑍𝑅𝑆𝑆𝐼 − H(k + 1)X
+̂(k + 1|k))
+X
+
+(7)
+
+Bu adımda filtre, yeni gelen ölçüm ile tahmini karşılaştırır ve hata kadar düzeltme yapar. Parantez içindeki ifade,
+“yenilik” ya da “ölçüm hatası” olarak bilinir. Bu hata, Kalman kazancı ile ağırlıklandırılarak durum tahmini güncellenir.
+Böylece, geçmiş bilgiyle yeni ölçüm dengelenmiş olur. Sonuç olarak daha kararlı ve gürültüden arındırılmış bir RSSI
+değeri elde edilir.
+Kovaryans Güncellemesi (Updated Uncertainty)
+P(k + 1|k + 1) = P(k + 1|k) − W(k + 1)(H(k + 1)P(k + 1|k)H(k + 1)′ + R)W(k + 1)′
+
+(8)
+
+Filtre güncellendikten sonra, durumun yeni belirsizliği bu adımda hesaplanır. Ölçümle yapılan düzeltmenin ardından,
+sistemin mevcut durumu hakkındaki güven seviyesi artar ve kovaryans azalır. Bu adım, filtrelemenin zamanla giderek
+daha hassas hale gelmesini sağlar.
+Aşağıda alınan sinyal güçlerine eklenen hatalar sonucunda Kalman Filtresinin konumlandırma algoritması üzerine
+etkileri simülasyon sonuçları verilmiştir.
+Sonuçlar
+Aşağıda Kalman filtresi kullanarak ve kullanmadan bulunan simülasyon sonuçları verilmiştir. Şekil 2 İHA’lar tarafından
+alınan güç farklarını göstermektedir.
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+Şekil 2 İHA'lar tarafından alınan sinyal gücü farkları
+Belirli bir süreden sonra, güç farkları kararlı bir hâle gelmektedir. Bu noktada, y eksenindeki güç farkı sıfıra oldukça
+yakın değerlere ulaşırken, x eksenindeki fark ise görece daha yüksek kalmaktadır.
+
+Şekil 3 Hedefin gerçek ve kestirilen konumu
+Şekil 3’te hedefin Kalman filtresi kullanılmadan kestirilen konumu verilmiştir. Hedefin gerçek konumu ile kestirilen
+konumu arasında 11.4 m hata vardır.
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+Şekil 4 Kalman filtresi kullanıldığında İHA'lar arasındaki güç farkları
+Şekil 4’te, Kalman filtresi uygulanmadan çalıştırılan algoritma ile aynı süre boyunca çalıştırılan Kalman filtreli
+konumlandırma algoritmasının ürettiği güç farkları karşılaştırmalı olarak sunulmuştur. Kalman filtresi sayesinde, güç
+değerlerindeki dalgalanmalar önemli ölçüde azaltılmış ve güç farkları sıfıra yakın seviyelere ulaşmıştır. Şekil 5’te ise
+Kalman filtresi uygulanarak elde edilen konumlandırma sonucu gösterilmiştir. Bu iyileştirme ile konumlandırma hatası
+2.3 metreye düşürülmüştür. Elde edilen sonuçlar, Kalman filtresinin konumlandırma performansı üzerinde belirgin ve
+olumlu bir etki sağladığını açıkça ortaya koymaktadır.
+Bu çalışmanın makale yazım çalışmaları halen devam etmektedir.
+
+Şekil 5 Hedefin gerçek konumu ve Kalman filtresi kullanılarak kestirilen konumu
+Referanslar
+
+
+
+
+Danilov, A. S., Smirnov, U. D., & Pashkevich, M. A. (2015). The system of the ecological monitoring of
+environment which is based on the usage of UAV. Russian Journal of Ecology, 46(1), 14–19.
+https://doi.org/10.1134/S1067413615010038
+Tsouros, D. C., Bibi, S., & Sarigiannidis, P. G. (2019). A Review on UAV-Based Applications for Precision
+Agriculture. Information, 10(11), 349. https://doi.org/10.3390/info10110349
+Spyridis, Y., Lagkas, T., Sarigiannidis, P., & Zhang, J. (2021). Modelling and simulation of a new cooperative
+algorithm for UAV swarm coordination in mobile RF target tracking. Simulation Modelling Practice and Theory,
+107, 102232. https://doi.org/10.1016/j.simpat.2020.102232
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+
+
+
+
+
+
+
+
+
+
+
+Griffin, G. F. (2014). The Use of Unmanned Aerial Vehicles For Disaster Management. Geomatica, 68(4), 264–
+280. https://doi.org/10.5623/cig2014-402
+Półka, M., Ptak, S., & Kuziora, Ł. (2017). The Use of UAV’s for Search and Rescue Operations. Procedia
+Engineering, 192, 748–752. https://doi.org/10.1016/j.proeng.2017.06.129
+Al-Mousa, A., Sababha, B. H., Al-Madi, N., Barghouthi, A., & Younisse, R. (2019). UTSim: A framework and
+simulator for UAV air traffic integration, control, and communication. International Journal of Advanced Robotic
+Systems, 16(5), 1729881419870937. https://doi.org/10.1177/1729881419870937
+Noor, N. M., Abdullah, A., & Hashim, M. (2018). Remote sensing UAV/drones and its applications for urban
+areas: a review. IOP Conference Series: Earth and Environmental Science, 169, 012003.
+https://doi.org/10.1088/1755-1315/169/1/012003
+Hasanzade, M., Herekoglu, O., Yeniceri, R., Koyuncu, E., & Inalhan, G. (2018). RF Source Localization using
+Unmanned Aerial Vehicle with Particle Filter. In 2018 9th International Conference on Mechanical and
+Aerospace
+Engineering
+(ICMAE)
+(pp.
+284–289).
+Budapest,
+IEEE.
+https://doi.org/10.1109/ICMAE.2018.8467555
+Nawaz, H., Ali, H. M., & Laghari, A. A. (2021). UAV Communication Networks Issues: A Review. Archives of
+Computational Methods in Engineering, 28(3), 1349–1369. https://doi.org/10.1007/s11831-020-09418-0
+Güzey, N. (2022). RF Source Localization Using Multiple UAVs through a Novel Geometrical RSSI Approach.
+Drones, 6(12), 417.
+Dey, A., Chattopadhyay, T., & Paul, T. (2021). Adaptive RSSI-based Indoor Localization Using Machine
+Learning. IEEE Sensors Journal, 21(6), 7981–7988.
+Liu, H., Zhang, X., & Zhou, L. (2017). RSSI-based Indoor Localization Using Unmanned Aerial Vehicle in
+Wireless Sensor Networks. Sensors, 17(10), 1–22.
+
+--------------------------------------------------------------------
+
+b) İP Sonuçlarının İlgili İP’nin Başarı Ölçütleri Göz Önüne Alınarak Gerçekleşme Durumu
+İP’nin tamamlanan rapor dönemi için gerçekleşme durumu, proje önerisinde belirlenmiş başarı ölçütleri dikkate alınarak
+kendi içinde ve proje bütünlüğü kapsamında bir değerlendirmesi yapılır.
+Proje önerisinde ilgili iş paketi: ‘Daha önceki çalışmamızda Güzey vd. (2022), alınan sinyal gücündeki hatalar dikkate
+alınmamıştı. Bu iş paketi kapsamında değişik filtre algoritmaları ile, alınan sinyaldeki hatanın varlığı durumunda,
+hedefi takip etmedeki hatanın azaltılması hedeflenmektedir. Matlab ortamında elde edilecek sonuçlarda, İHA
+sürüsünün hedef üzerinde formasyonu koruyarak uçarken yaptığı salınımı filtrelerin azalttığı gösterilecektir. Bu iş
+paketinin projenin başarısına katkısı %20’dir.’ olarak ifade edilmiştir.
+Bu iş paketinde, RSSI tabanlı konumlandırma sistemlerinde karşılaşılan sinyal gürültüsünün olumsuz etkilerini azaltmak
+amacıyla Kalman filtresi kullanılmıştır. Kalman filtresi sayesinde ölçüm doğruluğu artırılmış, böylece konumlandırma
+algoritmasının kararlılığı ve güvenilirliği önemli ölçüde iyileştirilmiştir. Geliştirilen algoritmanın performansı Matlab
+ortamında gerçekleştirilen simülasyonlarla değerlendirilmiş ve elde edilen sonuçlar grafiksel olarak sunulmuştur. Bu iş
+paketi, projenin genel başarısına %20 oranında katkı sağlamaktadır. Belirlenen hedefler eksiksiz bir şekilde yerine
+getirilmiş olup, iş paketi başarıyla tamamlanmıştır. Böylelikle, projenin %20’lik bölümü tamamlanmış durumdadır.
+Bu iş paketi kapsamında elde edilen bilimsel çıktı şu anda yazım aşamasındadır. Yazım sürecinin tamamlanmasının
+ardından, çalışmanın içeriğine uygun saygın bir akademik dergiye veya konferansa gönderilmesi planlanmaktadır.
+İP No
+
+3
+
+İP Adı
+
+Uzaktan tespit için teorik filtreleme: Hedefin üzerine yönelmeden konumlandırma
+yönteminde gürültünün etkisini azaltmak için filtreleme yöntemlerinin belirlenmesi
+
+İP Tamamlanma Durumu
+(Yüzde Belirtilmelidir)
+
+%100
+
+a) İP Kapsamında Yapılan Çalışmalar ve Elde Edilen Bulgular
+İP hedeflerine yönelik yapılan çalışmalar, ulaşılan hedefler ve elde edilen bulgular ilgili literatüre atıflar yapılarak detaylı
+olarak sunulur ve sonuçlar tartışılır. İP kapsamında elde edilen ara çıktılara ilişkin bilgiler verilir. Ana açıklamalar dışında
+İP kapsamında elde edilen ara çıktılar (teknik rapor, liste, diyagram, analiz/ölçüm sonucu, algoritma, yazılım, anket
+formu, verim, ham veri vb.) hakkında bilgi verilir ve ara çıktılar ekler bölümünde sunulur.
+12-18 Aylık dönemi kapsayan 2. Gelişme döneminde proje önerisinde İP 3 in gerçekleştireceği belirtilmiştir. Bu
+kapsamda
+
+
+Uzaktan tespit için teorik filtreleme: Hedefin üzerine yönelmeden konumlandırma yönteminde gürültünün
+etkisini azaltmak için filtreleme yöntemlerinin belirlenmesi sağlanmıştır.
+Bu iş paketi kapsamında, iki farklı filtreleme yöntemi kullanılmıştır. Bunlardan ilki proje ekibimiz tarafından geliştirilen
+integral kayan kip filtresi (integral sliding mode filter)dir, diğer yöntem ise, konumlandırma uygulamalarında yaygın olarak
+tercih edilen Kalman filtresi algoritmasıdır. Aşağıda, her iki filtrenin detaylı açıklamaları ve simülasyon sonuçları
+sunulmuştur.
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+i) İNTEGRAL KAYAN KİP FİLTRESİ (INTEGRAL SLIDING MODE FİLTER) İLE LOKALİZASYON
+İnsansız hava araçlarının (İHA) ortaya çıkışı, tarımdan afet yönetimine, gözetlemeden lojistiğe kadar pek çok alanda
+büyük bir dönüşüm yaratmıştır. Özellikle Nesnelerin İnterneti (IoT) ekosisteminde önemli bir yer edinen İHA’lar,
+geleneksel sorunlara yenilikçi çözümler sunmaktadır (Shakhatreh vd., 2019). Bu bağlamda lokalizasyon ve takip, hava
+trafik kontrolü, uzaktan algılama ve askeri gözetleme gibi uygulamalarda hassasiyet ve güvenilirliğin kritik olduğu
+alanlarda öne çıkmaktadır (Guerra vd., 2018). Geleneksel yer tabanlı lokalizasyon yöntemleri, İHA’ların sağladığı
+mobilite, esneklik ve yüksek irtifa avantajları karşısında yetersiz kalmaktadır (Zeng vd., 2016). Öte yandan GPS
+sinyalinin zayıf veya hiç bulunmadığı ortamlarda ortaya çıkan dinamik zorluklar, RSSI tabanlı yaklaşımları ön plana
+çıkarmıştır (Kapoor vd., 2019).
+Önceki çalışmamızda, dört İHA’nın RSSI değerlerine dayalı olarak sinyal gücü eşitliği sağlanana dek konumlarını
+ayarladığı düşük maliyetli geometrik bir lokalizasyon yöntemi geliştirmiştik (Güzey vd., 2022). Ancak bu yöntemde
+yansıma ve gürültü etkileri göz ardı edildiği için gerçek zamanlı uygulamalarda performans düşüşü yaşanabilmektedir.
+Literatürde makine öğrenmesi ve ileri sinyal işleme teknikleriyle bu problemi çözmeye yönelik yaklaşımlar bulunmakla
+birlikte (Dey vd., 2021; Liu vd., 2017), yüksek hesaplama maliyeti ve büyük veri gereksinimleri gerçek zamanlı İHA
+sistemleri için pratik değildir.
+Bu eksikliği gidermek amacıyla, çalışmamızda Kayma Modu Filtreleme (Sliding Mode Filtering – SMF) yöntemi entegre
+edilmiştir. SMF, RSSI verilerindeki gürültüye karşı dirençli olmasıyla öne çıkarak lokalizasyon sürecinin güvenilirliğini
+artırır (Shtessel vd., 2014; Bandyopadhyay vd., 2013). Gerçek ortamlarda yüksek frekanslı titreşimler (chattering)
+oluşturan SMF’nin bu yan etkisini azaltmak için hata integralini filtre yapısına ekleyerek daha yumuşak ve uygulanabilir
+açılar elde edilmiştir (Demim vd., 2023). SMF, kayma yüzeyine dayalı hata yönlendirmesi sayesinde belirsizlik ve çoklu
+yol etkisi gibi zorlukların üstesinden gelir (Fridman vd., 2011) ve gerçek zamanlı uygulamalarda esneklik sunar. Sonuç
+olarak, SMF tabanlı filtreleme, GPS olmayan ortamlarda RSSI temelli sistemlerin doğruluğunu ve uyum yeteneğini
+geliştirerek güvenilir lokalizasyon sağlamaktadır.
+Materyal Method
+Kayma Modu Filtresi (SMF), dinamik sistemlerde durum kestirimi ve filtreleme problemlerine yönelik olarak kayma modu
+kontrol prensiplerini uygulayan gelişmiş bir kestirim yöntemidir. Temel amacı, sistemdeki tahmin hatalarını önceden
+tanımlanmış bir kayma yüzeyine yönlendirerek, bu yüzey üzerinde kalmalarını sağlamaktır; böylece gürültü ve model
+belirsizliklerine rağmen güvenilir tahminler elde edilir (Utkin, 2013).
+SMF’nin başarımı, birçok kritik parametreye bağlıdır:
+
+
+
+
+
+
+Kayma yüzeyinin tasarımı: sistemin dayanıklılığı ve yakınsama hızını belirler.
+Kazanç matrisi: sistemin yüzeyden sapmalara karşı tepkisini kontrol eder; yanlış ayarlanması durumunda
+titreme (chattering) veya kararsızlık oluşabilir.
+İntegral terim katsayısı ve sistem gürültüsünün genlik ve frekansı: filtre etkinliğini doğrudan etkiler.
+Örnekleme süresi: filtrenin değişimlere tepki verme ve gürültüyü bastırma yeteneğini belirler.
+
+Bu parametrelere karşı duyarlılığı nedeniyle, özellikle gerçek zamanlı ve değişken ortamlarda, filtrenin performansını
+optimize etmek için dikkatli bir ayarlama gereklidir. Son dönemde geliştirilen adaptif kayma modu teknikleri, bu
+parametreleri koşullara göre dinamik olarak ayarlayarak filtrenin farklı ortamlarda daha yüksek başarıyla çalışmasını
+sağlamaktadır [15].
+-Kayma Yüzeyi Tasarımı
+Kayma yüzeyi S(x), sistemin davranışının bu yüzey üzerinde iken istenilen şekilde olması sağlanacak şekilde tanımlanır.
+Genellikle, bu yüzey tahmin hatasına (örneğin e  x  xˆ burada x̂ tahmin edilen durumdur) bağlı bir fonksiyon olarak
+seçilir. Amaç, hata dinamiklerinin kararlı olması ve sıfıra yakınsamasıdır; yani S(x)=0 olması beklenir.
+𝑆(𝑥) = 𝐶(𝑒) = 𝐶(𝑥 − 𝑥̂)
+
+(9)
+
+Burada C, hata dinamiklerini şekillendirmek için seçilen bir matris ya da fonksiyondur. Kayma modu kontrol yasası,
+sistemin durumlarını bu yüzeye kısa sürede getirecek ve orada tutacak şekilde kesikli (discontinuous) olarak tasarlanır.
+Kontrol yasası, sistemin yüzeyden saptığı durumda etkinleşen bir terim içerir:
+
+𝑢 = 𝑢0 − 𝐾. 𝑠𝑖𝑔𝑛(𝑆(𝑥))
+
+(10)
+
+Burada K, ölçüm geribildirimini tahmin sürecine dahil eden bir kazanç matrisidir.
+-Dört İHA’nın İstenen Başlangıç Konumlarının Türevlenmesi / Türetilmesi
+Dört adet RSSI alıcısıyla donatılmış İHA'nın rastgele konumlardan başladığını hayal edin. Bu İHA'lar için başlangıç
+hedef konumları şu şekilde belirlenir:
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+𝑥1𝑑 (𝑡0 ) = 𝑥𝑐 − 𝑅cos(𝛼(𝑡0 )) 𝑦1𝑑 (𝑡0 ) = 𝑦𝑐 − 𝑅sin(𝛼(𝑡0 ))
+𝑧1𝑑 = 𝑧𝑐
+𝑥3𝑑 (𝑡0 ) = 𝑥𝑐 + 𝑅cos(𝛼(𝑡0 )) 𝑦3𝑑 (𝑡0 ) = 𝑦𝑐 + 𝑅sin(𝛼(𝑡0 ))
+𝑧3𝑑 = 𝑧𝑐
+𝑑 (𝑡 )
+𝑑
+𝑑
+𝑥2 0 = 𝑥𝑐 − 𝑅sin(𝛽(𝑡0 ))
+𝑦2 = 𝑦𝑐
+𝑧3 (𝑡0 ) = 𝑧𝑐 − 𝑅cos(𝛽(𝑡0 ))
+𝑑 (𝑡 )
+𝑑
+))
+𝑥4 0 = 𝑥𝑐 + 𝑅cos(𝛽(𝑡0
+𝑦4 = 𝑦𝑐
+𝑧4𝑑 (𝑡0 ) = 𝑧𝑐 + 𝑅sin(𝛽(𝑡0 ))
+
+(11)
+
+Burada, C( xc , yc , zc ) formasyonun merkezi, R dairelerin yarıçapı, 𝛼(𝑡0 ) ve 𝛽(𝑡0 ) ise Şekil 6’de gösterildiği gibi kullanıcı
+tarafından tanımlanan başlangıç dönme açılarıdır; ise başlangıç zamanıdır. D1 ve D3 numaralı İHA’lar x-y düzleminde,
+D2 ve D4 numaralı İHA’lar ise x-z düzleminde birer grup oluşturur.
+
+Şekil 6 İHA'ların ilk ve istenen konumları
+İHA’ların başlangıç konumları, merkeze olan uzaklıklarının R olması ve aralarındaki mesafenin 2R olacak şekilde
+belirlenmiştir. Bu sayede, İHA’lar sabit bir dairesel yol üzerinde birbirlerine eşit uzaklıkta hareket ederler. Dönme
+açılarına ilişkin hesaplamalar bir sonraki bölümde açıklanmıştır.
+Bu çalışmada, her eksende yalnızca bir İHA olduğu varsayılmıştır. Ancak İHA sayısının 4n gibi daha yüksek değerlere
+çıkarılması, alınan sinyallerin ortalamasını daha güvenilir hale getirerek sistem performansını artırabilir. Öte yandan,
+daha fazla İHA kullanımı maliyetleri artırır, iletişim ve hesaplama yükünü büyütür, bu da sistemin yönetimini zorlaştırır.
+Bu nedenle, performans kazanımları ile sistemin ölçeklenebilirliğine dair zorluklar dikkatlice dengelenmelidir.
+
+-Daha Kararlı Türevli Kaymalı Kip Filtresi ile Dönme Açısı Tahmini
+Güç farkları, hedefin hem düşey hem de yatay düzlemlerdeki yönelimini belirlemek amacıyla aşağıdaki şekilde
+tanımlanmıştır:
+𝑒1 = 𝑃3 − 𝑃1
+𝑒2 = 𝑃4 − 𝑃2
+
+(12)
+
+Burada, P1, P2, P3, ve P4, sırasıyla İHA’lar tarafından algılanan güç değerleridir. e1 ifadesi, birinci ve üçüncü İHA’ların
+sinyal güçleri arasındaki farktan elde edilirken, e2 ifadesi ikinci ve dördüncü İHA’ların güç farkından hesaplanmaktadır.
+Hata dinamikleri ise şu şekilde sunulmuştur:
+𝑒̇1 = 𝑃̇3 − 𝑃1̇
+𝑒̇2 = 𝑃4̇ − 𝑃̇2
+
+(13)
+
+ve
+
+s1  e1   e1
+s2  e2   e2
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+(14)
+
+s1 ve s2 ifadeleri, sistemin takip etmesi gereken kaymalı yüzeyleri (sistemin zorlandığı manifoldları) temsil etmektedir.
+Bu çalışmada, her İHA’nın aynı güç seviyesini algılaması, yani aralarındaki güç farkının sıfıra yaklaşması
+hedeflenmektedir. s1  0, e1  0
+
+Eğer 𝑠1 = 0, 𝑒̇1 + 𝜆𝑒1 = 0, 𝑒̇1 = −𝜆𝑒1 ve eğer λ>>0, e1  0 . Benzer yaklaşımla eğer
+
+s2  0,
+
+e2  e2  0,
+
+e2  e2 ve eğer λ>>0, e2  0
+
+Hedefin yatay yönü, x-y düzleminde hareket eden iki İHA; düşey yönü ise x-z düzlemindeki İHA’lar kullanılarak belirlenir.
+İki İHA'nın algıladığı sinyal gücü farkını sıfırlamak amacıyla, bu farkların türevleri hesaplanır ve kontrol için kaymalı kip
+filtresi kullanılır. Yatay ve düşey sinyal farklarının türevleri, ilgili kaymalı yüzeylerin fonksiyonu olarak tanımlanır. Bu
+sayede, hedeflenen dönme açılarının dinamikleri elde edilir.
+
+𝛼̇ = 𝑘𝑠1 𝑠𝑖𝑔𝑛(𝑠1 )
+𝛽̇ = 𝑘𝑠 𝑠𝑖𝑔𝑛(𝑠2 )
+
+(15)
+
+2
+
+Burada ks1  0 ve ks2  0
+Kaymalı kip filtrelemede ortaya çıkan chattering (titreşimli davranış), kontrol yasasının doğasında bulunan süreksizlikten
+kaynaklanır. Bu süreksizlik, genellikle kontrol yasasında kullanılan sign (işaret) fonksiyonu gibi ani geçişler içeren yapılar
+nedeniyle, kontrol girişinin çok hızlı şekilde değişmesine neden olur.
+Bu çalışmada, bu etkiyi azaltmak amacıyla daha düzgün (smooth) integral kaymalı kip filtresi geliştirilmiştir. Geleneksel
+kaymalı kip filtresine hata integrali eklenerek, chattering önemli ölçüde azaltılmıştır. Bu temel değişiklik, kontrol
+girişlerinin daha yumuşak olmasını sağlar; böylece hem sistem üzerindeki mekanik gerilimler azalır hem de kontrol
+kararlılığı artar.
+Hata integralinin filtreye entegre edilmesi, sistemi dış bozuculara ve belirsizliklere karşı daha dayanıklı ve kararlı hale
+getirir. Aynı zamanda, izleme (tracking) doğruluğu artar ve hata daha hızlı sıfıra yaklaşır. Bu avantajlar özellikle RSSI
+(sinyal gücüne dayalı) hedef izleme gibi uygulamalarda büyük önem taşır.
+t
+
+  k s sign(s1 )   e1 ( ) d 
+1
+
+t0
+
+t
+
+(16)
+
+  k s sign(s 2 )   e2 ( ) d 
+1
+
+t0
+
+Ardından, mevcut dönme açıları şu şekilde elde edilir:
+t
+
+  t     t0     ( ) d 
+t0
+t
+
+(17)
+
+  t     t0     ( ) d 
+t0
+
+Zamanla  ve  ’nin değiştirilmesi, İHA’ların istenen konumlarının otomatik olarak değişmesine neden olur. Bu
+değişim, e1 ve e2 ifadeleri sıfıra ya da önceden belirlenmiş kabul edilebilir bir hata sınırına yakınsayıncaya kadar devam
+eder.
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+Şekil 7 Geometrik yaklaşımla küre merkezinden hedef konumuna uzanan doğrunun çizilmesi
+
+x1d  t   xc  R cos(  t ) y1d  t   yc  R sin(  t )
+z1d  zc
+x3d  t   xc  R cos(  t ) y3d  t   yc  R sin(  t )
+z3d  zc
+d
+d
+d
+x2  t   xc  R sin(  t )
+y2  yc
+z3 t   zc  R cos( t )
+d
+d
+x4  t   xc  R cos(  t )
+y4  yc
+z4d  t   zc  R sin(   t )
+
+(18)
+
+Açı değerleri belirlendikten sonra, kürenin merkezine dik olan ve her iki İHA grubunun oluşturduğu vektörler hesaplanır.
+Bu vektörler, hedefin bulunduğu noktadan geçer. Hedefin konumunu belirlemek için en az iki vektöre ihtiyaç vardır. Bu
+vektörler, sistemin merkezi farklı konumlara taşınarak elde edilebilir. Farklı konumlardan hesaplanan bu vektörlerin
+kesişim noktası, hedefin yerini verir. Bu vektörlerin hesaplanma yöntemi bir sonraki alt bölümde açıklanmıştır.
+Kaynaktan ve Küre Merkezinden Geçen Doğruların Belirlenmesi
+Küre merkezinin N kez değiştirildiğini ve her bir konum için İHA’ların son pozisyonlarına göre N farklı açı değeri
+hesaplandığını varsayalım. Her bir i. iterasyon için son açı değerleri, ilgili açıların son değerlerine ulaştığı zaman
+
+ 
+
+ 
+
+anlarında  t f i ve  t f i olarak gösterilmektedir. Burada t f i ve t f i , açıların son değerlerine ulaştığı zaman
+anlarını temsil eder. Her iterasyonda İHA’ların son konumları ise şu şekilde tanımlanır:
+z z
+ 
+   y t   y  R sin  t 
+x  t   x  R cos   t   y  t   y  R sin   t  
+z z
+x  t   x  R sin    t  
+y y
+z  t   z  R cos    t  
+x  t   x  R cos    t  
+y y
+z  t   z  R sin    t  
+x1d t f i  xc  R cos  t f i
+
+d
+1
+
+d
+3
+
+d
+3
+
+f i
+
+f i
+
+c
+
+d
+2
+
+f i
+
+c
+
+d
+4
+
+f i
+
+c
+
+f i
+
+f i
+
+c
+
+c
+
+f i
+
+d
+1
+
+c
+
+f i
+
+d
+3
+
+c
+
+f i
+
+d
+2
+
+c
+
+d
+3
+
+f i
+
+d
+4
+
+c
+
+d
+4
+
+f i
+
+c
+
+f i
+
+f i
+
+c
+
+f i
+
+(19)
+
+İHA’ların son konumları, açılar ve hesaplanan doğru, Şekil 7’de gösterilmiştir. Kaynak konumunu hesaplamak için
+öncelikle D1 ve D3 İHA’ları arasında bir vektör tanımlanır; benzer şekilde D2 ve D4 arasında da bir vektör tanımlanır.
+Bu iki vektör birbirine diktir ve İHA’ların hareket ettiği kürenin merkezinde kesişirler. Bu iki vektöre dik olan üçüncü bir
+vektör ise hedefin (kaynağın) konumundan geçer. D1 ve D3 arasında tanımlanan vektör şu şekilde ifade edilir:
+
+   , R sin  t  , 0]
+
+(20)
+
+   , 0, R sin   t ]
+
+(21)
+
+v1  [ R cos  t f i
+
+benzer şekilde D2 ve D4 arasındaki vektör
+
+v 2  [ R cos  t f i
+
+Bu iki vektörün çarpraz çarpımı v3  v1  v 2 aşağıdaki gibi hesaplanır:
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+f i
+
+f i
+
+     
+     
+     
+
+ R 2 sin  t
+sin  t f i , 
+f i
+
+
+
+
+v3  - R 2 cos  t f i sin  t f i , 
+ 2
+
+- R sin  t f i cos  t f i
+
+
+(22)
+
+Bu vektör kullanılarak kaynak konumundan geçen doğru denklemi aşağıdaki gibi hesaplanır.
+
+   sin   t  t
+y  - R cos   t   sin    t   t
+z  z - R sin   t   cos    t   t
+x  R 2 sin  t f i
+2
+
+f i
+
+f i
+
+2
+
+f i
+
+f i
+
+(23)
+
+f i
+
+Sonuçlar
+Bu bölümde, önerilen yöntemin performansı açıklanmıştır. Simülasyon deneylerinde, 1 × 1 km²’lik bir arama alanında
+yer yüzeyinde bulunan bir hedefin konumlandırılması ele alınmıştır. İHA’lar, ilk olarak GPS olmayan bölgede RF sinyali
+arar ve sinyal tespit ettiklerinde belirlenen dairesel yollar etrafında dönmeye başlarlar. Amaç, her bir İHA grubunun eşit
+güç almasını sağlamaktır.
+
+Şekil 8 İHA grupları arasındaki alınan sinyal gücü farkı
+İHA’lar hedefi algıladıktan sonra, eşit sinyal gücü elde edilinceye kadar dönmeye devam ederler. Ancak, filtre
+uygulanmadan önce sinyal gücündeki dalgalanmalar Şekil 8’de gösterildiği gibi oldukça fazladır ve bu durum konum
+tespitinde hatalara neden olur.
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+Şekil 9 Gruplarca alınan sinyal güçlerinin İntegral Kayan Kip filtresi ile filtrelenmiş hali
+Yumuşak integral kaymalı kip filtresi uygulandığında bu dalgalanmalar Şekil 9’da gösterildiği gibi önemli ölçüde azalır.
+Bu stabilizasyon, RF kaynağının daha hassas şekilde konumlandırılmasına doğrudan katkı sağlar. Gürültünün
+filtrelenmesi ve çevresel etkilerin azaltılması sayesinde, İHA’lar sinyali daha tutarlı ve güvenilir biçimde alabilir.
+
+Şekil 10 Dönme açılarının sinyal güçlerinin eşitlenmesi ile sabitlenmesi
+
+Algoritma sonunda sinyal güçleri eşitlendiğinde, dönme açıları sabitlenir ve bu durum Şekil 10’da gösterilmektedir.
+Filtre uygulandıktan sonra yapılan konum tespiti Şekil 11’de gösterilmiştir.
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+Şekil 11 Fİltrelenmiş sinyal güçleri kullanılarak kaynak lokalizasyonu
+
+Referanslar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Shakhatreh, H., Sawalmeh, A. H., Al-Fuqaha, A., Dou, Z., Almaita, E., Khalil, I., Othman, N. S., Khreishah, A.,
+& Guizani, M. (2019). Unmanned Aerial Vehicles (UAVs): A Survey on Civil Applications and Key Research
+Challenges. IEEE Access, 7, 48572–48634.
+Guerra, A., Guerreiro, B., & Sousa, J. (2018). UAV Navigation for Target Tracking and 3D Localization. IEEE
+Transactions on Aerospace and Electronic Systems, 54(4), 1884–1899.
+Zeng, Y., Wu, Q., & Zhang, R. (2016). Wireless Communications with Unmanned Aerial Vehicles: Opportunities
+and Challenges. IEEE Communications Magazine, 54(5), 36–42.
+Kapoor, R., Bhamidipati, K., & Smolka, S. A. (2019). Localization Challenges in UAV Communication Networks.
+IEEE Communications Magazine, 57(1), 70–75.
+Dey, A., Chattopadhyay, T., & Paul, T. (2021). Adaptive RSSI-based Indoor Localization Using Machine
+Learning. IEEE Sensors Journal, 21(6), 7981–7988.
+Liu, H., Zhang, X., & Zhou, L. (2017). RSSI-based Indoor Localization Using Unmanned Aerial Vehicle in
+Wireless Sensor Networks. Sensors, 17(10), 1–22.
+Güzey, N. (2022). RF Source Localization Using Multiple UAVs through a Novel Geometrical RSSI Approach.
+Drones, 6(12), 417.
+Shtessel, Y., Edwards, C., Fridman, L., & Levant, A. (2014). Sliding Mode Control and Observation. Birkhäuser.
+Bandyopadhyay, B., Janardhanan, S., & Spurgeon, S. K. (2013). Advances in Sliding Mode Control: Concept,
+Theory and Implementation. Springer.
+Jin, S., Kikuuwe, R., & Yamamoto, M. (2012). Real-Time Quadratic Sliding Mode Filter for Removing Noise.
+Advanced Robotics, 26, 877–896.
+Aung, M. T. S., Shi, Z., & Kikuuwe, R. (2014). A new noise-reduction filter with sliding mode and low-pass
+filtering. In 2014 IEEE Conference on Control Applications (CCA) (pp. 1029–1034).
+Demim, F., Rouigueb, A., Belaidi, H., Nemra, A., & Allam, A. (2023). Smooth Sliding Mode Control based
+Technique of an Autonomous Underwater Vehicle Based Localization using Obstacle Avoidance Strategy. In
+Proceedings of the 20th International Conference on Informatics in Control, Automation and Robotics (ICINCO
+2023) (Vol. 1, pp. 529–537).
+Fridman, L., Moreno, J., & Iriarte, R. (2011). Sliding Modes after the First Decade of the 21st Century: State of
+the Art. Springer.
+Utkin, V. I. (2013). Sliding Modes in Control and Optimization. Springer Science & Business Media.
+
+ii) KALMAN FİLTRESİ KULLANARAK LOKALİZASYON
+Kalman filtresi ile literatür taraması önceki bölümde verilmiştir.
+Materyal Method
+Bu sistem, durağan bir RF hedefinin konumunu belirlemek amacıyla birlikte çalışan dört İHA’dan oluşan bir sürüye
+dayanmaktadır. Her bir İHA'nın, hedef ile arasındaki RSSI (sinyal gücü) ölçümlerini almak üzere gerekli sensörlerle
+donatıldığı varsayılmaktadır. İHA’lar, merkezden R yarıçapında olacak şekilde x-y ve x-z düzlemlerinde iki dik çember
+boyunca hareket edecek biçimde üç boyutlu olarak konumlandırılır. Ardından, İHA’ların bu daireler üzerinde 2R mesafeyi
+koruyarak hareket etmesi için gereken dönüş açıları, alınan sinyal gücü farklarına göre hesaplanır. Bu açılar, hedef
+konumunun belirlenmesinde kullanılacak üç dik vektörün elde edilmesinde kullanılır.
+Bu çalışmada, RSSI ölçümlerindeki gürültüyü azaltarak konumlandırma doğruluğunu artırmak amacıyla Kalman filtre
+algoritması kullanılmıştır. Konumlandırma algoritması, iki hata değeri olan e1 ve e2 üzerinden çalışır. Burada e1, İHA1
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+ile İHA3’ün ölçtüğü RSSI değerleri arasındaki farkı; e2 ise İHA2 ile İHA4’ün ölçtüğü değerler arasındaki farkı ifade eder.
+Her bir İHA’nın RSSI verisi, kendi Kalman filtresi ile ayrı ayrı işlenir. Filtrelenmiş RSSI tahminleri elde edildikten sonra
+e1 ve e2 bu değerlere göre yeniden hesaplanır ve hedefin konumu buna göre belirlenir.
+Durum tahmini şu şekilde modellenmiştir:
+̂X(k + 1|k) = FX
+̂(k|k)
+
+(24)
+
+Durum tahmin kovaryansı:
+𝑃(𝑘 + 1|𝑘) = 𝐹𝑃(𝑘│𝑘) 𝐹′ + 𝑄(𝑘)
+
+(25)
+
+Kalman kazancı:
+𝑊(𝑘 + 1) = 𝑃(𝑘 + 1|𝑘)𝐻(𝑘 + 1)′ (𝐻(𝑘 + 1)𝑃(𝑘 + 1|𝑘)𝐻(𝑘 + 1)′ + 𝑅)−1
+
+(26)
+
+Durum güncellemesi (filtrelenmiş RSSI tahmini):
+̂(k + 1|k) = X
+̂(k + 1|k) + W(k + 1) (𝑍𝑅𝑆𝑆𝐼 − H(k + 1)X
+̂(k + 1|k))
+X
+
+(27)
+
+Güncellenmiş kovaryans:
+P(k + 1|k + 1) = P(k + 1|k) − W(k + 1)(H(k + 1)P(k + 1|k)H(k + 1)′ + R)W(k + 1)′
+
+(28)
+
+Dört İHA’nın her birinin RSSI alıcılarıyla donatıldığını ve hareketlerine rastgele başlangıç konumlarından başladıklarını
+varsayalım. Bu İHA’lar için başlangıç hedef konumları aşağıdaki şekilde hesaplanmaktadır:
+
+𝑥1𝑑 (𝑡0 ) = 𝑥𝑐 − 𝑅cos(𝛼(𝑡0 )) 𝑦1𝑑 (𝑡0 ) = 𝑦𝑐 − 𝑅sin(𝛼(𝑡0 ))
+𝑧1𝑑 = 𝑧𝑐
+𝑥3𝑑 (𝑡0 ) = 𝑥𝑐 + 𝑅cos(𝛼(𝑡0 )) 𝑦3𝑑 (𝑡0 ) = 𝑦𝑐 + 𝑅sin(𝛼(𝑡0 ))
+𝑧3𝑑 = 𝑧𝑐
+𝑑 (𝑡 )
+𝑑
+𝑑
+𝑥2 0 = 𝑥𝑐 − 𝑅sin(𝛽(𝑡0 ))
+𝑦2 = 𝑦𝑐
+𝑧3 (𝑡0 ) = 𝑧𝑐 − 𝑅cos(𝛽(𝑡0 ))
+𝑑 (𝑡 )
+𝑑
+𝑥4 0 = 𝑥𝑐 + 𝑅cos(𝛽(𝑡0 ))
+𝑦4 = 𝑦𝑐
+𝑧4𝑑 (𝑡0 ) = 𝑧𝑐 + 𝑅sin(𝛽(𝑡0 ))
+
+(29)
+
+x-y ve x-z eksenlerinde hareket eden İHA’ların başlangıç konumları iki koşula bağlı olarak belirlenmektedir. Birincisi, her
+bir İHA merkeze olan uzaklığı R olacak şekilde konumlandırılmalıdır. İkincisi ise, herhangi iki İHA arasındaki mesafe 2R
+olmalıdır. Sonuç olarak, İHA’lar önceden tanımlanmış bir çember yörüngesi boyunca hareket eder ve Şekil 6’de
+gösterildiği gibi birbirleriyle sabit mesafeyi korurlar.
+Bu bölümde, hedefin yatay ve düşey düzlemlerdeki yönünü belirlemek amacıyla, İHA’lar tarafından alınan RSSI
+farklarına dayalı olarak dönme açılarının (α ve β) hesaplanması ele alınmıştır. Kalman filtresi ile filtrelenmiş RSSI
+değerleri P1, P2, P3, P4 kullanılarak aşağıdaki güç farkları tanımlanır:
+
+𝑒1 = 𝑃3 − 𝑃1
+𝑒2 = 𝑃4 − 𝑃2
+
+(30)
+
+Bu ifadeler, sırasıyla İHA1 ile İHA3, ve İHA2 ile İHA4 arasındaki sinyal gücü farkını temsil eder. Bu farkların zamana
+göre türevleri de:
+
+𝑒̇1 = 𝑃3̇ − 𝑃1̇
+𝑒̇2 = 𝑃4̇ − 𝑃2̇
+
+(31)
+
+x-y düzleminde hareket eden İHA’lar hedefin düşey yönünü, x-z düzlemindekiler ise yatay yönünü belirlemede kullanılır.
+Amaç, bu iki İHA çifti arasındaki sinyal farkını sıfıra yaklaştırmaktır. Bu amaçla, PID kontrol mantığıyla aşağıdaki dönme
+açısı türevleri tanımlanır:
+𝑡
+
+𝛼̇ = 𝑘𝑝 𝑒1 + 𝑘𝚤 ∫𝑡 𝑒1 (𝜏)𝑑𝜏 + 𝑘𝐷 𝑒̇1
+0
+𝑡
+𝛽̇ = 𝑘𝑝 𝑒2 + 𝑘𝚤 ∫ 𝑒2 (𝜏)𝑑𝜏 + 𝑘𝐷 𝑒̇2
+𝑡0
+
+Burada 𝑘𝑝 > 0, 𝑘𝚤 > 0 and 𝑘𝐷 > 0 dizayn parametresidir. Bu açılar zamanla entegrasyon yapılarak güncellenir:
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+(32)
+
+𝑡
+
+𝛼(𝑡) = 𝛼(𝑡0 ) + ∫𝑡 𝛼̇ (𝜏)𝑑𝜏
+0
+𝑡
+𝛽(𝑡) = 𝛽(𝑡0 ) + ∫ 𝛽̇ (𝜏)𝑑𝜏
+
+(33)
+
+𝑡0
+
+Bu güncellenen açı değerlerine göre İHA’ların istenen konumları zamanla aşağıdaki gibi değiştirilir:
+
+x1d  t   xc  R cos(  t ) y1d  t   yc  R sin(  t )
+z1d  zc
+x3d  t   xc  R cos(  t ) y3d  t   yc  R sin(  t )
+z3d  zc
+d
+d
+d
+x2  t   xc  R sin(  t )
+y2  yc
+z3 t   zc  R cos( t )
+d
+d
+x4  t   xc  R cos(  t )
+y4  yc
+z4d  t   zc  R sin(   t )
+
+(34)
+
+Güç hataları kabul edilebilir bir tolerans aralığına düştüğünde, İHA’lar D1–D3 ve D2–D4 üzerinden geçen doğruların
+oluşturduğu düzlem hesaplanır. Ardından, bu düzleme dik ve merkezin içinden geçen doğru belirlenir. Hedefin
+konumunun hesaplanmasında ilk adım olarak, bu doğrultu üzerinde, İHA’ların oluşturduğu küre yüzeyinde yer alan ve
+tüm İHA’lara eşit uzaklıkta olan genişletilmiş bir nokta tanımlanır. Bu nokta A(xaug,yaug,zaug), hem geometrik olarak küre
+üzerinde bulunur hem de belirli koşulları sağlar..
+
+r= √(𝑥𝑎 − 𝑥𝑐 )2 + (𝑦𝑎 − 𝑦𝑐 )2 + (𝑧𝑎 − 𝑧𝑐 )2
+𝑑𝑎1 = √(𝑥𝑎 − 𝑥1𝑑 )2 + (𝑦𝑎 − 𝑦1𝑑 )2 + (𝑧𝑎 − 𝑧1𝑑 )2
+
+(34)
+
+𝑑𝑎2 = √(𝑥𝑎 − 𝑥2𝑑 )2 + (𝑦𝑎 − 𝑦2𝑑 )2 + (𝑧𝑎 − 𝑧2𝑑 )2
+𝑑𝑎3 = √(𝑥𝑎 − 𝑥3𝑑 )2 + (𝑦𝑎 − 𝑦3𝑑 )2 + (𝑧𝑎 − 𝑧3𝑑 )2
+𝑑𝑎4 = √(𝑥𝑎 − 𝑥4𝑑 )2 + (𝑦𝑎 − 𝑦4𝑑 )2 + (𝑧𝑎 − 𝑧4𝑑 )2
+Genişletilmiş (augmented) nokta, (34) ve (35)’a göre aşağıdaki şekilde hesaplanmaktadır.
+
+𝑟𝑎 = |𝑟 cos(𝛽)|
+𝑧𝑎𝑢𝑔 = 𝑧𝑐 + 𝑟 sin(𝛼) sin(𝛽)
+𝑥𝑎𝑢𝑔 = 𝑥𝑐 − 𝑟𝑎 sin(𝛼)
+
+(36)
+
+𝑦𝑎𝑢𝑔 = 𝑦𝑐 − 𝑟𝑎 cos(𝛼)
+Genişletilmiş nokta 𝐴(𝑥𝑎𝑢𝑔 , 𝑦𝑎𝑢𝑔 , 𝑧𝑎𝑢𝑔 ) ile kürenin merkezi 𝐶(𝑥𝑐 , 𝑦𝑐 , 𝑧𝑐 ) üzerinden geçen doğru, hedef konumunda
+kesişir. 𝐶(𝑥𝑐 , 𝑦𝑐 , 𝑧𝑐 ) noktasının tanımı ve 𝐴(𝑥𝑎𝑢𝑔 , 𝑦𝑎𝑢𝑔 , 𝑧𝑎𝑢𝑔 ) noktasından geçen doğrunun denklemi aşağıda
+belirtildiği şekilde türetilmiştir.
+
+𝑦=
+
+𝑧=
+
+𝑥−𝑥𝑎𝑢𝑔
+𝑥𝑐 −𝑥𝑎𝑢𝑔
+
+(𝑦𝑐 − 𝑦𝑎𝑢𝑔 ) + 𝑦𝑎𝑢𝑔
+
+(37)
+
+𝑦 − 𝑦𝑎𝑢𝑔
+(𝑧 − 𝑧𝑎𝑢𝑔 ) + 𝑧𝑎𝑢𝑔
+𝑦𝑐 − 𝑦𝑎𝑢𝑔 𝑐
+
+Bu doğru, hedefin yönelimini temsil eder ve hedefin konumu, bu doğruların kesişim noktasıyla belirlenir. İHA grupları,
+karşılıklı olarak eşit sinyal gücü alacak şekilde koordineli biçimde hareket ederek konumlandırmaya katkı sağlar. Her
+yeniden konumlanmada, güncel RSSI ölçümlerine göre yeni doğrular oluşturulur ve bu işlem doğruluğu artırmak
+amacıyla tekrarlanır. Teorik olarak tüm doğrular hedefin içinden geçtiği için, bunların kesişim noktası hedefin yerini verir.
+İdeal ve gürültüsüz bir ortamda, yalnızca iki doğrunun kesişimi hedefi doğru şekilde belirlemek için yeterlidir. Ancak
+çevresel engeller ve parazitler RSSI verilerini bozarak doğruların tam olarak kesişmemesine ve konum hatalarına yol
+açabilir. Bu durumda, hedefin konumu, oluşturulan tüm doğrulara olan toplam mesafesi en kısa olan nokta olarak
+belirlenir. RSSI ölçümlerindeki gürültü lokalizasyon doğruluğunu ciddi şekilde etkilediğinden, bu tür hataların
+filtrelenmesi büyük önem taşır. Kalman filtresi gibi gürültü bastırma teknikleri uygulanarak, sistem karmaşık ve gürültülü
+ortamlarda bile hedefin konumunu daha doğru ve güvenilir şekilde tahmin edebilmektedir.
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+Sonuçlar
+Bu bölümde, Kalman filtre algoritmasının, İHA sürüsünün hareketlerini dinamik olarak ayarlayarak durağan bir RF
+hedefinin konumunu doğru şekilde belirlemedeki başarımı analiz edilmektedir. Simülasyon ortamında hedef, üç boyutlu
+Kartezyen koordinat sisteminde (0, 500, 0) noktasında yer almakta ve dört İHA’dan oluşan sürü, GPS olmayan bir
+ortamda çalışmaktadır. İHA’lar iki gruba ayrılmıştır: biri x-y düzleminde, diğeri x-z düzleminde hareket eder.
+RF sinyali algılandığında İHA’lar birlikte hedefe yönelir. Her grup, aldığı RSSI (sinyal gücü) değerlerini dengeleyerek
+dönme hareketini sürdürür ve iki grup da eşit sinyal gücü alana kadar bu hareket devam eder. Ancak, çevresel etkilerden
+kaynaklanan yansıma, parazit ve kırılma gibi faktörler nedeniyle RSSI verileri ciddi ölçüde gürültü içerir. Bu gürültü,
+İHA’ların koordineli hareketini bozar ve yüksek konumlandırma hatalarına neden olur.
+Şekil 13’te gösterildiği üzere, gürültülü RSSI verileri İHA’ların uçuş sırasında sinyal gücünü dengelemesini zorlaştırır.
+Şekil 15’te de görüldüğü gibi bu durum konum hatalarının artmasına yol açar. Bu problemi gidermek için Kalman filtre
+algoritması uygulanmış, gürültülü veriler yumuşatılarak hem İHA’ların hareket doğruluğu hem de genel konumlandırma
+hassasiyeti artırılmıştır.
+
+Şekil 12 Kalman Filtre Algoritması Kullanılmadan Ölçülen RSSI Verileri
+
+Şekil 13 Kalman Filtresi kullanılarak ölçülen RSSI verileri
+Şekil 14, Kalman filtre algoritmasıyla elde edilen filtrelenmiş RSSI ölçümlerini göstermektedir. Bu veriler, Şekil 13’teki
+ham ölçümlere kıyasla çok daha az dalgalanma içermektedir. RSSI verilerinin bu şekilde dengelenmesi, durağan RF
+hedefinin daha doğru konumlandırılması açısından kritik öneme sahiptir. Kalman filtresi, ölçüm gürültüsünü ve çevresel
+etkilerin neden olduğu sapmaları azaltarak İHA sürüsünün daha güvenilir ve tutarlı sinyal almasını sağlar; böylece
+konumlama doğruluğu önemli ölçüde artar.
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+Şekil 14 Ham RSSI Ölçümlerini Kullanarak Tahmini ve Gerçek Hedef Pozisyonu
+
+Şekil 15 Filtrelenmiş RSSI Ölçümlerini Kullanarak Tahmini Hedef Pozisyonu
+
+Şekil 16, filtrelenmiş RSSI ölçümleri kullanılarak elde edilen tahmini hedef konumunu ve gerçek hedef konumunu
+göstermektedir. Şekil 15 ile karşılaştırıldığında, Kalman filtresi uygulandığında tahmini konumun gerçek hedefe çok daha
+yakın olduğu görülmektedir. Kalman filtresi, ham RSSI verilerine dayalı yöntemlere kıyasla konumlandırma hatasını %61
+oranında azaltmıştır. Bu sayede, Kalman filtresinin İHA sürü sistemine entegrasyonu, İHA’ların hareketlerini dinamik
+olarak ayarlamasına, koordinasyonu sürdürmesine ve konumlandırma doğruluğunu önemli ölçüde artırmasına olanak
+sağlamıştır.
+
+b) İP Sonuçlarının İlgili İP’nin Başarı Ölçütleri Göz Önüne Alınarak Gerçekleşme Durumu
+İP’nin tamamlanan rapor dönemi için gerçekleşme durumu, proje önerisinde belirlenmiş başarı ölçütleri dikkate alınarak
+kendi içinde ve proje bütünlüğü kapsamında bir değerlendirmesi yapılır.
+Proje önerisinde ilgili iş paketi: ‘Daha önceki çalışmamızda Güzey (2022), alınan sinyal gücündeki hatalar dikkate
+alınmamıştı. Bu iş paketi kapsamında değişik filtre algoritmaları ile, alınan sinyaldeki hatanın varlığı durumunda, hedefi
+takip etmedeki hatanın azaltılması hedeflenmektedir. Matlab ortamında elde edilecek sonuçlarda, küre etrafında hareket
+eden İHA’ların, hedeften aldıkları güçte istatistiki bir hata olduğu senaryosu işlenecektir. Hatadan dolayı oluşacak yer
+tespitindeki hata, filtreler kullanılarak azaltılacaktır. Bu iş paketinin projenin başarısına katkısı %25’dir.’ olarak ifade
+edilmiştir.
+Bu iş paketinde, RSSI tabanlı konumlandırma sistemlerinde karşılaşılan sinyal gürültüsünün olumsuz etkilerini azaltmak
+amacıyla Kalman filtresi ve İntegral Kayan Kip filtresi kullanılmıştır. Kullanılan filtreler sayesinde ölçüm doğruluğu
+artırılmış, böylece konumlandırma algoritmasının kararlılığı ve güvenilirliği önemli ölçüde iyileştirilmiştir. Geliştirilen
+algoritmanın performansı Matlab ortamında gerçekleştirilen simülasyonlarla değerlendirilmiş ve elde edilen sonuçlar
+grafiksel olarak sunulmuştur. Bu iş paketi, projenin genel başarısına %25 oranında katkı sağlamaktadır. Belirlenen
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+hedefler eksiksiz bir şekilde yerine getirilmiş olup, iş paketi başarıyla tamamlanmıştır. Böylelikle, projenin %25’lik bölümü
+tamamlanmış durumdadır.
+Bu iş paketi kapsamında elde edilen bilimsel çıktılardan İntegral Kayan Kip Filtresine yönelik çalışma, SCI kapsamındaki
+bir dergide yayımlanmıştır. Kalman filtresi ile gerçekleştirilen diğer çalışma ise yine SCI indeksli bir dergide
+değerlendirme sürecindedir.
+
+c) Önceki iş paketinin tamamlanma durumu
+Önceki iş paketinde yaşanan donanım tedarik sürecindeki gecikmeler nedeniyle bazı iş paketlerinin uygulanmasında
+aksamalar meydana gelmiştir. Özellikle İHA bileşenlerinin temininde, tedarikçilerin stok kaynaklı sorunları nedeniyle
+beklenenden daha uzun süreli gecikmeler yaşanmıştır. Bu durum, proje takviminde öngörülen ilerlemeyi kısmen
+etkilemiş ve bazı iş paketlerinin belirtilen zaman aralığında tamamlanmasında gecikmelere neden olmuştur. Ancak, ilgili
+donanım malzemelerinin tedarik edilmesiyle birlikte, bu rapor döneminde eksiklikler giderilmiş; dört adet İHA’nın montajı
+tamamlanarak uçuşa hazır hale getirilmiş ve söz konusu iş paketi başarıyla tamamlanmıştır.
+Önceki rapora ilişkin değerlendirmelerde, telsiz ve telemetri frekanslarına dair yazım hatasından kaynaklanan bir
+karışıklık tespit edilmiştir. Bu durumu netleştirmek adına, hedef olarak kullanılan telsiz cihazının 446 MHz frekans
+bandında çalıştığı, telemetri iletişimini sağlayan cihazların ise 915 MHz bandında faaliyet gösterdiği bilgisi yeniden ve
+doğru şekilde ifade edilmektedir.
+Buna ek olarak, rapor yorumlarında yer alan; "yazılım tabanlı radyo (SDR) ile alınan sinyal gücü ölçümlerinin, İHA
+motorları çalışır ve çalışmaz durumdayken ayrı ayrı kaydedilerek, motor kaynaklı olası parazit etkilerinin
+değerlendirilmesi" yönündeki öneri dikkate alınmıştır. Bu kapsamda bir ön test gerçekleştirilmiş; İHA motorları aktif ve
+pasif durumdayken yaklaşık 50 metre mesafeden SDR ile sinyal gücü ölçümleri alınmıştır. Elde edilen ilk bulgular,
+motorların çalışmasının RSSI değerleri üzerinde belirgin bir etkisi olmadığını göstermektedir. Bu tespit, sistem
+tasarımında elektromanyetik etkileşimlerin ihmal edilebileceğine dair ön bilgi sunmaktadır.
+İHA’ların motorları çalışmazken ve çalışır durumdayken, hedef telsizden yaklaşık 50 metre mesafede SDR kullanılarak
+sinyal verileri kaydedilmiştir. Elde edilen ölçümler incelendiğinde, motorların çalışmasının alınan sinyal gücü (RSSI)
+üzerinde anlamlı bir etkisinin bulunmadığı görülmüştür. İlgili grafiklerde bu bulgular açık şekilde sunulmuştur.
+
+Şekil 16 İHA motorları çalışmadan alınan sinyal gücü
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+Şekil 17 İHA motorları çalışırken alınan sinyal gücü
+Spektrum analiz sonuçları, motorlar çalışır durumdayken veya durdurulduğunda frekans ve şelale (waterfall)
+spektrumlarında herhangi bir parazit izine rastlanmadığını net biçimde göstermektedir. Bunun temel sebebi,
+sistemimizde kullandığımız fırçasız (brushless) motorların yapısal özelliğidir: Fırçasız motorlarda rotor ile stator
+arasındaki manyetik etkileşim, mekanik temas gerektirmediği için elektriksel parazit oluşturmaz. Oysa fırçalı DC
+motorlarda, fırçalar ile kolektör yüzeyi arasındaki sürekli sürtünme ve temas değişimleri, yüksek frekanslı gürültü ve
+parazit sinyallere yol açar. Dolayısıyla analizlerde gözlemlediğimiz temiz spektrum, motorlarımızın bu avantajlı
+tasarımından kaynaklanmaktadır.
+
+1.2 Çalışma Takvimine Uyum
+Projenin öneride belirtildiği şekilde öngörülen çalışma takvimine göre yürütülüp yürütülmediği belirtilir. İş-Zaman
+Çizelgesinde planlanan iş paketlerinin gecikmesi durumunda bunun sebebi detaylı olarak açıklanır ve buna yönelik
+alınan/alınacak tedbirler sunulur. Ayrıca, yaşanan gecikmelerden etkilenecek iş paketleri ve ara çıktılar hakkında da bilgi
+verilir. Değişiklik yapıldıysa güncellenmiş çalışma takvimi sunulur. B planına geçilmesi durumunda Etik Kurul
+Onay/Yasal/Özel İzin belgelerinin alınması gerekmiş ise ilgili belge gelişme raporuyla birlikte sisteme yüklenir.
+Ek süre, ek ödenek, kapsam, yöntem değişikliği, B planını devreye sokulması vb. gibi değişikliklerin TÜBİTAK onayı
+alınmadan gerçekleştirilemeyeceği hususuna dikkat edilir.
+Proje, öneri aşamasında belirlenen takvime tam uyumlu biçimde ilerlemektedir; ilgili iş paketine dair tüm teorik çalışmalar
+başarıyla tamamlanmış ve önceki rapor döneminde yaşanan gecikmeler, projenin işleyişini değiştirmeyecek şekilde
+giderilmiştir.
+
+1.3 Dönem İçinde Projeyle İlgili İdari ve Mali Gelişmeler
+Proje ekibinin proje önerisinde belirtildiği şekilde öngörülen iş/görev dağılımına ve çalışma takvimine göre yaptıkları
+çalışmalar ve üzerlerine düşen sorumlulukları ne ölçüde yerine getirdikleri hakkında ve proje ekibinde değişiklikler
+yapılmışsa kısaca bilgi verilir. Yürütücü tarafından araştırmacı ve danışmanların ilgili rapor dönemine ait PTİ lerinin
+ödenip ödenmemesi hususunda gerekçeli bilgi verilir. Yürütücü kurum/kuruluş değişikliği, destekleyen kurum/kuruluş
+değişikliği, yeni kuruluş desteği alma vb. değişiklikler yapılmışsa gerekçeleriyle birlikte kısaca açıklanır. Bu tür
+değişikliklerin TÜBİTAK onayı alınmadan yapılamayacağı hususuna dikkat edilir. Destekleyen diğer kuruluşlarla ilgili
+sorunlar varsa ayrıntıları ve çözüm önerileri de sunulur.
+Proje bütçe kalemlerinin harcanmasında yaşanan sorunlar varsa neler olduğu ve sorunların çözülüp çözülmediği
+belirtilir.
+Bu rapor döneminde, projenin donanım ayağında görev alan bursiyerler Muhammed Furkan BOZBEK ve Ahmet Turan
+KARAGÖZ, İHA’ların tasarımı ve gömülü yazılım geliştirme süreçlerini başarıyla sürdürmüştür. Diğer bursiyer Gökhan
+KARAÇOBAN ise, projede kullanılacak olan sinyal işleme ve filtreleme algoritmaları üzerine teorik ve uygulamalı
+çalışmalar gerçekleştirmiştir.
+Proje araştırmacısı Doç. Dr. Hacı Mehmet GÜZEY, hem donanım ve yazılım geliştirme aşamalarında hem de filtreleme
+algoritmalarının tasarımı ve teorik analizlerinde proje ekibine teknik destek sağlamaya devam etmektedir.
+Bu rapor döneminde herhangi bir yeni malzeme alımı gerçekleştirilmemiştir.
+
+1.4 Bir Sonraki Dönemde Yapılması Planlanan Çalışmalar
+Bir sonraki dönemde yapılması planlanan çalışmalar hakkında gerektiğinde ilgili iş paketlerine de atıf yapılarak kısaca
+bilgi verilir. Mevcut dönemde bitirilemeyip sonraki dönemde devam edilmesi gereken çalışmalar varsa onlar hakkında
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+da kısaca bilgi verilir. Öneri formunda belirtilenlerden farklı risklerin ortaya çıkabileceği düşünülüyorsa, bu riskler ve
+risklere yönelik alınacak tedbirler belirtilir.
+Projenin ilerleyen iş paketlerinde, bu iş paketinde geliştirilen filtreleme algoritmalarının entegrasyonu ile tasarlanan
+İHA’lar kullanılarak, proje önerisinde belirtilen yöntemler doğrultusunda konumlandırma çalışmaları gerçekleştirilecektir.
+Bu çalışmalar, proje bitimine kadar sürecek olan saha ve simülasyon testlerini kapsamaktadır.
+Şekil 18 Ham RSSI Ölçümlerini Kullanarak Tahmini ve Gerçek Hedef Pozisyonu
+
+2. ELDE EDİLEN ÇIKTILAR, GERÇEKLEŞEN YAYILIM FAALİYETLERİ VE OLUŞAN ETKİ
+
+2.1 Dönem İçinde Proje Kapsamında Elde Edilen ve Süreci Devam Eden Çıktılar
+Projeden elde edilmiş ve ilgili döneme ait süreci tamamlanmış tüm çıktılar, mutlaka gelişme raporu ile birlikte
+Proje Takip Sistemi’nde (https://ardeb-pts.tubitak.gov.tr) çıktı türleri dikkate alınarak yüklenir.
+Bu bölümde henüz tamamlanmamış ancak süreci devam eden bilimsel/akademik, ekonomik/ticari ve/veya
+araştırmacı yetiştirilmesine yönelik çıktılar varsa, bu çıktıların türü ve sürecin hangi aşamada olduğuyla ilgili kısaca
+bilgi verilir.
+Bu dönem için bir adet SCI makale yayınlanmıştır.
+N. Güzey, "Smoother Integral Sliding Mode Filter for RSSI-Based Localization," in IEEE Access, vol. 12, pp.
+172410-172418, 2024, doi: 10.1109/ACCESS.2024.3467994.
+Ayrıca değerlendirme aşamasında olan bir adet SCI ve bir adet TR Dizin yayın bulunmaktadır.
+
+2.2 Dönem İçinde Proje Kapsamında Yapılan Yayılım Faaliyetleri
+Elde edilen bulguların, ara sonuçların/çıktıların ilgili paydaşlar ve potansiyel kullanıcılara ulaştırılması ve
+paylaşılmasına yönelik yapılan yayılım faaliyetleri hakkında bilgi verilir.
+Etkinlik Türü (Toplantı, Çalıştay,
+Eğitim, Web Sitesi, Medya, Fuar,
+Proje Pazarı vb.)
+
+Paydaş / Olası Kullanıcılar
+
+Etkinliğin Zamanı ve
+Süresi
+
+2.3 Projenin Beklenen Etkiyi Oluşturmak Üzere Amaçları Doğrultusunda İlerleme Durumu
+Bu bölümde ilgili rapor döneminde proje kapsamında yapılan faaliyetlerin projede öngörülen etkiyi oluşturma
+potansiyeli kısaca tartışılır.
+
+İlgili rapor döneminde proje kapsamında her iki iş paketinde de filtreleme algoritmalarının geliştirilmesine
+odaklanılmıştır. İkinci iş paketinde, alınan sinyal gücündeki gürültü etkisini azaltmak amacıyla Kalman filtresi
+uygulanmış ve bilgisayar simülasyonları ile gürültü seviyesindeki belirgin azalma başarıyla gösterilmiştir. Üçüncü
+iş paketinde ise proje ekibi tarafından geliştirilen İntegral Kayan Kip filtresi ile Kalman filtresi birlikte kullanılarak
+performans analizleri gerçekleştirilmiş ve simülasyon sonuçları her iki algoritmanın etkinliğini ortaya koymuştur.
+Ayrıca önceki rapor döneminde tespit edilen eksiklikler giderilmiştir. Bu çalışmalar, ilgili dönem süresince
+öngörülen etkinin oluşturulma potansiyelini başarıyla karşılamıştır.
+
+AP-GR-02 Güncelleme Tarihi 07/04/2020
+
+

@@ -1,0 +1,959 @@
+3501 – KARİYER GELİŞTİRME PROGRAMI
+PROJE BAŞVURU FORMU
+Başvuru formunun Arial 9 yazı tipinde, her bir konu başlığı altında verilen açıklamalar göz önünde bulundurularak
+hazırlanması ve ekler hariç toplam 22 sayfayı geçmemesi beklenir. Değerlendirme kariyer geliştirme potansiyeli,
+projenin özgün değeri, yöntemi, yönetimi ve yaygın etkisi başlıkları altında yapılacaktır. Araştırma proje önerisi
+değerlendirme formuna ulaşmak için tıklayınız.
+Proje Başlığı: Yeni Bir Geometrik RSSI Yaklaşımıyla Çoklu İHA Kullanarak RF Kaynak Lokalizasyonu
+Proje Yürütücüsü: Dr. Öğr. Üyesi Nurbanu GÜZEY
+Projenin Yürütüleceği Kurum/Kuruluş: Sivas Bilim ve Teknoloji Üniversitesi
+PROJE YÜRÜTÜCÜSÜNÜN TEZ BİLGİLERİ
+Proje Yürütücüsünün Yüksek Lisans Tezinin Başlığı ve Yaygın Etkisi ( bildiri, makale, kitap bölümü, kitap, vb.) verilir.
+Başlık: Çapraz filtrelerde rastgele gecikme hatalarının etkileri (Effects of random delay errors in transversal filters)
+Yaygın Etki:
+
+Doktora / Tıpta Uzmanlık Tezinin Başlığı ve Yaygın Etkisi ( bildiri, makale, kitap bölümü, kitap, vb.) verilir.
+
+Başlık: İstemsiz emisyon yapan elektronik cihazların yer tespiti ve takibi (Localization and tracking of electronic devices
+with their unintended emissions)
+Yaygın Etki: Bu tez çalışmasından üç adet SCI makale 2 adet konferans yayını çıkmıştır
+
+GÜZEY NURBANU,Ghasr Mohammad T.,Jagannathan Sarangapani (2016). “Analysis of localization methods for
+unintended emitting sources.”
+Measurement Science and Technology, 27(10), 105104, Doi: 10.1088/09570233/27/10/105104 (Yayın No: 4159354)
+GÜZEY NURBANU,Xu Hao,Jagannathan Sarangapani (2015). “Localization of Near-Field Sources in Spatially Colored
+Noise.” IEEE Transactions on Instrumentation and Measurement, 64(8), 2302-2311., Doi: 10.1109/TIM.2015.2390813
+(Yayın No: 4159278)
+GÜZEY NURBANU,Xu Hao,Jagannathan Sarangapani (2014). “Localization of Near-Field Radio Controlled Unintended
+Emitting Sources in the Presence of Multipath Fading.” IEEE Transactions on Instrumentation and Measurement,
+63(11), 2696-2703., Doi: 10.1109/TIM.2014.2313435 (Yayın No: 4159293)
+GUZEY NURBANU, Xu Hao, Jagannathan Sarangapani, “Localization of Radio Controlled Unintended Emitting
+Devices.” RDSP-Recent Developments on Signal Processing Conference, September 2013.
+GUZEY NURBANU, Jagannathan Sarangapani, “Localization of Radio Controlled Unintended Emitting Sources.” XIII
+International Conference on Control Science and Systems Engineering, vol. 9, no.2, Istanbul, February 2015.
+
+ÖZET
+Türkçe ve İngilizce özetlerin projenin (a) kariyer geliştirme potansiyeli, (b) önemi, (c) özgün değeri, (d) araştırma sorusu
+veya hipotezi, (e) amaç ve hedefleri, (f) yöntemi ve (g) yaygın etkisinin ana hatlarını kapsaması beklenir. Türkçe özet 450,
+İngilizce özet ise 600 kelime ile sınırlandırılmalıdır. Bu bölümün en son yazılması önerilir. Bu bölümün en son yazılması
+önerilir.
+
+3501BF-01 Güncelleme Tarihi: 30/09/2019
+
+1
+
+Proje Özeti
+Konum tespiti ve takibi, savunma, arama ve kurtarma gibi birçok alanda ihtiyaç duyulan bir uygulamadır. Önceleri
+konumlandırma ve takip yer istasyonlarının ya da GPS gibi uydu sistemlerinin kullanımı ile gerçekleştiriliyordu. Ancak
+özellikle arazi koşullarının uygun olmadığı ya da GPS erişiminin kısıtlı olduğu ortamlarda İHA’ların kullanılması bazı
+durumlarda kaçınılmaz hale gelmiştir. İHA teknolojilerindeki yenilikler ve İHA’ların hızlı manevra ve mobilite kabiliyetleri
+konumlandırma alanında bu cihazların kullanılmasının artırmıştır.
+İHA’lar kullanılarak gerçekleştirilen konumlandırma uygulamalarında birçok yönteme başvurulmuştur. Ancak kamera
+bazlı yöntemler uzak mesafe konumlandırma durumlarında görüntü koşulları uygun olmadığında kullanılamaz. Geliş
+açısı ve geliş zamanı yöntemleri ise hassas bir senkranizasyon ve ekstra donanım gerektirdiğinden İHA’larla yapılan
+konumlandırma uygulamaları için uygun olmamaktadır. Geliştirilen yeni yöntemlerle, sinyalin çıkış gücü dahi bilinmeden
+Alınan Sinyal Gücü Göstergesi (RSSI) tabanlı geometrik konumlandırma yapılmaktadır.
+Projede geliştirilen yöntemlerde bir grup insansız hava aracının iki farklı senaryoda: i) İHA’ların hedefin üzerine
+yönelmesi ve ii) İHA grubunun hayali bir küre üzerinde hareket ederek hedef üzerine yönelmeden uzaktan yerinin nasıl
+tespit edileceği, konumlandırma yapılırken İHA’ların eşit sinyal gücü alabilmeleri için hareketlerinin nasıl hesaplanacağı,
+bu hareket oranından faydalanarak ve küre merkezi hareket ettirilerek hesaplanan doğruların hedefin konumunu
+hesaplamakta nasıl kullanılacağı gibi sorulara cevap aranmaktadır. Ayrıca alınan sinyal gücündeki gürültünün etkisinin
+filtreleme yöntemiyle azaltılarak konumlandırma doğruluğunun nasıl artırtılacağı konusu ele alınacaktır.
+Bu projede arazi koşullarının yerel bir arama kurtarma çalışmasına izin vermediği durumlarda, İHA grubu ve merkezi bir
+bilgisayar kullanarak hedef cihazın konum tespitinin yapılması amaçlanmıştır. Ekstra donanım gerektiren diğer
+yöntemlerden farklı olarak sadece alınan sinyal gücü kullanılarak hedefin yerinin tespit edilmesi ve ayrıca alınan
+gürültülü sinyalleri filtreleyerek sistemin doğruluğunun artırılması hedeflenmiştir.
+Bu hedefler doğrultusunda geliştirilen yöntemlerden birinde iki gruba ayrılmış dört İHA hedef tespit edildikten sonra
+hedefe doğru hareket eder. Her iki gruptaki İHA eşit sinyal gücü alacak şekilde hedef üzerinde konumlanır ve hedefin
+yeri bulunmuş olur. Diğer yöntemde ise iki gruba ayrılan dört İHA birbirine dik düzlemlerde uçmaktadır. Gruptaki her bir
+İHA, grup üyesi ile eşit güç elde edinceye kadar düzlem merkezine olan mesafesini koruyarak bir daire üzerinde hareket
+eder. Bu hareket oranı kullanılarak kaynak konumundan da geçen doğrular hesaplanır. Bu çizgilerin kesişimi, RF
+hedefinin konumunu verir.
+Proje yürütücüsü olarak doktora çalışmalarımda ve sonrasında radyo frekansı yayan elektronik cihazların konum tespiti
+üzerinde çalıştım. Önerilen bu projede, daha önce iki SCI makalede teorik ve ön çalışmaları yapılan RSSI tabanlı
+konumlandırma yöntemlerinin iyileştirilmesi ve pratik olarak uygulamasının yapılması önerilmektedir. Böylelikle özellikle
+savunma, arama kurtarma gibi alanlarda çokça ihtiyaç duyulan İHA’lar ve konumlandırma yöntemlerine yönelik bilgi ve
+tecrübelerim artacaktır. Ayrıca teorik çalışmaların pratikte nasıl çalıştığı görülerek geliştirilen yöntemlerin gerçek hayatta
+bir karşılığı elde edilecektir.
+Proje sonunda yaygın etki olarak, proje kapsamında kullanılan ekipmanlar bir sonraki projelere alt yapı oluşturacaktır.
+Ayrıca projede görev yapacak lisansüstü öğrencilerin tezleri, proje bursiyerleri ve araştırmacıları ile yapılacak ortak
+yayınlar projenin çıktısı olacaktır.
+Anahtar Kelimeler: Yer Tespiti; Alınan Sinyal Gücü Göstergesi; İnsansız Hava Aracı
+
+Title : RF Source Localization Using Multiple UAVs with a New Geometric RSSI Approach
+Summary
+Location detection and tracking is an application needed in many areas such as, defense, search and rescue.
+Previously, positioning and tracking was accomplished with the use of ground stations or satellite systems such as GPS.
+However, the use of UAVs has become inevitable in some cases, especially in environments where terrain conditions
+are not suitable or GPS access is limited. Innovations in UAV technologies, rapid maneuvering and mobility capabilities
+of UAVs have increased the use of these devices in the field of positioning.
+Many methods have been used in positioning applications using UAVs. However, camera-based methods cannot be
+used in long distance positioning situations when the image conditions are not suitable. Arrival angle and arrival time
+methods, on the other hand, are not suitable for positioning applications with UAVs as they require precise
+synchronization and extra hardware. With the new methods developed by the researchers of this project, geometric
+positioning based on the Received Signal Strength Indicator (RSSI) is performed without even knowing the transmitting
+power of the signal.
+In the methods developed for the project, a group of unmanned aerial vehicles can be used in two different scenarios: i)
+UAVs approaching to the target and ii) determining the location of the target by moving the UAV group on an imaginary
+sphere without approaching to the target, so that the UAVs can receive equal signal strength while positioning. Answers
+will be solved for questions such as how to calculate the motions of the UAVs, how to use the lines calculated by this
+3501BF-01 Güncelleme Tarihi: 30/09/2019
+
+2
+
+motion rate and moving the sphere center to calculate the position of the target. In addition, the issue of how to increase
+the positioning accuracy by reducing the effect of noise in the received signal power by filtering method will be
+discussed.
+In this project, it is aimed to determine the location of the target device by using a UAV group and a central computer in
+cases where the field conditions do not allow a local search and rescue operation. Unlike other methods that require
+extra hardware, it is aimed to determine the location of the target using only the received signal strength and also to
+increase the accuracy of the system by filtering the received noisy signals.
+In one of the methods developed for the project, four UAVs divided into two groups move towards the target after the
+target is detected. The UAVs in both groups are positioned above the target with equal signal strength. The position
+where each group receives equal power in itself will be the target location. In the second method, four UAVs divided into
+two groups fly in planes perpendicular to each other. Each UAV in the group moves in a circle keeping its distance from
+the center of the plane until it receives equal power with the group member. By using this movement rate, the lines
+passing through the source position are calculated. The intersection of these lines gives the position of the RF target.
+As a project coordinator, I worked on the location detection of electronic devices emitting radio frequency during and
+after my doctoral studies. In this proposed project, it is suggested to improve and practically apply RSSI-based
+positioning methods, whose theoretical and preliminary studies are published in two SCI articles. Thus, my knowledge
+and experience on UAVs and positioning methods, which are much needed in areas such as defense, search and
+rescue, will developed. In addition, by seeing how theoretical studies work in practice, a real-life equivalent of the
+developed methods will be obtained.
+As a widespread effect at the end of the project, the equipment used within the scope of the project will form the
+infrastructure for the next projects. In addition, the theses of the graduate students who will work in the project, joint
+publications with the project scholars and researchers will be the output of the project.
+
+Keywords: Localization; Received Signal Strength Indicator; Unmanned Aerial Vehicles
+1. KARİYER GELİŞTİRME POTANSİYELİ
+Proje önerisinin yürütücünün kariyer gelişimine yapacağı katkılar, yeni yetenekler veya disiplinlerarası çalışma yetkinliği
+kazandırma potansiyeli ile proje kapsamında yapılacak araştırmaların projenin yürütüldüğü kuruluşa olası katkıları
+açıklanır. Yürütücünün ayrıca yüksek lisans, doktora veya tıpta uzmanlık çalışmalarının proje önerisi ile olan ilişkisi
+belirtilir. Yürütücünün proje kapsamında ve sonrasında kariyer yol haritasını belirtmesi beklenir.
+Proje yürütücüsü olarak doktora tezimde aktif olarak salınım yapmayan elektronik cihazların yerinin tespiti üzerine
+deneysel çalışmalar ve yayınlar yaptım. Bu cihazlar elektronik patlayıcılar gibi içerisinde radyo alıcı-vericisi bulunduran
+cihazlardır. Bu cihaza stimule edici bir sinyal gönderip, bu stimülasyonla birlikte cihazdan salınan sinyalin geliş açısı
+kullanılarak anten dizileriyle yer tespiti yapılmıştı. Sonrasında da yine İHA’lar kullanılarak yer tespiti ve takibine yönelik
+çalışmalarım devam etmiştir.
+Teklif edilen bu projede de elektronik cihazlar için, özellikle arama kurtarma gibi görevlerde İHA’lar ile kullanılabilecek bir
+konumlandırma çalışması sunulmuştur. Çalışmada radyo frekansı yayan cihaz hakkında herhangi bir ön bilgi
+bilinmemektedir. Proje, sinyal işleme, haberleşme ve kontrol alanlarını kapsayarak disiplinlerarası bir çalışma
+gerektirmektedir.
+Proje, yeni kurulmuş olan Sivas Bilim ve Teknoloji Üniversitesi’nde gerçekleştirilecektir. Üniversite çalışmaları savunma
+sanayi alanlarında yoğunlaşmaktadır. Önerilen proje ile gerek araştırmacıların gerek projede çalışacak öğrencilerin
+savunma alanında birçok uygulamaya sahip olan İHA’lar ve İHA’ların kullanılmasıyla gerçekleştirilecek olan
+konumlandırma konularında bilgi ve tecrübeleri artacaktır. Bu tecrübeler daha sonraki projelerin temelini oluşturacaktır.
+Proje sonrasında Sivas Bilim ve Teknoloji Üniversitesi’nin protokol antlaşmaları imzaladığı savunma sanayi firmaları ile
+görüşülüp, projenin gerçek hayatta da kullanılmasına yönelik iyileştirmeler ve adımlarının atılması hedeflenmektedir.
+2. ÖZGÜN DEĞER
+2.1. Konunun Önemi, Projenin Özgün Değeri ve Araştırma Sorusu veya Hipotezi
+Proje önerisinde ele alınan konunun kapsamı ve sınırları ile önemi literatürün eleştirel bir değerlendirmesinin yanı sıra nitel
+veya nicel verilerle açıklanır.
+Özgün değer yazılırken projenin bilimsel kalitesi, farklılığı ve yeniliği, hangi eksikliği nasıl gidereceği veya hangi soruna
+nasıl bir çözüm geliştireceği veya ilgili bilim ve teknoloji alan(lar)ına kavramsal, kuramsal veya metodolojik olarak ne gibi
+3501BF-01 Güncelleme Tarihi: 30/09/2019
+
+3
+
+özgün katkılarda bulunacağı literatüre atıf yapılarak açıklanır. Kaynaklar http://www.tubitak.gov.tr/ardeb-kaynakca
+sayfasındaki açıklamalara uygun olarak EK-1’de verilir.
+Projenin araştırma sorusu ve varsa hipotezi veya ele aldığı problem(ler)i açık bir şekilde ortaya konulur.
+
+Konum tespiti ve takibi, hava trafik kontrolü, uzaktan algılama, istihbarat, gözetleme ve keşif gibi ticari ve askeri
+uygulamalarda çözülmesi gereken önemli konulardır Laoidias vd. (2018). Başlangıçta, konum tespiti yapmak için yer
+tabanlı yöntemler kullanılıyordu. Ancak, insansız hava araçlarının (İHA) ve sensör teknolojisinin hızla gelişmesi
+nedeniyle, İHA'lar artık havadan algılama cihazları olarak kullanılabilir hale geldi. Ayrıca, arama kurtarma görevleri gibi
+bazı uygulamalar yalnızca havadan konumlandırma gerektirebilir. Hava araçlarının hareketliliği ve geniş görüş kabiliyeti,
+başarılı ve hızlı yer belirlemeye olanak tanır. Ayrıca, yer seviyesinin üzerinde uçmak, engellerden kaynaklanan sinyal
+yayılma belirsizliğini azaltır ve RF hedef tanımlamasını geliştirir. Kanatlı İHA'lar yerine dört rotorlu İHA'ların oldukça
+kararlı havada asılı kalması, bu uçakları yer belirleme/izleme uygulamaları için uygun hale getirmiştir.
+İHA'lar kullanılarak bir RF hedefinin lokalizasyonu literatürde birkaç farklı şekilde incelenmiştir. Mevcut yaklaşımlardan
+bazıları: görsel özellikler Bi vd. (2020), RF varış zamanı He vd. (2014), varış açısı Nguyen vd. (2018), varış zaman farkı
+Fletcher vd. (2007), Doppler ve varış yönü Lin vd. (2007), Guzey vd. (2014) ve alınan sinyal gücü göstergesi (RSSI)
+Viani vd. (2008), Lagias vd. (2017), Uluskan vd. (2019) gibi çalışmalardır. Ek olarak, GPS veya menzil ve açı sensörleri
+kullanarak doğrudan hedefi takip eden teknikler vardır Zengin vd. (2007), Haoran vd. (2020).
+Görsel özellik tabanlı algoritmalar, çeşitli durumlarda bir öğenin yerini belirlemede etkilidir, ancak, özellikle görüş
+engellendiğinde veya ışık koşulları zayıf olduğunda, uzun menzilli konumlandırma işlemlerinde sorun yaşayabilirler
+Zhang vd. (2019). Termal kameralar bu soruna yardımcı olabilir, ancak hava sıcak olduğunda birçok yanlış pozitif
+üretebilirler. Varış zamanı ve varış açısı teknikleri, İHA'ların hareketliliği nedeniyle ortaya çıkabilecek daha karmaşık
+antenler ve senkronizasyon zorlukları gerektirir. Bu nedenle, bazı durumlarda, sinyalin yönünü belirlemeye yönelik
+donanım konfigürasyonu erişilebilir olmayabilir ve İHA'lar, hedefi bulmak için yalnızca sinyal gücüne bağlı kalmaya
+zorlanabilir. Ayrıca İHA'larda enerji kısıtlamalarının önemi nedeniyle, uçuş süresinin arttırılması ve görevin zaman
+kısıtlamaları içinde tamamlanmasını sağlamak için genellikle daha basit bir yöntem kullanılmaktadır. RSSI teknikleri bu
+senaryoda umut verici sonuçlar verebilir.
+Bu nedenle RSSI tabanlı konum tespiti ve takibi literatürde incelenmiştir. Örneğin, Lagias vd. (2017), hedef takibi aracını
+hedefe doğru yönlendiren yönlendirme açısını belirlemek için RF kaynağından tahmini mesafelerle birlikte kosinüs
+yasasını kullanan bir RSSI izleme yöntemi sunar. Bununla birlikte, her zaman karşılanamayan sabit bir iletim gücü
+varsayarlar. Hasanzade vd. (2017)'de konumlandırma işleminden önce yapay sinir ağı ile iletim gücünün tahmin edildiği
+RSSI tabanlı bir yöntem ve bir parçacık filtresi yaklaşımı Hasanzade vd. (2018) sunulmuştur.
+Önceden tanımlanmış bir oluşumda uçan çoklu İHA'lar, bilgi toplamak veya kritik hizmetler sunmak için ilgilenilen bir
+hedefi tespit edebilir ve takip edebilir Spyridis vd. (2021). Liang vd. (2011), hedefin konumunu bir füzyon merkezi
+tarafından belirlenen ve RF kaynağına olan mesafeyi log-normal gölgeleme modeli kullanılarak yaklaşık olarak
+hesaplar.
+Bu çalışma, temel RSSI sensörleri ile donatılmış ve radyo dalgaları yayan bir nesnenin yerini belirlemek için
+hareketlerini koordine eden bir işbirlikçi insansız hava araçları (İHA) sürüsünü incelemektedir. Projede iki farklı yöntem
+ele alınmaktadır. İlkinde ikişerli gruplara ayrılan dört adet İHA, tespit ettiği hedefin yerini belirlemek için hedefe doğru
+uçar. Uçarken de x ve y düzlemlerinde bulunan her İHA grubu kendi içerisinde eşit sinyal gücü alacak şekilde hareket
+eder. Nihayetinde İHA’lar grup içerisinde eşit güce eriştiğinde, x-y düzleminde hedefin üzerinde bulunur.
+İkinci yöntemde sistemde yine iki gruba ayrılan dört İHA'nın taşıdığı antenlerin aldığı sinyal güçlerinin karşılaştırılmasına
+dayanmaktadır. Her grup iki İHA'dan oluşur. Her grupta İHA'lar uçtukları düzlemde, grup arkadaşı ile eşit güç almak için
+aralarındaki mesafeyi koruyarak dairesel bir şekilde hareket eder. Kaynağa daha yakın olan İHA, kaynaktan uzaklaşır
+ve kaynaktan uzak olan İHA, kaynağa aynı oranda yaklaşır ve eşit güç elde eder. Her grup için hareket oranı
+kullanılarak, RF kaynağının konumu geometrik olarak hesaplanır.
+Çalışmanın özgün değeri ve yeniliği şu şekilde özetlenebilir: Sadece İHA’lar tarafından çok kolaylıkla ulaşılan sinyal
+gücü göstergesine dayalı konumlandırma yöntemleri geliştirilmiştir. Bu sayede maliyeti artıracak ve ayrıca İHA’ların uçuş
+kabiliyetlerini ve böylelikle uçuş sürelerini sınırlandıracak herhangi bir ekstra donanım gerekmemektedir. Ayrıca birçok
+ortamda gerçek değerinin kestirilmesi zor olan yol kaybı üsteli ve çoğu durumda bilinmeyen sinyalin çıkış gücü bilgisi
+konumlandırma algoritması için gerekmemektedir. Bu da hedefin konum tespiti için hesaplama maliyetini düşürmektedir.
+Bu bakımdan var olan konumlandırma yöntemlerine yenilik getirecektir.
+Özet olarak, proje kapsamında, yer bazlı sistemlerin yetersiz olduğu coğrafi koşullarda, arama kurtarma gibi
+uygulamalarda İHA’lar kullanılarak nasıl konumlandırma yapılacağı, en az donanım kullanılarak gerçekleştirilmek
+istenen bu yöntemde İHA gruplarının kendi içlerinde eşit sinyal gücünü alması için hareketlerinin nasıl hesaplanacağı,
+bu hareket oranından faydalanarak hedefin konum tespitinin nasıl yapılacağı sorularına cevap aranmaktadır. Ayrıca
+alınan sinyal gücündeki gürültünün etkisinin filtreleme yöntemiyle azaltılarak konumlandırma doğruluğunun nasıl
+3501BF-01 Güncelleme Tarihi: 30/09/2019
+
+4
+
+artırtılacağı konusu ele alınacaktır.
+
+2.2. Amaç ve Hedefler
+Proje önerisinin amacı ve hedefleri açık, ölçülebilir, gerçekçi ve proje süresince ulaşılabilir nitelikte olacak şekilde yazılır.
+Konum tespiti ve takibi, savunma, arama ve kurtarma gibi birçok uygulamada önemli bir yere sahiptir. Günümüzde
+İHA’ların birçok alanda kullanımı arttığı gibi konumlandırma alanında da artık sıklıkla kullanılmaktadır. Hatta bazı
+durumlarda arazi koşullarından dolayı sadece İHA’lar ile konumlandırma gerekmektedir. Projede de bu bağlamda, bir
+elektronik cihazın İHA’lar ve merkezi bir bilgisayar kullanılarak konumunun tespiti amaçlanmıştır.
+Literatürde kullanılan yöntemlerin birçoğu, farklı donanımsal gereksinimler gerektirmektedir. Önerisi verilen bu projede
+ise İHA’ların zaten bünyesinde olan sistemden elde edilen alınan sinyal gücü göstergesine dayalı konumlandırma
+hedeflenmektedir. Ayrıca, yöntemde, konumlandırma yapılırken sinyalin çıkış gücü ya da ortamın yol kaybı üsteli bilgisi
+gerektirmeksin, sadece İHA’ların aldığı sinyal gücü farkının kullanılması amaçlanmıştır. İlaveten, alınan sinyal
+gücündeki gürültünün etkisinin azaltılması için filtreleme yöntemiyle konumlandırma hatasının azaltılması
+hedeflenmektedir.
+
+3. YÖNTEM
+Projede uygulanacak yöntem ve araştırma teknikleri (veri toplama araçları ve analiz yöntemleri dahil) ilgili literatüre atıf
+yapılarak açıklanır. Yöntem ve tekniklerin projede öngörülen amaç ve hedeflere ulaşmaya elverişli olduğu ortaya konulur.
+Yöntem bölümünün araştırmanın tasarımını, bağımlı ve bağımsız değişkenleri ve istatistiksel yöntemleri kapsaması
+gerekir. Proje önerisinde herhangi bir ön çalışma veya fizibilite yapıldıysa bunların sunulması beklenir. Yöntemlerin iş
+paketleri ile ilişkilendirilmesi gerekir.
+Projede geliştirilen yöntemlerde bir grup insansız hava aracının iki farklı senaryoda: i) İHA’ların hedefin üzerine
+yönelmesi ve ii) İHA grubunun hayali bir küre üzerinde hareket ederek hedef üzerine yönelmeden uzaktan yerinin tespit
+edilmesi konuları ele alınacaktır. Her iki senaryo için teorik çalışmalar yapılmıştır ve iki adet SCI makale yayınlanmıştır
+Güzey vd. (2022), Güzey (2022). Proje desteklenmesi durumunda, yapmış olduğumuz teorik çalışmaların uygulamasını
+yapma imkânımız olacaktır. Bunun yanında, ortam gürültüsünden dolayı ölçülen sinyallerdeki hatalar, önceki
+çalışmalarımızda, Güzey (2022), Güzey vd. (2022), göz ardı edilmişti. Proje süresince değişik filtreler kullanılarak,
+alınan sinyallerin filtrelenmesi planlanmaktadır. Her iki yöntemin de detayları aşağıda verilmiştir.
+i)
+
+Hedefin Üzerine Yönelme ile Takip
+
+RSSI, alıcıdaki sinyal gücünü, iletim gücü, alıcı ve verici antenlerinin özellikleri, alıcı ve verici arasındaki mesafe gibi
+farklı parametrelerin fonksiyonu olarak hesaplayan tekniktir Lee vd. (2012). Ölçülen sinyal gücü, verici ile alıcı
+arasındaki mesafeye dönüştürülebilir. Uzayda verici ile alıcı arasındaki mesafe değiştikçe sinyal gücü de değişir. Alıcı ve
+verici arasındaki sinyal gücü değişimi Friis denklemi kullanılarak ölçülebilir Lee vd. (2012):
+
+
+  
+Pr  Pt Dr Dt 
+  N (0,  )
+ 4 d 
+
+(1)
+
+Burada Pt verici tarafından iletilen sinyal gücü, d verici ile alıcı arasındaki mesafe,  yol kaybı üsteli ve  iletilen
+sinyalin dalga boyudur. Yansımalar, ölçümler ve benzerlerinden kaynaklanan modelleme hatasını denkleme bir ek
+Gauss gürültüsü, N, olarak dahil edilir. Yol kaybı üsteli, farklı çevre koşullarından dolayı 2 ile 4 arasında bir değer
+alabilir. Bazı özel durumlarda da bu sınırı aşabilmektedir Chan vd. (2012).
+Bu çalışmada, RF cihazlarının konum tespiti sorununa RSSI tabanlı geometrik çözümler önerilmiştir. Algoritma, iki ana
+zorluğun varlığında türetilmiştir:
+• Hedefin konumu hakkında ön bilgi yoktur,
+• İHA'lar tarafından ölçülen tek şey sinyal gücüdür; sinyalin zaman damgası, yön bulma donanımı veya diğer yararlı
+bilgileri yoktur.
+Problemi çözmek için aşağıdaki iki koşul varsayılır:
+
+3501BF-01 Güncelleme Tarihi: 30/09/2019
+
+5
+
+• İHA'lar ile hedef arasında her zaman net bir görüş hattı vardır.
+• Herhangi bir iletişim sınırlaması yoktur; İHA'lar bilgi kaybetmeden veri gönderip alabilir.
+Projede gerçekleştirilecek olan ilk yöntemde takip edilmek istenen hedefin yer düzleminde olduğu farz edilmiştir. Bu
+çalışmada x ekseninin doğu-batı yönünde ve y ekseninin kuzey-güney doğrultusunda olduğu varsayılmıştır. '+'
+dizilişinde uçan 4n sayısında İHA, n=1,2,.., doğu, batı, kuzey ve güney olmak üzere 4 ana gruba ayrılıyor. İHA'lar x
+ekseninde doğu grubu ile batı grubunun sinyal güçlerinin farkından, y ekseninde kuzey ve güney gruplarının güç
+farkından sürülür. İHA’lar hedeften gelen gücü tespit ettikten sonra doğu ve batı grubundaki İHA’lar kendi içlerinde,
+kuzey ve güney grubundaki İHA’lar kendi içlerinde alınan toplam sinyal gücü eşit oluncaya kadar hareket ederler. Eşit
+güçleri elde ettiklerinde hedef kaynağın üzerinde formasyonu koruyarak konumlanmış olurlar. Böylelikle sistemin
+merkezinin konumu hedefinde x-y düzlemindeki konumunu vermektedir (Güzey vd. 2022).
+
+Şekil 1. Hedef ve ‘+’ formasyonunda uçan İHA’lar
+Şekil 1’de gösterildiği gibi ‘+’ şekline sahip iki anten dizisi kullanılarak, x ve ye yönündeki alınan sinyal gücü farkları
+aşağıdaki gibi tanımlanmıştır
+ px  PxL  PxR ,  py  PyL  PyR
+(2)
+burada PxL , PxR , PyL , PyR İHA grupları tarafından alınan sinyal gücünü göstermektedir . Ayrıca system merkezinin
+yükseklik hatası
+
+ z  z  zd
+
+(3)
+olarak tanımlanır. Konumlandırma işleminde x ve y yönündeki grupların alınan sinyal gücü farkları ve yükseklik hatası 0
+olacak şekilde İHA’lar hareket ettirilir. Her bir İHA (2) ve (3)’deki hataları sıfır yapacak şekilde kontrol algoritması
+üzerinden sürülmektedir. Böylece, her bir İHA’nın üretmiş olduğu kontrol sinyali aynı olacağından, olağan üstü durumlar
+ve gürültüler olmadığı durumda istenilen ‘+’ formasyonunu bozmayacaklardır. Gürültü vb etkiler ile ‘+’ formasyonu
+bozulduğunda, İHA’ları istenen formasyona getirecek formasyon kontrolü de, yine önceki çalışmamızda Güzey vd.
+(2022). geliştirilmiştir. Yöntemin detaylarına Güzey vd. (2022)’dan ulaşılabilir. Ayrıca proje kapsamında sensörlerden
+alınan RSSI değerlerindeki gürültü etkisinin filtreleme yöntemleri ile azaltılması hedeflenmektedir.
+ii)
+
+Hedefin Üzerine Yönelmeden Konumlandırma
+
+İkinci yöntemin detayları aşağıdaki alt bölümlerde verilmektedir. Birinci alt bölümde, İHA'ların birbirine dik iki daire
+üzerinde hareket etmesi için her bir İHA'nın istenen duruşu (3D Kartezyen konumu) hesaplanır. Dairelerden biri; x-y
+düzleminde ve merkezden r mesafesinde, diğeri x-z düzleminde merkezden r uzaklıkta seçilir. İkinci alt bölümde,
+İHA'ların aralarındaki 2r mesafeyi koruyarak daire üzerinde dönmesini sağlayacak dönüş açıları hesaplanmıştır. Dönme
+açılarının türevi, alınan sinyal güçlerindeki farklar kullanılarak bulunur (Güzey 2022).
+
+3501BF-01 Güncelleme Tarihi: 30/09/2019
+
+6
+
+İHA’ların Başlangıç Konumlarının Hesaplanması
+Rastgele başlangıç konumlarında RSSI alıcıları ile donatılmış dört İHA olduğunu varsayalım. İstenen ilk konumları şu
+şekilde türetilecektir:
+
+x1d  t0   xc  r cos(  t0 )
+x3d  t0   xc  r cos(  t0 )
+x2d  t0   xc  r sin(   t0 )
+x4d  t0   xc  r cos(   t0 )
+
+y1d  t0   yc  r sin(  t0 )
+z1d  zc
+y3d  t0   yc  r sin(  t0 )
+z3d  zc
+y2d  yc
+z3d  t0   zc  r cos(  t0 )
+y4d  yc
+z4d  t0   zc  r sin(   t0 )
+
+(4)
+
+Burada C( xc , yc , zc ) oluşumun merkezi, r çemberlerin yarıçapı,   t0  ve   t0  Şekil 2 de gösterildiği gibi kullanıcı
+tarafından belirlenen başlangıç anındaki dönme açıları, t0 başlangıç zamanıdır. D1 ve D3 İHA'ları x-z düzleminde bir
+grup oluştururken, D2 ve D4 İHA'ları x-y düzleminde ayrı bir grup oluşturur.
+
+Şekil 2. İHA'ların ilk ve istenen konumları.
+Hem x-y ekseninde hem de x-z ekseninde hareket eden İHA'ların istenilen başlangıç duruşları (4), iki temel kısıtı
+sağlayacak şekilde hesaplanır. İlk kısıtlama, her iki İHA'nın da merkezden r uzaklıkta olmasıdır. İkinci kısıtlama, iki İHA
+arasındaki mesafenin 2r olmasıdır. Böylece İHA'lar önceden belirlenmiş çember üzerinde hareket etmekte ve İHA'lar
+arasındaki mesafe sabitlenmektedir.
+Dönüş Açısı Türevlerinin Hesaplanması
+Hedefin konumunu bulmak için güç farkları aşağıdaki gibi tanımlanır.
+
+e1  P3  P1
+
+(5)
+
+e2  P4  P2
+burada P1 ,
+
+, P4 , D1 ,
+
+, D4 İHA’ları tarafından alınan güç, e1 , D1 ve D3 İHA’ları arasındaki güç farkı, e2 D2 ve D4
+
+İHA’ları arasındaki güç farkıdır. Güç farkının dinamikleri
+
+3501BF-01 Güncelleme Tarihi: 30/09/2019
+
+7
+
+e1  P3  P1
+
+(6)
+
+e2  P4  P2
+
+ile belirlenecektir. Hedefin yatay yönünü bulmak için x-y ekseninde hareket eden iki İHA, dikey yönünü bulmak için x-z
+düzleminde hareket eden İHA'lar kullanılacaktır.  ve  , her iki gruptaki İHA’ların dönme oranı, her gruptaki İHA’ların
+sinyal gücü farkını sıfır yapacak şekilde hesaplanır. PID kontrolcü kullanılarak  ’nın türevi e1 ’in ve  ’nın türevi e2 ’nin
+fonksiyonu olacak şekilde hesaplanır. İstenen dönme açısı dinamiği aşağıdaki gibi tanımlanır:
+t
+
+  k P e1  k I  e1 ( ) d   k D e1
+t0
+
+(7)
+
+t
+
+  k P e2  k I  e2 ( ) d   k D e2
+t0
+
+k P  0 , kI  0 ve kD  0 dizayn parametreleridir. Bu durumda dönüş açıları aşağıdaki gibi hesaplanır
+t
+
+  t     t0     ( ) d 
+t0
+
+(8)
+
+t
+
+  t     t0     ( ) d 
+t0
+
+Şekil 3. İHA'lar, farklı alınan sinyal gücü ile istenen başlangıç konumunda uçarken
+
+x1d  t   xc  r cos(  t )
+x3d  t   xc  r cos(  t )
+x2d  t   xc  r sin(   t )
+x4d  t   xc  r cos(   t )
+
+y1d  t   yc  r sin(  t )
+z1d  zc
+d
+y3  t   yc  r sin(  t )
+z3d  zc
+y2d  yc
+z3d  t   zc  r cos(   t )
+y4d  yc
+z4d  t   zc  r sin(   t )
+
+(9)
+
+ ve  ’nın zamanda değişmesi, (9)'a göre İHA'ların istenen konumlarını otomatik olarak değiştirecektir. Bu değişiklik,
+sıfıra veya önceden tanımlanmış ve tolere edilebilir bir hata sınırına yaklaşana kadar devam eder.
+
+3501BF-01 Güncelleme Tarihi: 30/09/2019
+
+8
+
+Şekil 4. İHA'lar aynı RSSI değerini almak için dairesel formasyonda hareket eder.
+Açıklama: Şekil 3'te gösterilen senaryoyu ele alalım, İHA’lar uçarken bir hedef tespit ediyorlar. Her grupta alınan güçler
+kendi içinde karşılaştırılır ve İHA'lar eşit güç alana kadar kendi düzleminde hareket eder. Bu senaryoda D4, D2'den
+daha fazla güç alır, dolayısıyla D4 hedeften uzaklaşır ve D2 hedefe doğru hareket eder. D1 ve D3 ile aynı şekilde, D1,
+D3'ten daha az güç alır, bu nedenle Şekil 4'te gösterildiği gibi D1 hedefe yaklaşır ve D3 hedeften uzaklaşır.
+Geçiş Noktası ve Hedef Yön Hesaplaması
+Güç farkları tolere edilebilir bir hata aralığında olduğunda, D1-D3'ten geçen çizgi ile D2-D4'ten geçen çizginin
+oluşturduğu düzlem hesaplanır. Bu düzleme dik olacak ve merkezden geçecek doğru belirlenir. Doğrunun
+hesaplanmasında ilk adım olarak birbirine dik dairelerin oluşturduğu küre üzerinde bir geçiş nokta hesaplanır.
+Her bir İHA'ya eşit uzaklıkta olan ve aşağıdaki kriterleri karşılayan küre üzerinde bir geçiş noktası A( xaug , yaug , zaug )
+tanımlanır:
+
+( xa  xc ) 2  ( ya  yc ) 2  ( za  zc ) 2  r
+da1  ( xa  x1d ) 2  ( ya  y1d ) 2  ( za  z1d ) 2
+da2  ( xa  x2d ) 2  ( ya  y2d ) 2  ( za  z2d ) 2
+
+(10)
+
+da3  ( xa  x3d ) 2  ( ya  y3d ) 2  ( za  z3d ) 2
+da4  ( xa  x4d ) 2  ( ya  y4d ) 2  ( za  z4d ) 2
+da1  da2  da3  da4
+bu kriterler (10) ile geçiş noktası şu şekilde hesaplanır:
+
+ra  r cos(  )
+zaug  zc  r sin( ) sin(  )
+
+(11)
+
+xaug  xc  ra sin( )
+yaug  yc  ra cos( )
+
+İddia: Küre merkezi C ( xc , yc , zc ) ’den ve geçiş noktası A( xaug , yaug , zaug ) ’dan geçen doğru aynı zamanda hedefin
+bulunduğu noktadan da geçer. A( xaug , yaug , zaug ) ve C ( xc , yc , zc ) noktalarından geçen doğrunun denklemi aşağıda
+verilmiştir.
+
+3501BF-01 Güncelleme Tarihi: 30/09/2019
+
+9
+
+y
+z
+
+x  xaug
+xc  xaug
+y  yaug
+yc  yaug
+
+y  y  y
+c
+
+aug
+
+z  z  z
+c
+
+aug
+
+aug
+
+(12)
+aug
+
+Bu doğru kaynak yönündedir. Yer tespiti için, İHA grubu, aynı sinyal gücünü almak için konsensus korunurken hareket
+ettirilir. Yeni konumlarında, yeni açılarla yeni bir çizgi oluşturulur. Bu prosedür birden çok kez yapılır. Tüm çizgiler
+kaynağa yöneldiğinden, kesişmeleri kaynağın yerini verecektir. Gürültüsüz bir ortamda, hedefi bulmak için iki doğru
+yeterlidir. Ancak alınan sinyal gücü gürültüden etkileneceğinden bu doğrular kaynak pozisyonundan geçmeyebilir. Bu
+durumda sinyal gücündeki gürültüden kaynaklanan lokalizasyon hataları lineer olmayan filtreleme yöntemleriyle en aza
+indirilmeye çalışılacaktır
+
+Özetle, birbirine dik iki düzlemde uçan iki İHA grubu, kendi içerisinde uzaktaki bir hedeften aldıkları sinyal gücü eşit
+oluncaya kadar dairesel rotasını koruyarak hareket edecektir. Eşit sinyal gücüne erişildiğinde, her gruptaki İHA’ların
+dönme oranına göre merkezden ve her İHA’ya eşit uzaklıkta olan bir geçiş noktasından geçecek doğru hesaplanır.
+Sistemin merkezi hareket ettirilerek çizgi hesaplama işlemi tekrarlanır. Çizgiler ideal şartlarda kaynak lokasyonunda
+kesişir. Ancak ideal olmayan koşullarda sinyal güçlerindeki hata nedeniyle çizgilerin kesişmesi tek bir noktada
+olmayabilir. Bu durumu mümkün olduğunca azaltmak için filtreleme yöntemi kullanılacaktır.
+
+3501BF-01 Güncelleme Tarihi: 30/09/2019
+
+10
+
+4. PROJE YÖNETİMİ
+4.1. Yönetim Düzeni: İş Paketleri (İP), Görev Dağılımı ve Süreleri
+Projede yer alacak başlıca iş paketleri ve hedefleri, her bir iş paketinin kimler tarafından hangi sürede gerçekleştirileceği, başarı ölçütü ve projenin başarısına katkısı “İş-Zaman Çizelgesi”
+doldurularak verilir. Her bir iş paketinde görev alacak yürütücü, araştırmacı ve personel ayrıntılı olarak belirtilir. Literatür taraması, gelişme ve sonuç raporu hazırlama aşamaları, proje
+sonuçlarının paylaşımı, makale yazımı ve malzeme alımı ayrı birer iş paketi olarak gösterilmemelidir.
+Başarı ölçütü olarak her bir iş paketinin hangi kriterleri sağladığında başarılı sayılacağı açıklanır. Başarı ölçütü, ölçülebilir ve izlenebilir nitelikte olacak şekilde nicel veya nitel ölçütlerle (ifade,
+sayı, yüzde, vb.) belirtilir.
+İŞ-ZAMAN ÇİZELGESİ (*)
+
+İP No
+
+İş Paketlerinin Adı ve Hedefleri
+
+Kim(ler) Tarafından
+Gerçekleştirileceği
+
+Zaman Aralığı
+(..-.. Ay)
+
+Başarı Ölçütü ve Projenin Başarısına Katkısı
+
+1-12 Ay
+
+Proje kapsamında geliştirilecek dört rotorlu İHA’lar, 20 dakika havada
+kalacak, hedeften gelen sinyali tespit eden antenleri taşıyacak, merkezden
+gelen uçuş rotalarını otonom takip edecek, hedeften aldıkları sinyal gücünü
+merkeze göndereceklerdir. Bu iş paketinin projenin başarısına katkısı
+%10’dur.
+
+1
+
+Donanım
+tedariği
+ve
+sistem
+entegrasyonu:
+İHA
+parçalarının
+temini ve birleştirilip uçuşa hazır hale
+getirilmesi. Yer istasyonu ile İHA’lar
+arasındaki haberleşme kanallarının
+Araştırmacı, Bursiyer1,
+sağlanması. Kurulacak donanım
+Bursiyer2
+düzenekleri
+sayesinde
+İHA’lar
+hedeften almış oldukları sinyal
+gücünü
+merkeze
+gönderecek,
+merkez de sinyalleri işleyerek
+İHA’lara anlık görev iletecektir.
+
+2
+
+Hedef takip için teorik filtreleme:
+Hedefin
+üzerine
+yönelme
+ile
+konumlandırma
+yönteminde
+gürültünün etkisini azaltmak için
+filtreleme yöntemlerinin belirlenmesi.
+
+Yürütücü, Bursiyer1
+
+6-18 Ay
+
+3
+
+Uzaktan tespit için teorik filtreleme:
+Hedefin
+üzerine
+yönelmeden
+konumlandırma
+yönteminde
+gürültünün etkisini azaltmak için
+filtreleme yöntemlerinin belirlenmesi
+
+Yürütücü, Bursiyer2
+
+6-18 Ay
+
+3501BF-01 Güncelleme Tarihi: 30/09/2019
+
+11
+
+Daha önceki çalışmamızda Güzey vd. (2022), alınan sinyal gücündeki
+hatalar dikkate alınmamıştı. Bu iş paketi kapsamında değişik filtre
+algoritmaları ile, alınan sinyaldeki hatanın varlığı durumunda, hedefi takip
+etmedeki hatanın azaltılması hedeflenmektedir. Matlab ortamında elde
+edilecek sonuçlarda, İHA sürüsünün hedef üzerinde formasyonu koruyarak
+uçarken yaptığı salınımı filtrelerin azalttığı gösterilecektir. Bu iş paketinin
+projenin başarısına katkısı %20’dir.
+Daha önceki çalışmamızda Güzey (2022), alınan sinyal gücündeki hatalar
+dikkate alınmamıştı. Bu iş paketi kapsamında değişik filtre algoritmaları ile,
+alınan sinyaldeki hatanın varlığı durumunda, hedefi takip etmedeki hatanın
+azaltılması hedeflenmektedir. Matlab ortamında elde edilecek sonuçlarda,
+küre etrafında hareket eden İHA’ların, hedeften aldıkları güçte istatistiki bir
+hata olduğu senaryosu işlenecektir. Hatadan dolayı oluşacak yer
+tespitindeki hata, filtreler kullanılarak azaltılacaktır. Bu iş paketinin projenin
+başarısına katkısı %25’dir.
+
+4
+
+5
+
+Hedef takip uygulaması: 1. İş paketi
+kapsamında hazırlanan donanımlar
+ve 2. iş paketinde simülasyon
+ortamında denenen filtreler bu iş
+Yürütücü, Araştırmacı,
+paketi kapsamında birleştirilecektir.
+Bursiyer3
+Böylelikle gürültülü sinyal alınması
+durumunda 4 adet İHA kullanılarak
+hareketli
+bir
+hedefin
+takibi
+sağlanacaktır.
+Uzaktan tespit uygulaması: 1. İş
+paketi
+kapsamında
+hazırlanan
+donanımlar ve 3. iş paketinde
+simülasyon
+ortamında
+denenen
+filtreler bu iş paketi kapsamında Yürütücü, Araştırmacı,
+birleştirilecektir.
+Böylelikle
+çıkış
+Bursiyer3
+sinyali gücü bilinmeyen bir hedefin
+hayali bir küre yüzeyinde hareket
+ettirilen 4 adet İHA ile uzaktan tespiti
+sağlanacaktır.
+
+18-36 Ay
+
+İş paketi 1 ve iş paketi 2 sonucunda elde edilen çıktılar kullanılarak, 4 adet
+İHA’nın, hareketli hedefin yerini tespit edip, hedefin üzerinde ‘+’
+formasyonda uçması. Bu iş paketinin projenin başarısına katkısı %20’dir
+
+18-36 Ay
+
+İş paketi 1 ve iş paketi 3 sonucunda elde edilen çıktılar kullanılarak, 4 adet
+İHA’nın, merkez bilgisayarı üzerinde tasarlanan, hayali küre üzerinde
+hareket ederek, çıkış gücü bilinmeyen bir hedefin yerini tespit etmesi. Bu iş
+paketinin projenin başarısına katkısı %25’dir.
+
+(*) Çizelgedeki satırlar ve sütunlar gerektiği kadar genişletilebilir ve çoğaltılabilir.
+
+3501BF-01 Güncelleme Tarihi: 30/09/2019
+
+12
+
+4.2. Risk Yönetimi
+Projenin başarısını olumsuz yönde etkileyebilecek riskler ve bu risklerle karşılaşıldığında projenin başarıyla yürütülmesini
+sağlamak için alınacak tedbirler (B Planı) ilgili iş paketleri belirtilerek ana hatlarıyla aşağıdaki Risk Yönetimi Tablosu’nda
+ifade edilir. B planlarının uygulanması projenin temel hedeflerinden sapmaya yol açmamalıdır.
+RİSK YÖNETİMİ TABLOSU (*)
+İP
+No
+
+Risk Yönetimi (B Planı)
+
+En Önemli Riskler
+İHA denemeleri için Sivil havacılıktan izin
+alınamaması
+
+Üniversite kampüsünde belirli bir yüksekliğe kadar uçuş
+izni verilmektedir. Deneyler burada gerçekleştirilebilir.
+
+Bursiyerlerin donanım konusunda yetersiz kalması
+
+Proje araştırmacısı Dr. H. Mehmet Güzey’in Teknokentte
+bulunan şirketinde drone-droneport üreten ekibi vardır.
+Gerektiğinde bu ekip personellerinden donanım konusunda
+yardım alacaktır.
+
+Kur farkından dolayı bütçenin yetersiz kalması
+
+İHA tasarımı güncellenecektir.
+
+Bursiyerlerin filtreleme algoritmasını geliştirecek
+teorik altyapılarının olmaması
+
+Proje yürütücüsü Dr. Nurbanu Güzey nezaretinde ilk 6 ay
+online ya da imkân olduğu takdirde yüz yüze Dijital Sinyal
+İşleme, İstatistiksel Sinyal İşleme gibi dersler aldırılacaktır.
+
+(*) Tablodaki satırlar gerektiği kadar genişletilebilir ve çoğaltılabilir.
+
+4.3. Araştırma Olanakları
+Bu bölümde projenin yürütüleceği kurum ve kuruluşlarda var olan ve projede kullanılacak olan altyapı/ekipman
+(laboratuvar, araç, makine-teçhizat, vb.) olanakları belirtilir.
+ARAŞTIRMA OLANAKLARI TABLOSU (*)
+Kuruluşta Bulunan Altyapı/Ekipman Türü, Modeli
+(Laboratuvar, Araç, Makine-Teçhizat, vb.)
+
+Projede Kullanım Amacı
+
+Gömülü Sistemler ve Sinyal İşleme Laboratuvarı
+
+Bursiyerlerin çalışma alanı olarak kullanılacaktır.
+Geliştirilen
+algoritmaları
+gerçek
+sistemlerde
+uygulamadan
+önce MATLAB
+gibi
+programlar
+kullanılarak benzetimlerinin yapılması.
+İHA üretimi aşamasında laboratuvarda bulunan aletlerin
+kullanılması
+ve
+bu
+laboratuvarda
+bulunan
+araştırmacıların tecrübelerinden faydalanması.
+
+MATLAB gibi simülasyon yazılımları
+Havacılık ve Uzay Bilimleri Fakültesi Laboratuvarı
+(*) Tablodaki satırlar gerektiği kadar genişletilebilir ve çoğaltılabilir.
+
+5. YAYGIN ETKİ
+Proje başarıyla gerçekleştirildiği takdirde projeden elde edilmesi öngörülen çıktı(lar) ve etki(ler) ile bu çıktı ve etkilerin
+paylaşımı ve yayılımına yönelik faaliyet(ler)/ürün(ler)/hizmet(ler) kısa ve net cümlelerle ilgili bölümde belirtilmelidir.
+5.1. Projeden Elde Edilmesi Öngörülen Çıktılara İlişkin Bilgiler
+Bu bölümde, projeden elde edilmesi öngörülen çıktılara yer verilmelidir. Söz konusu çıktılar, amaçlarına göre belirlenen
+kategorilere ayrılarak belirtilmeli, nicel gösterge ve hedeflere dayandırılmalı ve varsa bu çıktıları kullanacak
+kurum/kuruluş(lar)a ilişkin bilgi verilmelidir. Her bir çıktının elde edilmesinin öngörüldüğü zaman aralığı belirtilmelidir.
+Çıktı Türü
+Bilimsel/Akademik
+
+Çıktılar
+
+Çıktı
+(Bildiri,
+
+Makale, Kitap Bölümü, Kitap vb.):
+
+2 TR Dizin
+2 konferans
+2 SCI makale yayını
+
+3501BF-01 Güncelleme Tarihi: 30/09/2019
+
+13
+
+Çıktının Elde Edilmesi
+Öngörülen Zaman Aralığı (*)
+
+24-30 Ay
+12-24 Ay
+30-36 Ay
+
+Ekonomik/Ticari/Sosyal
+
+Çıktılar
+
+(Ürün, Prototip, Patent, Faydalı Model,
+Üretim İzni, Tescil, Görsel/İşitsel Arşiv,
+Envanter/Veri Tabanı/Belgeleme Üretimi,
+Telife Konu Olan Eser, Spin-off/Start- up
+Şirket vb.):
+
+Araştırmacı Yetiştirilmesine Yönelik
+Çıktılar (Yüksek Lisans/Doktora/Tıpta
+
+Proje sonunda elde edilecek ürün, proje
+ekibi tarafından ya da başka girişimciler
+tarafından ticarileştirilebilecek mahiyette
+olup birçok alanda kullanılabilecektir.
+Savunma sanayi, orman bakanlığı, sivil
+savunma,
+arama
+kurtarma,
+sahil
+güvenlik gibi alanlarda kullanılabilecek
+bir ürün prototipi geliştirilmiş olacaktır.
+2 adet yüksek lisans tezi
+
+Teknoloji hazırlık seviyesinin 8-9’a
+çıkarılması ve ticarileştirilecek
+seviyeye gelmesi için proje
+bitiminden
+sonra
+1-2
+yıl
+gerekmektedir.
+
+0-24 Ay
+
+Uzmanlık Tezleri):
+
+(*) Proje başlangıcından itibaren 6 aylık süreler halinde belirtilmelidir (Örn. 0-6 ay/6-12 ay/12-18 ay vb.).
+
+5.2. Projeden Elde Edilmesi Öngörülen Etkilere İlişkin Bilgiler
+Proje başarıyla gerçekleştirildiği takdirde projeden elde edilmesi öngörülen
+
+
+
+
+
+Toplumsal/kültürel etki,
+Akademik etki,
+Ekonomik etki,
+Ulusal Güvenlik etkisi
+
+Proje Başvuru Sistemi (PBS)’nde seçilen 11. Kalkınma Planı hedefleri ve politikaları çerçevesinde hedef kitle/alan
+belirtilerek açıklanmalıdır. Beklenen etkiler doğrulanabilir ve ölçülebilir olmalıdır. Etkilerin elde edilme zamanına ilişkin
+öngörüler belirtilmelidir.
+Etki Türü
+Toplumsal/Kültürel Etki:
+ Yaşam Kalitesine Katkı,
+ Sürdürülebilir Çevre ve Enerjiye Katkı,
+ Refah
+veya
+Eğitim
+Seviyesinin
+İyileştirilmesine Katkı,
+ Ülke ya da Dünya Düzeyinde Önemli Bir
+Sosyal Soruna Getirilecek Çözümler vb.
+
+Akademik Etki:
+ Yeni Ar-Ge Kararları,
+ Ulusal/Uluslararası Ar-Ge İşbirlikleri,
+ Araştırmacı Sayısındaki ve Niteliğindeki
+Değişim,
+ Üniversite- Sanayi İşbirliklerine Katkı vb.
+
+Ekonomik Etki:
+ Potansiyel Sektörel Uygulama Alanları,
+ Küresel Pazar Öngörüleri,
+ İstihdam Katkısı,
+ Rekabetçilik (İhracata Etkisi, İthal İkamesi,
+Yeni Firmaların Oluşumu, Yabancı
+Sermaye Yatırımının Tetiklenmesi vb.)
+
+Etki
+
+Etkinin Elde Edilmesi
+Öngörülen Zaman
+
+İnsanların tabi afetler gibi birçok sebeple Proje bitiminden 2 sene sonra
+kaybolması durumunda konumlandırma
+yapabilecek
+bu
+cihaz
+sayesinde
+kendilerini daha güvende hissetmeleri
+sağlanacaktır.
+
+Söz konusu proje kapsamında hem Proje bitiminde
+kontrol hem sinyal işleme hem de
+haberleşme
+alanlarında
+faaliyet
+gösterilecek olduğundan disiplinler arası
+bir çalışma olacaktır. Daha sonrasında bu
+alanda Avrupa Birliği çağrıları takip edilip
+Avrupa’dan paydaşlarla ortak proje önerisi
+sunulması düşünülmektedir. Yurt içinde
+de, deney düzeneğimiz oluşturulduktan
+sonra adaptif filtrelerle sinyal işleme
+alanında çalışan başka araştırma gruplar
+ile ortak çalışmalar yapılacaktır. Proje
+çıktılar savunma sanayi firmaları ile
+paylaşılacaktır.
+Savunma sanayi, arama kurtarma gibi Proje bitiminden 2 sene sonra
+alanlarda kullanılacak bir çıktı olacaktır.
+Yurt
+içi
+ve yurt
+dışı
+piyasada
+ticarileşebilecek
+bir
+üründür.
+Proje
+sonunda çıkacak ürünü ticarileştirebilecek
+firmalar
+nitelikli
+istihdam
+katkısı
+sağlayacaktır.
+
+3501BF-01 Güncelleme Tarihi: 30/09/2019
+
+14
+
+Mevcut sistemlerde, sınır güvenliği gibi Proje bitiminden 2 sene sonra
+uygulamalarda herhangi bir RF hedefin
+yerinin tespiti çok büyük araçlar üzerine
+konumlanmış cihazlar ile gerçekleştirilir.
+Ancak arazi koşullarının el vermediği
+durumlarda dört adet İHA ve bir merkezi
+bilgisayardan oluşan sistemin kullanılması
+çok daha pratik olacaktır.
+Ayrıca sadece savunma alanında değil,
+arama kurtarma, sivil güvenlik gibi birçok
+uygulamada daha etkin bir şekilde
+kullanılacaktır.
+
+Ulusal Güvenlik Etkisi:
+ Siber güvenlik,
+ Enerji güvenliği,
+ Sınır güvenliği,
+ Ekonomik güvenlik vb.
+
+5.3. Proje Çıktılarının Paylaşımı ve Yayılımı
+Proje faaliyetleri boyunca elde edilecek çıktıların ve ulaşılacak sonuçların ilgili paydaşlar ve olası kullanıcılara ulaştırılması
+ve yayılmasına yönelik yapılacak olan toplantı, çalıştay, eğitim, web sitesi, medya, fuar, proje pazarı ve benzeri etkinlikler
+aşağıdaki tabloda verilmelidir.
+
+PROJE ÇIKTILARININ PAYLAŞIMI VE YAYILIMI TABLOSU (*)
+Etkinlik Türü (Toplantı, Çalıştay, Eğitim,
+Web Sitesi, Medya, Fuar, Proje Pazarı
+vb.)
+2 Adet uluslararası konferans katılımı
+
+Paydaş / Olası Kullanıcılar
+Yürütücü, Araştırmacı ve Bursiyerler
+
+Etkinliğin Zamanı ve Süresi
+12-24 Ay, 1 Hafta
+
+(*) Tablodaki satırlar gerektiği kadar genişletilebilir ve çoğaltılabilir .
+
+BELİRTMEK İSTEDİĞİNİZ DİĞER KONULAR
+Sadece proje önerisinin değerlendirilmesine katkı sağlayabilecek bilgi veya veri (grafik, tablo, vb.) eklenebilir.
+
+BAŞVURU FORMU EKLERİ
+EK-1: KAYNAKLAR
+EK-2: BÜTÇE VE GEREKÇESİ
+EK-3: PROJE EKİBİNİN DİĞER PROJELERİ VE GÜNCEL YAYINLARI (Proje Başvuru Sistemi (PBS)’ne girilen
+bilgiler doğrultusunda Sistem tarafından otomatik olarak oluşturulmaktadır.)
+
+3501BF-01 Güncelleme Tarihi: 30/09/2019
+
+15
+
+
