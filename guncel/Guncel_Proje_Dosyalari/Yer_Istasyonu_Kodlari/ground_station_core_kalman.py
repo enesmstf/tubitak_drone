@@ -676,6 +676,13 @@ class GroundStation:
             rssi = float(parts[1])
             drone_id = int(parts[0])
 
+            # ── PTT / SİNYAL KOPMA KORUMASI (v2.1) ──
+            # Telsiz mandalına basılmadığında alıcı dip gürültüsünü (-120 dBm) okur.
+            # Dronların biri -120 dBm okurken diğeri -85 dBm okursa oluşacak yapay 35 dB'lik
+            # farkın otopilotu ve filtreleri sarsmaması için bu paketler elenir.
+            if rssi <= -115.0:
+                return
+
             if drone_id not in self.pixhawk_ports and not self.simulation:
                 print(f"[UYARI] Tanınmayan drone ID'sinden paket, reddedildi: '{line}'")
                 return

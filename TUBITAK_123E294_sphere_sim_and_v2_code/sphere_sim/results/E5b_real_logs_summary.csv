@@ -1,0 +1,6 @@
+filter,mean_output_variance_db2,mean_jitter_db,mean_lag_s,n_series
+raw,18.43,2.094,1.866,16
+kalman,6.893,0.553,7.338,16
+sismf,5.037,0.418,9.826,16
+kalman+sismf,4.914,0.282,12.686,16
+movavg,10.886,0.813,4.104,16

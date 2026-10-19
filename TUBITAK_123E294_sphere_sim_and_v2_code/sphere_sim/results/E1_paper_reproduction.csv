@@ -1,0 +1,13 @@
+geometry,law,setting,mean_err_3d_m,median_err_3d_m,mean_err_2d_m,line_err_median_deg,converged_frac,angle_activity_rad_per_min,time_min,min_drone_sep_median_m,runs_with_sep_below_3m
+typo,PID (Rapor 2),"repo gains, |e|<1 dB",83.527,76.063,76.868,43.549,1.0,2.276,1.082,4.332,0.333
+fixed,PID (Rapor 2),"repo gains, |e|<1 dB",80.95,74.557,74.3,42.769,1.0,2.334,1.119,5.0,0.2
+fixed,PID (Rapor 2),"repo gains, |e|<0.02 dB",78.952,78.809,77.188,62.747,0.0,3.708,60.4,0.233,1.0
+fixed,PID (Rapor 2),"tuned, window",25.21,16.041,24.372,4.086,1.0,1.566,15.403,0.754,0.667
+typo,ISMF-2024,"repo gains, |e|<1 dB",77.726,75.665,72.475,42.047,1.0,2.989,1.081,4.277,0.417
+fixed,ISMF-2024,"repo gains, |e|<1 dB",75.682,68.562,70.648,40.693,1.0,3.041,1.102,5.0,0.217
+fixed,ISMF-2024,"repo gains, |e|<0.02 dB",79.419,75.684,77.011,64.867,0.0,3.802,60.4,0.21,1.0
+fixed,ISMF-2024,"tuned, window",20.311,11.149,19.552,3.229,1.0,2.554,15.4,0.591,0.7
+typo,SISMF-2026,"repo gains, |e|<1 dB",73.508,68.281,70.889,47.439,1.0,4.047,1.081,4.177,0.467
+fixed,SISMF-2026,"repo gains, |e|<1 dB",73.05,68.453,70.536,44.335,1.0,4.052,1.108,5.0,0.25
+fixed,SISMF-2026,"repo gains, |e|<0.02 dB",77.913,80.549,75.617,61.147,0.0,4.172,60.4,0.138,1.0
+fixed,SISMF-2026,"tuned, window",21.59,10.118,20.875,3.375,1.0,2.471,15.4,0.725,0.667

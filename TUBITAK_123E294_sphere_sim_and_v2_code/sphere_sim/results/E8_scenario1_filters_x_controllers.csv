@@ -1,0 +1,25 @@
+channel,rssi_filter,controller,final_err_median_m,final_err_p90_m,reached_5m_frac,t_reach_median_s,hover_jitter_m,path_over_straight
+paper-like,raw,"P, K=0.5 (repo)",0.275,0.406,1.0,160.0,0.23,1.372
+paper-like,raw,Axis-SISMF (repo gains),0.873,1.035,1.0,60.0,0.864,2.919
+paper-like,kalman,"P, K=0.5 (repo)",0.274,0.404,1.0,160.0,0.217,1.169
+paper-like,kalman,Axis-SISMF (repo gains),1.974,2.212,1.0,60.0,1.881,3.669
+paper-like,sismf,"P, K=0.5 (repo)",0.29,0.424,1.0,160.0,0.252,1.263
+paper-like,sismf,Axis-SISMF (repo gains),1.469,1.73,1.0,60.0,1.465,3.777
+paper-like,kalman+sismf,"P, K=0.5 (repo)",0.3,0.422,1.0,160.0,0.251,1.196
+paper-like,kalman+sismf,Axis-SISMF (repo gains),2.735,2.931,1.0,60.0,2.686,5.239
+field-quiet,raw,"P, K=0.5 (repo)",6.106,24.971,0.75,180.0,1.893,3.798
+field-quiet,raw,Axis-SISMF (repo gains),7.003,44.346,0.875,90.0,3.393,8.433
+field-quiet,kalman,"P, K=0.5 (repo)",6.428,25.425,0.725,180.0,1.868,2.385
+field-quiet,kalman,Axis-SISMF (repo gains),6.949,45.273,0.85,86.0,4.113,6.415
+field-quiet,sismf,"P, K=0.5 (repo)",6.406,25.209,0.75,170.0,1.957,2.789
+field-quiet,sismf,Axis-SISMF (repo gains),7.18,44.037,0.8,86.0,4.032,7.127
+field-quiet,kalman+sismf,"P, K=0.5 (repo)",6.429,25.75,0.75,170.0,2.06,2.566
+field-quiet,kalman+sismf,Axis-SISMF (repo gains),7.261,44.805,0.8,100.0,4.648,7.065
+field-typical,raw,"P, K=0.5 (repo)",10.94,38.596,0.725,146.0,4.839,7.851
+field-typical,raw,Axis-SISMF (repo gains),13.238,40.035,0.825,130.0,6.66,12.197
+field-typical,kalman,"P, K=0.5 (repo)",10.579,43.814,0.725,186.0,4.646,4.907
+field-typical,kalman,Axis-SISMF (repo gains),15.88,45.406,0.8,128.0,8.269,9.925
+field-typical,sismf,"P, K=0.5 (repo)",10.987,43.671,0.725,216.0,4.871,4.983
+field-typical,sismf,Axis-SISMF (repo gains),16.137,48.428,0.75,128.0,8.229,9.926
+field-typical,kalman+sismf,"P, K=0.5 (repo)",10.871,44.022,0.7,206.0,4.889,4.802
+field-typical,kalman+sismf,Axis-SISMF (repo gains),17.329,47.708,0.75,140.0,8.922,9.822

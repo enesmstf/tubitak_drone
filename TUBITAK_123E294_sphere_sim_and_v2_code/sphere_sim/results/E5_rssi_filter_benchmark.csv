@@ -1,0 +1,31 @@
+noise,profile,filter,rmse_vs_truth_db,rmse_reduction_pct,output_variance_db2,output_var_reduction_pct,jitter_db,lag_s
+field-quiet,steady,raw,1.236,0.0,1.522,0.0,1.134,nan
+field-quiet,steady,kalman,0.518,58.118,0.26,82.921,0.201,nan
+field-quiet,steady,sismf,0.647,47.686,0.41,73.04,0.249,nan
+field-quiet,steady,kalman+sismf,0.527,57.391,0.27,82.24,0.097,nan
+field-quiet,steady,movavg,0.694,43.909,0.474,68.843,0.272,nan
+field-quiet,ramp (moving radio),raw,1.234,0.0,65.302,0.0,1.162,0.22
+field-quiet,ramp (moving radio),kalman,1.298,-5.164,62.247,4.678,0.32,7.747
+field-quiet,ramp (moving radio),sismf,1.112,9.863,63.114,3.35,0.344,6.273
+field-quiet,ramp (moving radio),kalman+sismf,1.969,-59.576,61.876,5.246,0.271,12.633
+field-quiet,ramp (moving radio),movavg,0.927,24.871,64.055,1.91,0.372,3.967
+field-quiet,step +12 dB,raw,1.229,0.0,37.44,0.0,1.195,0.0
+field-quiet,step +12 dB,kalman,1.269,-3.255,34.587,7.62,0.247,5.22
+field-quiet,step +12 dB,sismf,2.137,-73.878,33.892,9.474,0.283,16.72
+field-quiet,step +12 dB,kalman+sismf,2.168,-76.426,33.775,9.789,0.147,17.44
+field-quiet,step +12 dB,movavg,1.176,4.315,35.847,4.253,0.327,3.947
+field-typical,steady,raw,2.517,0.0,6.25,0.0,2.001,nan
+field-typical,steady,kalman,1.259,49.971,1.504,75.936,0.389,nan
+field-typical,steady,sismf,1.255,50.125,1.494,76.096,0.383,nan
+field-typical,steady,kalman+sismf,1.154,54.162,1.253,79.957,0.197,nan
+field-typical,steady,movavg,1.657,34.154,2.67,57.279,0.557,nan
+field-typical,ramp (moving radio),raw,2.524,0.0,70.254,0.0,2.016,0.753
+field-typical,ramp (moving radio),kalman,1.742,30.972,63.76,9.244,0.459,7.8
+field-typical,ramp (moving radio),sismf,1.891,25.106,62.564,10.946,0.434,9.793
+field-typical,ramp (moving radio),kalman+sismf,2.284,9.525,62.515,11.016,0.311,13.52
+field-typical,ramp (moving radio),movavg,1.789,29.124,66.554,5.267,0.612,3.967
+field-typical,step +12 dB,raw,2.517,0.0,42.217,0.0,2.048,0.027
+field-typical,step +12 dB,kalman,1.72,31.691,35.877,15.016,0.427,5.647
+field-typical,step +12 dB,sismf,2.404,4.515,34.46,18.372,0.404,16.92
+field-typical,step +12 dB,kalman+sismf,2.421,3.845,34.498,18.284,0.237,17.953
+field-typical,step +12 dB,movavg,1.925,23.545,38.14,9.657,0.608,4.1

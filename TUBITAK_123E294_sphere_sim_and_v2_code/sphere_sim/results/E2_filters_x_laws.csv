@@ -1,0 +1,49 @@
+channel,R_m,rssi_filter,angle_law,mean_err_2d_m,median_err_2d_m,p90_err_2d_m,line_err_median_deg,time_min
+field-temporal,5.0,Raw,PID (Rapor 2),75.365,74.722,93.868,70.623,52.764
+field-temporal,5.0,Raw,ISMF-2024,73.266,72.399,96.755,54.868,52.828
+field-temporal,5.0,Raw,SISMF-2026,75.335,75.419,95.298,58.124,52.697
+field-temporal,5.0,Kalman,PID (Rapor 2),73.633,76.13,88.64,68.785,54.499
+field-temporal,5.0,Kalman,ISMF-2024,75.669,76.779,91.968,68.621,54.94
+field-temporal,5.0,Kalman,SISMF-2026,75.384,77.255,94.845,68.815,54.737
+field-temporal,5.0,SISMF-signal,PID (Rapor 2),76.056,76.411,94.655,70.367,55.302
+field-temporal,5.0,SISMF-signal,ISMF-2024,75.857,77.671,94.296,69.439,54.907
+field-temporal,5.0,SISMF-signal,SISMF-2026,75.068,74.873,91.404,68.656,54.707
+field-temporal,5.0,MovAvg-5,PID (Rapor 2),74.232,73.624,93.401,65.611,54.078
+field-temporal,5.0,MovAvg-5,ISMF-2024,75.666,75.594,96.06,64.295,54.518
+field-temporal,5.0,MovAvg-5,SISMF-2026,75.186,72.07,95.786,66.294,53.595
+field-temporal,20.0,Raw,PID (Rapor 2),52.95,54.898,80.706,27.972,50.652
+field-temporal,20.0,Raw,ISMF-2024,47.526,43.389,88.226,22.049,48.484
+field-temporal,20.0,Raw,SISMF-2026,56.711,52.251,94.864,26.049,47.774
+field-temporal,20.0,Kalman,PID (Rapor 2),62.441,64.97,87.997,38.374,50.583
+field-temporal,20.0,Kalman,ISMF-2024,62.557,66.067,90.864,33.159,48.617
+field-temporal,20.0,Kalman,SISMF-2026,63.582,64.7,87.469,41.144,49.04
+field-temporal,20.0,SISMF-signal,PID (Rapor 2),62.813,64.852,89.71,40.107,50.653
+field-temporal,20.0,SISMF-signal,ISMF-2024,61.202,64.866,86.033,41.037,49.93
+field-temporal,20.0,SISMF-signal,SISMF-2026,62.627,63.826,90.687,36.606,52.132
+field-temporal,20.0,MovAvg-5,PID (Rapor 2),62.156,65.226,90.323,36.164,50.426
+field-temporal,20.0,MovAvg-5,ISMF-2024,54.802,57.394,80.107,30.884,47.708
+field-temporal,20.0,MovAvg-5,SISMF-2026,56.971,56.905,86.765,32.674,48.367
+field-quiet,5.0,Raw,PID (Rapor 2),73.173,73.704,96.293,62.498,47.687
+field-quiet,5.0,Raw,ISMF-2024,74.86,74.374,99.665,63.699,45.902
+field-quiet,5.0,Raw,SISMF-2026,74.897,76.612,97.093,63.614,45.712
+field-quiet,5.0,Kalman,PID (Rapor 2),75.294,79.895,95.002,65.256,48.377
+field-quiet,5.0,Kalman,ISMF-2024,75.276,72.945,92.425,68.355,47.968
+field-quiet,5.0,Kalman,SISMF-2026,74.043,73.259,95.788,68.818,48.302
+field-quiet,5.0,SISMF-signal,PID (Rapor 2),74.704,74.073,100.343,64.302,48.533
+field-quiet,5.0,SISMF-signal,ISMF-2024,75.194,79.563,93.361,64.1,46.312
+field-quiet,5.0,SISMF-signal,SISMF-2026,75.511,76.849,96.044,65.192,46.521
+field-quiet,5.0,MovAvg-5,PID (Rapor 2),75.461,77.157,95.267,66.281,46.815
+field-quiet,5.0,MovAvg-5,ISMF-2024,74.413,76.629,94.711,62.957,46.252
+field-quiet,5.0,MovAvg-5,SISMF-2026,75.462,73.305,97.316,65.552,46.596
+field-quiet,20.0,Raw,PID (Rapor 2),57.762,58.751,93.766,31.789,35.598
+field-quiet,20.0,Raw,ISMF-2024,59.637,58.76,97.601,31.581,35.85
+field-quiet,20.0,Raw,SISMF-2026,61.517,59.539,97.098,32.631,35.567
+field-quiet,20.0,Kalman,PID (Rapor 2),61.583,64.982,92.564,35.081,36.494
+field-quiet,20.0,Kalman,ISMF-2024,59.708,59.06,95.555,34.087,35.278
+field-quiet,20.0,Kalman,SISMF-2026,61.489,60.336,97.623,34.806,35.508
+field-quiet,20.0,SISMF-signal,PID (Rapor 2),61.79,59.808,94.441,34.686,36.727
+field-quiet,20.0,SISMF-signal,ISMF-2024,59.832,61.538,97.758,33.423,35.477
+field-quiet,20.0,SISMF-signal,SISMF-2026,62.976,60.911,98.249,33.074,35.918
+field-quiet,20.0,MovAvg-5,PID (Rapor 2),61.045,60.781,93.274,34.408,35.862
+field-quiet,20.0,MovAvg-5,ISMF-2024,62.254,61.583,99.09,34.145,35.621
+field-quiet,20.0,MovAvg-5,SISMF-2026,62.109,61.094,93.346,33.863,36.053

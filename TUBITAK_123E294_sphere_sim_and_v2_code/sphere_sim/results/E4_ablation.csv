@@ -1,0 +1,43 @@
+channel,R_m,step,mean_err_2d_m,median_err_2d_m,p90_err_2d_m,line_err_median_deg,time_min,min_drone_sep_median_m,runs_with_sep_below_3m
+paper-like,5.0,A repo as found,71.349,70.821,103.257,43.96,1.077,2.534,0.617
+paper-like,5.0,B + D2/D4 geometry fix,71.34,70.821,103.257,37.442,1.149,5.0,0.367
+paper-like,5.0,B2 + yaw-aligned vertical circle,74.158,78.449,103.345,67.607,1.461,7.071,0.0
+paper-like,5.0,"C + normalised tuned SISMF, window, angle avg",14.879,12.793,32.461,3.413,15.4,7.071,0.0
+paper-like,5.0,D + bias-cancelling flip,10.642,6.43,24.609,2.332,30.672,7.071,0.0
+paper-like,5.0,E + 40 m lateral baseline,5.86,4.587,11.061,2.706,31.0,7.071,0.0
+paper-like,5.0,F + ground-plane prior,5.297,4.406,9.429,2.706,31.0,7.071,0.0
+paper-like,20.0,A repo as found,64.838,66.89,99.831,31.863,2.433,1.396,1.0
+paper-like,20.0,B + D2/D4 geometry fix,65.141,67.428,96.984,27.343,4.682,3.847,0.483
+paper-like,20.0,B2 + yaw-aligned vertical circle,66.013,68.19,93.142,35.137,12.089,28.284,0.0
+paper-like,20.0,"C + normalised tuned SISMF, window, angle avg",3.933,2.789,8.766,1.242,15.551,28.284,0.0
+paper-like,20.0,D + bias-cancelling flip,2.533,1.582,5.909,0.714,31.618,28.284,0.0
+paper-like,20.0,E + 40 m lateral baseline,1.417,1.173,2.457,0.821,31.975,28.284,0.0
+paper-like,20.0,F + ground-plane prior,1.251,1.008,2.905,0.821,31.975,28.284,0.0
+field-temporal,5.0,A repo as found,73.777,77.087,105.262,60.911,12.057,0.276,1.0
+field-temporal,5.0,B + D2/D4 geometry fix,75.072,77.222,109.318,61.59,11.412,0.545,0.983
+field-temporal,5.0,B2 + yaw-aligned vertical circle,73.635,74.226,106.435,67.391,11.884,7.071,0.0
+field-temporal,5.0,"C + normalised tuned SISMF, window, angle avg",72.009,74.523,99.206,65.182,26.713,7.071,0.0
+field-temporal,5.0,D + bias-cancelling flip,73.779,74.784,101.272,67.589,53.842,7.071,0.0
+field-temporal,5.0,E + 40 m lateral baseline,75.501,77.645,100.439,68.753,54.748,7.071,0.0
+field-temporal,5.0,F + ground-plane prior,73.907,75.11,98.61,68.753,54.748,7.071,0.0
+field-temporal,20.0,A repo as found,73.155,72.231,103.507,59.52,15.424,0.944,1.0
+field-temporal,20.0,B + D2/D4 geometry fix,75.206,76.361,106.701,54.714,17.157,1.48,0.733
+field-temporal,20.0,B2 + yaw-aligned vertical circle,75.59,76.821,105.32,59.115,17.535,28.284,0.0
+field-temporal,20.0,"C + normalised tuned SISMF, window, angle avg",69.536,75.699,103.69,38.618,24.213,28.284,0.0
+field-temporal,20.0,D + bias-cancelling flip,62.785,72.057,98.835,26.293,48.569,28.284,0.0
+field-temporal,20.0,E + 40 m lateral baseline,66.43,65.083,106.777,37.247,49.783,28.284,0.0
+field-temporal,20.0,F + ground-plane prior,62.575,60.935,97.389,37.247,49.783,28.284,0.0
+field-quiet,5.0,A repo as found,75.609,76.642,103.156,57.593,3.018,0.349,0.95
+field-quiet,5.0,B + D2/D4 geometry fix,75.945,74.304,108.328,59.74,3.229,1.963,0.633
+field-quiet,5.0,B2 + yaw-aligned vertical circle,74.965,77.423,99.295,70.319,3.13,7.071,0.0
+field-quiet,5.0,"C + normalised tuned SISMF, window, angle avg",74.223,77.29,102.352,66.539,23.276,7.071,0.0
+field-quiet,5.0,D + bias-cancelling flip,72.84,72.804,100.904,64.886,47.154,7.071,0.0
+field-quiet,5.0,E + 40 m lateral baseline,74.486,73.763,100.282,64.953,47.527,7.071,0.0
+field-quiet,5.0,F + ground-plane prior,73.925,75.515,97.131,64.953,47.527,7.071,0.0
+field-quiet,20.0,A repo as found,72.314,73.907,103.44,53.504,7.172,1.396,1.0
+field-quiet,20.0,B + D2/D4 geometry fix,73.357,74.257,101.988,48.421,8.232,2.465,0.55
+field-quiet,20.0,B2 + yaw-aligned vertical circle,72.398,76.368,102.558,54.365,11.234,28.284,0.0
+field-quiet,20.0,"C + normalised tuned SISMF, window, angle avg",67.73,70.833,106.574,34.913,17.262,28.284,0.0
+field-quiet,20.0,D + bias-cancelling flip,69.484,72.212,109.242,31.891,35.081,28.284,0.0
+field-quiet,20.0,E + 40 m lateral baseline,70.838,66.04,103.416,34.775,35.301,28.284,0.0
+field-quiet,20.0,F + ground-plane prior,63.06,62.075,96.339,34.775,35.301,28.284,0.0
